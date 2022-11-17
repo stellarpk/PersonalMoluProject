@@ -11,6 +11,7 @@ public interface IBattle
         get;
     }
 }
+
 public class BattleSystem : MonoBehaviour
 {
     // Start is called before the first frame update

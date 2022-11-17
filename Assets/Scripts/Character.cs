@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class Character : CharacterProperty, IBattle
 {
     [SerializeField] float rotSpeed = 360.0f;
-    [SerializeField] CharacterStat myStat;
+    public CharacterStat myStat;
     NavMeshPath myPath = null;
     public Transform myHitPos;
     Vector3 Destination = Vector3.zero;
@@ -15,6 +15,7 @@ public class Character : CharacterProperty, IBattle
     public Scan scanner = null;
     public Transform HitPos;
     public UnityAction fire = null;
+    public Skill mySkill;
     public enum STATE
     {
         Create, Normal, Battle, Death, Clear
@@ -36,6 +37,8 @@ public class Character : CharacterProperty, IBattle
 
     private void Start()
     {
+        mySkill.Passive_Skill();
+        myStat.Initialize();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Normal); };
@@ -57,7 +60,7 @@ public class Character : CharacterProperty, IBattle
         }
     }
 
-    void ChangeState(STATE s)
+    public void ChangeState(STATE s)
     {
         if (myState == s) return;
         myState = s;
@@ -81,7 +84,7 @@ public class Character : CharacterProperty, IBattle
         }
     }
 
-    void StateProcess()
+    public void StateProcess()
     {
         switch (myState)
         {
@@ -104,7 +107,7 @@ public class Character : CharacterProperty, IBattle
         Debug.Log("Stage Clear");
     }
 
-    bool Changable()
+    public bool Changable()
     {
         return myState != STATE.Death;
     }
