@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -299,7 +299,7 @@ Transform:
   m_GameObject: {fileID: 252659062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -379,7 +379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 647584969}
   - component: {fileID: 647584967}
-  - component: {fileID: 647584971}
   - component: {fileID: 647584970}
   - component: {fileID: 647584966}
   - component: {fileID: 647584965}
@@ -432,11 +431,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c93c67ae18060f409745b00dc5629e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHP>k__BackingField: 100
+  myData: {fileID: 11400000, guid: 8e54d5374bc574d4b91e6bdb9da770d0, type: 2}
+  <MaxHP>k__BackingField: 0
   <CurHP>k__BackingField: 0
-  <MoveSpeed>k__BackingField: 2
-  <AttackRange>k__BackingField: 30
-  <AttackSpeed>k__BackingField: 1
+  <MoveSpeed>k__BackingField: 0
+  <AttackRange>k__BackingField: 0
+  <AttackSpeed>k__BackingField: 0
+  <AttackDamage>k__BackingField: 0
 --- !u!4 &647584969
 Transform:
   m_ObjectHideFlags: 0
@@ -445,7 +446,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 647584964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -4.63}
+  m_LocalPosition: {x: 0, y: 0, z: -34.8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -466,27 +467,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ebcb3e7cc20024293638b7b51ed97c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myChar: {fileID: 647584971}
---- !u!114 &647584971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 647584964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e6b0b13cb41b244a9447058d01ada29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotSpeed: 360
   myStat: {fileID: 647584967}
-  myHitPos: {fileID: 0}
-  targetPos: {fileID: 2110845890}
+  s_Normal:
+    sData: {fileID: 11400000, guid: af85c12a3c3b2854cab412ac6847baf0, type: 2}
+    time: 4
+    Percentage: 1.15
+    SkillLevel: 1
+    buff:
+      bData: {fileID: 0}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  s_Passive:
+    sData: {fileID: 11400000, guid: eaa6d013594f4a640a7cde1a04a51cb5, type: 2}
+    time: 0
+    Percentage: 0
+    SkillLevel: 1
+    buff:
+      bData: {fileID: 11400000, guid: 2e29484f7154677449339cef23d32413, type: 2}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  s_Sub:
+    sData: {fileID: 11400000, guid: a6fe1e1e032ddff45a99dd370142c4b3, type: 2}
+    time: 0
+    Percentage: 0
+    SkillLevel: 1
+    buff:
+      bData: {fileID: 11400000, guid: ce4611bcf7d397446a19f67f5352daa0, type: 2}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  myBuffList: []
   scanner: {fileID: 1309766844}
-  HitPos: {fileID: 0}
-  mySkill: {fileID: 647584970}
+  targetPos: {fileID: 2110845890}
   myState: 0
+  lastState: 0
 --- !u!1 &686087391
 GameObject:
   m_ObjectHideFlags: 0
@@ -499,9 +515,8 @@ GameObject:
   - component: {fileID: 686087394}
   - component: {fileID: 686087393}
   - component: {fileID: 686087392}
-  - component: {fileID: 686087399}
-  - component: {fileID: 686087398}
   - component: {fileID: 686087397}
+  - component: {fileID: 686087398}
   m_Layer: 7
   m_Name: EnemyTest
   m_TagString: Untagged
@@ -580,7 +595,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 686087391}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.19, y: 0, z: 4.39}
+  m_LocalPosition: {x: 0.19, y: 0, z: 17.88}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -600,11 +615,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c93c67ae18060f409745b00dc5629e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MaxHP>k__BackingField: 100
+  myData: {fileID: 11400000, guid: 0ed1d1ff35edd5c4a9d5f495a65f6050, type: 2}
+  <MaxHP>k__BackingField: 0
   <CurHP>k__BackingField: 0
   <MoveSpeed>k__BackingField: 0
   <AttackRange>k__BackingField: 0
   <AttackSpeed>k__BackingField: 0
+  <AttackDamage>k__BackingField: 0
 --- !u!114 &686087398
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -614,30 +631,45 @@ MonoBehaviour:
   m_GameObject: {fileID: 686087391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2ebcb3e7cc20024293638b7b51ed97c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9fe08779229773e4b92d0d085a9f8de4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myChar: {fileID: 686087399}
---- !u!114 &686087399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 686087391}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e6b0b13cb41b244a9447058d01ada29, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotSpeed: 360
   myStat: {fileID: 686087397}
-  myHitPos: {fileID: 0}
-  targetPos: {fileID: 686087395}
+  s_Normal:
+    sData: {fileID: 0}
+    time: 0
+    Percentage: 0
+    SkillLevel: 0
+    buff:
+      bData: {fileID: 0}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  s_Passive:
+    sData: {fileID: 0}
+    time: 0
+    Percentage: 0
+    SkillLevel: 0
+    buff:
+      bData: {fileID: 0}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  s_Sub:
+    sData: {fileID: 0}
+    time: 0
+    Percentage: 0
+    SkillLevel: 0
+    buff:
+      bData: {fileID: 0}
+      buffTime: 0
+      buffType: 0
+      isBuffOn: 0
+  myBuffList: []
   scanner: {fileID: 517687417}
-  HitPos: {fileID: 0}
-  mySkill: {fileID: 686087398}
+  targetPos: {fileID: 686087395}
   myState: 0
+  lastState: 0
 --- !u!4 &870003084 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 563674fd8ae92644897b214c4914ce78, type: 3}
@@ -1836,7 +1868,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2110845890}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: TargetPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1850,7 +1882,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2110845889}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.14, y: 0, z: 4}
+  m_LocalPosition: {x: 0.14, y: 0, z: 36.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
