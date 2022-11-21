@@ -16,14 +16,14 @@ public interface IBattle
 public struct Skill
 {
     public SkillData sData;
-    public float time;
+    public float coolTime;
     public float Percentage;
     public int SkillLevel;
     public Buff buff;
 
     public void Initialize(SkillData SDB)
     {
-        time = SDB.CoolTime;
+        coolTime = SDB.CoolTime;
         SkillLevel = SDB.SkillLevel;
         Percentage = SDB.GetBuffPercentage(SDB.SkillLevel);
     }
@@ -37,10 +37,10 @@ public struct Buff
     public bool buffType; // Buff 1, DeBuff 0
     public bool isBuffOn; // On 1, Off 0
 
-    public void Initailize(Skill skill)
+    public void Initailize(BuffData BDB)
     {
-        buffTime = skill.buff.bData.BuffTime;
-        buffType = skill.buff.bData.BuffType;
+        buffTime = BDB.BuffTime;
+        buffType = BDB.BuffType;
     }
 }
 

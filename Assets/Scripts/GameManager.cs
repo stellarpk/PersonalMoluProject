@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Inst = null;
 
-    public float playTime = 3.0f;
+    public float playTime = 180.0f;
 
     private void Awake()
     {

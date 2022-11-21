@@ -9,7 +9,7 @@ public class Character : CharacterProperty, IBattle
     [Header ("Stat")]
     public CharacterStat myStat;
     private float rotSpeed = 360.0f;
-
+    public float AttackDelay;
 
     [Header("Character Skill")]
     public Skill s_Normal;
@@ -28,10 +28,10 @@ public class Character : CharacterProperty, IBattle
     
     protected UnityAction fire = null;
 
-    Coroutine Move;
-    Coroutine Rot;
-    Coroutine Normal;
-    Coroutine Battle;
+    protected Coroutine Move;
+    protected Coroutine Rot;
+    protected Coroutine Normal;
+    protected Coroutine Battle;
 
     //public Transform HitPos;
     //public Transform myHitPos;
@@ -52,15 +52,15 @@ public class Character : CharacterProperty, IBattle
     {
         if (s_Normal.buff.bData != null)
         {
-            s_Normal.buff.Initailize(s_Normal);
+            s_Normal.buff.Initailize(s_Normal.buff.bData);
         }
         if (s_Passive.buff.bData != null)
         {
-            s_Passive.buff.Initailize(s_Passive);
+            s_Passive.buff.Initailize(s_Passive.buff.bData);
         }
         if (s_Sub.buff.bData != null)
         {
-            s_Sub.buff.Initailize(s_Sub);
+            s_Sub.buff.Initailize(s_Sub.buff.bData);
         }
     }
 
@@ -113,6 +113,8 @@ public class Character : CharacterProperty, IBattle
                 if (Battle != null) StopCoroutine(Battle);
                 break;
             case STATE.Death:
+                StopAllCoroutines();
+                myAnim.SetBool("Die", true);
                 break;
             case STATE.Clear:
                 OnClear();
@@ -158,7 +160,9 @@ public class Character : CharacterProperty, IBattle
     void SetPath()
     {
         if (Battle != null) StopCoroutine(Battle);
+
         NavMesh.CalculatePath(transform.position, Destination, NavMesh.AllAreas, myPath);
+
         Normal = StartCoroutine(MovingByPath(myPath.corners));
     }
 
@@ -166,12 +170,11 @@ public class Character : CharacterProperty, IBattle
     {
         if (poslist.Length < 2) yield break;
         int targetPos = 1;
-        myAnim.SetBool("Run", true);
+        myAnim.SetBool("Normal", true);
         while (targetPos < poslist.Length)
         {
             yield return Move = StartCoroutine(MovingToPosition(poslist[targetPos++]));
         }
-        myAnim.SetBool("Run", false);
         ChangeState(STATE.Clear);
     }
 
@@ -227,19 +230,29 @@ public class Character : CharacterProperty, IBattle
         if (Normal != null) StopCoroutine(Normal);
         if (Move != null) StopCoroutine(Move);
         if (Rot != null) StopCoroutine(Rot);
-        Battle = StartCoroutine(Attack());
+
+        if(myAnim.GetBool("Normal")) myAnim.SetBool("Normal", false);
+
+        Battle = StartCoroutine(CoBattle());
     }
 
-    protected virtual IEnumerator Attack()
+    protected virtual IEnumerator CoBattle()
     {
         float delay = 0.0f;
+        myAnim.SetBool("Battle", true);
         while (scanner.myTarget != null)
         {
             Vector3 dir = (scanner.CurTarget.transform.position - transform.position).normalized; // 추후 HitPos로 변경
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5.0f);
+            Quaternion rot = Quaternion.LookRotation(dir);
+            Vector3 rotDeg = rot.eulerAngles;
+            rotDeg.x = rotDeg.z = 0.0f;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotDeg), Time.deltaTime * 5.0f);
+            //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5.0f);
 
+            if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
+            else myAnim.SetFloat("AttackSpeed", 1);
             delay += Time.deltaTime;
-            if (delay >= myStat.AttackSpeed)
+            if (delay >= AttackDelay)
             {
 
                 fire?.Invoke();
@@ -251,7 +264,7 @@ public class Character : CharacterProperty, IBattle
 
     public virtual void Shooting()
     {
-        Debug.Log("Attack");
+        myAnim.SetTrigger("Shoot");
     }
     #endregion
 }

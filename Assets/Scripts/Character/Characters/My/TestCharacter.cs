@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TestCharacter : Character, ISkill
 {
-    int attackCount;
-    
-    Coroutine Sub_Buff;
+    public int attackCount;
     private void Start()
     {
         myStat.Initialize();
@@ -36,9 +34,6 @@ public class TestCharacter : Character, ISkill
 
     public void Normal_Skill()
     {
-        //ChangeState(STATE.Skill);
-        //Sub_Skill();
-        //ChangeState(lastState);
         StartCoroutine(AttackNormalSkill());
     }
 
@@ -48,13 +43,12 @@ public class TestCharacter : Character, ISkill
         while (true)
         {
             delay += Time.deltaTime;
-            if (delay > s_Normal.time)
+            if (delay > s_Normal.coolTime)
             {
                 ChangeState(STATE.Skill);
-                Debug.Log($"NormalSkill Damage: {myStat.AttackDamage*s_Normal.Percentage}");
+                myAnim.SetTrigger("Skill_Normal");
+                //Debug.Log($"NormalSkill Damage: {myStat.AttackDamage*s_Normal.Percentage}");
                 delay = 0.0f;
-                yield return new WaitForSeconds(1.0f);
-                ChangeState(lastState);
             }
             yield return null;
         }
@@ -82,15 +76,18 @@ public class TestCharacter : Character, ISkill
         if (s_Sub.buff.isBuffOn)
         {
             ResetSubBuff();
-            StopCoroutine(Sub_Buff);
+            StopCoroutine(SubBuff());
         }
-        Sub_Buff = StartCoroutine(SubBuff());
+        StartCoroutine(SubBuff());
     }
 
     public IEnumerator SubBuff()
     {
+        ChangeState(STATE.Skill);
+        myAnim.SetTrigger("Skill_Sub");
         myBuffList.Add(s_Sub.buff);
         myStat.AttackDamage *= s_Sub.Percentage;
+        //Debug.Log($"Attack Damage {s_Sub.Percentage} Increase");
         s_Sub.buff.isBuffOn = true;
         yield return new WaitForSeconds(s_Sub.buff.buffTime);
         ResetSubBuff();
@@ -103,34 +100,48 @@ public class TestCharacter : Character, ISkill
         myStat.AttackDamage /= s_Sub.Percentage;
     }
 
+    public void EndSkillAnim()
+    {
+        ChangeState(lastState);
+    }
 
-    protected override IEnumerator Attack()
+    protected override IEnumerator CoBattle()
     {
         float delay = 0.0f;
+        AttackDelay = 1 / myStat.AttackSpeed;
+        myAnim.SetBool("Battle", true);
+
         while (scanner.myTarget != null)
         {
+            // 캐릭터 회전
             Vector3 dir = (scanner.CurTarget.transform.position - transform.position).normalized; // 추후 HitPos로 변경
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5.0f);
-
-            delay += Time.deltaTime;
-            if (delay >= myStat.AttackSpeed)
-            {
-                fire?.Invoke();
-                delay = 0.0f;
-                attackCount++;
-                //if (attackCount == 6)
-                //{
-                //    yield return new WaitForSeconds(1.0f);
-                //    attackCount = 0;
-                //    s_Normal_Skill();
-                //}
+            Quaternion rot = Quaternion.LookRotation(dir);
+            Vector3 rotDeg = rot.eulerAngles;
+            rotDeg.x = rotDeg.z = 0.0f;
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotDeg), Time.deltaTime * 5.0f);
+            
+            // 캐릭터 공격
+            if (myState == STATE.Battle) {
+                delay += Time.deltaTime;
+                if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
+                else myAnim.SetFloat("AttackSpeed", 1);
+                if (delay >= AttackDelay)
+                {
+                    fire?.Invoke();
+                    if (attackCount == 6)
+                    {
+                        attackCount = 0;
+                        Sub_Skill();
+                    }
+                    delay = 0.0f;
+                }
             }
             yield return null;
         }
     }
-
     public override void Shooting()
     {
-        //Debug.Log("Test Attack");
+        attackCount++;
+        myAnim.SetTrigger("Shoot");
     }
 }
