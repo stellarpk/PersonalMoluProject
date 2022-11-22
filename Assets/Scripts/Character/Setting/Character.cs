@@ -30,14 +30,14 @@ public class Character : CharacterProperty, IBattle
 
     protected Coroutine Move;
     protected Coroutine Rot;
-    protected Coroutine Normal;
+    protected Coroutine Moving;
     protected Coroutine Battle;
 
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
     {
-        Create, Wait, Normal, Battle, Skill, Death, Clear
+        Create, Wait, Move, Battle, Skill, Death, Clear
     }
 
     public void InitializeSkill()
@@ -101,19 +101,20 @@ public class Character : CharacterProperty, IBattle
             case STATE.Wait:
                 OnWait();
                 break;
-            case STATE.Normal:
-                OnNormal(targetPos.position);
-                lastState = STATE.Normal;
+            case STATE.Move:
+                OnMove(targetPos.position);
+                lastState = STATE.Move;
                 break;
             case STATE.Battle:
                 OnBattle();
                 lastState = STATE.Battle;
                 break;
             case STATE.Skill:
-                if (Normal != null) StopCoroutine(Normal);
+                if (Moving != null) StopCoroutine(Moving);
                 if (Move != null) StopCoroutine(Move);
                 if (Rot != null) StopCoroutine(Rot);
                 if (Battle != null) StopCoroutine(Battle);
+                myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
                 break;
             case STATE.Death:
                 StopAllCoroutines();
@@ -134,7 +135,7 @@ public class Character : CharacterProperty, IBattle
                 break;
             case STATE.Wait:
                 break;
-            case STATE.Normal:
+            case STATE.Move:
                 break;
             case STATE.Battle:
                 if (scanner.myTarget != null && !scanner.myTarget.IsLive)
@@ -158,15 +159,23 @@ public class Character : CharacterProperty, IBattle
 
     void OnWait()
     {
-        if (Normal != null) StopCoroutine(Normal);
+        if (Moving != null) StopCoroutine(Moving);
         if (Move != null) StopCoroutine(Move);
         if (Rot != null) StopCoroutine(Rot);
         if (Battle != null) StopCoroutine(Battle);
     }
 
-    #region STATE.Normal
-    void OnNormal(Vector3 target)
+    protected IEnumerator ToMoveState()
     {
+        yield return new WaitForSeconds(2);
+        ChangeState(STATE.Move);
+        yield break;
+    }
+
+    #region STATE.Normal
+    void OnMove(Vector3 target)
+    {
+        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
         Destination = target;
         myPath = new NavMeshPath();
         SetPath();
@@ -177,14 +186,16 @@ public class Character : CharacterProperty, IBattle
 
         NavMesh.CalculatePath(transform.position, Destination, NavMesh.AllAreas, myPath);
 
-        Normal = StartCoroutine(MovingByPath(myPath.corners));
+        Moving = StartCoroutine(MovingByPath(myPath.corners));
+
+        myAnim.SetBool("Move", true);
+        if(myAnim.GetBool("Battle")) myAnim.SetBool("Battle", false);
     }
 
     IEnumerator MovingByPath(Vector3[] poslist)
     {
         if (poslist.Length < 2) yield break;
         int targetPos = 1;
-        myAnim.SetBool("Normal", true);
         while (targetPos < poslist.Length)
         {
             yield return Move = StartCoroutine(MovingToPosition(poslist[targetPos++]));
@@ -241,11 +252,14 @@ public class Character : CharacterProperty, IBattle
     #region STATE.Battle
     void OnBattle()
     {
-        if (Normal != null) StopCoroutine(Normal);
+        if (Moving != null) StopCoroutine(Moving);
         if (Move != null) StopCoroutine(Move);
         if (Rot != null) StopCoroutine(Rot);
 
-        if(myAnim.GetBool("Normal")) myAnim.SetBool("Normal", false);
+        if(myAnim.GetBool("Move")) myAnim.SetBool("Move", false);
+        myAnim.SetBool("Battle", true);
+
+        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 1);
 
         Battle = StartCoroutine(CoBattle());
     }
@@ -253,7 +267,7 @@ public class Character : CharacterProperty, IBattle
     protected virtual IEnumerator CoBattle()
     {
         float delay = 0.0f;
-        myAnim.SetBool("Battle", true);
+        AttackDelay = 1 / myStat.AttackSpeed;
         while (scanner.myTarget != null)
         {
             Vector3 dir = (scanner.CurTarget.transform.position - transform.position).normalized; // 추후 HitPos로 변경

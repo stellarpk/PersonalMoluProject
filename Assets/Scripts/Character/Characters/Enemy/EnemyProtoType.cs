@@ -10,9 +10,9 @@ public class EnemyProtoType : Character
         myStat.SetHP();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
-        scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Normal); };
+        scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
         scanner.Range.radius = myStat.AttackRange / 10.0f;
-        ChangeState(STATE.Normal);
+        ChangeState(STATE.Move);
     }
 
     private void Update()
