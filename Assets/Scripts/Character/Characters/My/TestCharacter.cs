@@ -15,8 +15,8 @@ public class TestCharacter : Character, ISkill
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Normal); };
         scanner.Range.radius = myStat.AttackRange / 10.0f;
-        ChangeState(STATE.Normal);
-        Normal_Skill();
+        ChangeState(STATE.Wait);
+        //Normal_Skill();
     }
 
     

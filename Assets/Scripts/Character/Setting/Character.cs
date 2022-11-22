@@ -37,7 +37,7 @@ public class Character : CharacterProperty, IBattle
     //public Transform myHitPos;
     public enum STATE
     {
-        Create, Normal, Battle, Skill, Death, Clear
+        Create, Wait, Normal, Battle, Skill, Death, Clear
     }
 
     public void InitializeSkill()
@@ -98,6 +98,9 @@ public class Character : CharacterProperty, IBattle
         {
             case STATE.Create:
                 break;
+            case STATE.Wait:
+                OnWait();
+                break;
             case STATE.Normal:
                 OnNormal(targetPos.position);
                 lastState = STATE.Normal;
@@ -129,6 +132,8 @@ public class Character : CharacterProperty, IBattle
         {
             case STATE.Create:
                 break;
+            case STATE.Wait:
+                break;
             case STATE.Normal:
                 break;
             case STATE.Battle:
@@ -150,6 +155,15 @@ public class Character : CharacterProperty, IBattle
     {
         return myState != STATE.Death;
     }
+
+    void OnWait()
+    {
+        if (Normal != null) StopCoroutine(Normal);
+        if (Move != null) StopCoroutine(Move);
+        if (Rot != null) StopCoroutine(Rot);
+        if (Battle != null) StopCoroutine(Battle);
+    }
+
     #region STATE.Normal
     void OnNormal(Vector3 target)
     {
@@ -175,7 +189,7 @@ public class Character : CharacterProperty, IBattle
         {
             yield return Move = StartCoroutine(MovingToPosition(poslist[targetPos++]));
         }
-        ChangeState(STATE.Clear);
+        ChangeState(STATE.Wait);
     }
 
     IEnumerator MovingToPosition(Vector3 pos)
