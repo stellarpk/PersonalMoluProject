@@ -10,6 +10,8 @@ public class TestCharacter : Character, ISkill
         myStat.Initialize();
         InitializeSkill();
         Passive_Skill();
+        myWeapon.weapon.Initialize(this);
+        myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
@@ -89,22 +91,18 @@ public class TestCharacter : Character, ISkill
         myBuffList.Add(s_Sub.buff);
         myStat.AttackDamage *= s_Sub.Percentage;
         //Debug.Log($"Attack Damage {s_Sub.Percentage} Increase");
-        s_Sub.buff.isBuffOn = true;
+        if(!s_Sub.buff.isBuffOn) s_Sub.buff.isBuffOn = true;
         yield return new WaitForSeconds(s_Sub.buff.buffTime);
+        s_Sub.buff.isBuffOn = false;
         ResetSubBuff();
     }
 
     void ResetSubBuff()
     {
-        s_Sub.buff.isBuffOn = false;
         myBuffList.Remove(s_Sub.buff);
         myStat.AttackDamage /= s_Sub.Percentage;
     }
 
-    public void EndSkillAnim()
-    {
-        ChangeState(lastState);
-    }
 
     protected override IEnumerator CoBattle()
     {
@@ -128,20 +126,28 @@ public class TestCharacter : Character, ISkill
                 if (delay >= AttackDelay)
                 {
                     fire?.Invoke();
-                    if (attackCount == 6)
-                    {
-                        attackCount = 0;
-                        Sub_Skill();
-                    }
                     delay = 0.0f;
                 }
+                
             }
             yield return null;
         }
     }
     public override void Shooting()
     {
-        attackCount++;
-        myAnim.SetTrigger("Shoot");
+        if(attackCount < 6)
+        {
+            if (myWeapon.curMagazine > 0)
+            {
+                attackCount++;
+            }
+            myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
+        }
+        else
+        {
+            attackCount = 0;
+            Sub_Skill();
+        }
+        Debug.Log($"AttackCount:{attackCount}");
     }
 }

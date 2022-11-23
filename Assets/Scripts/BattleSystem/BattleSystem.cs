@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -26,6 +27,26 @@ public struct Skill
         coolTime = SDB.CoolTime;
         SkillLevel = SDB.SkillLevel;
         Percentage = SDB.GetBuffPercentage(SDB.SkillLevel);
+    }
+}
+
+[Serializable]
+public struct Weapon
+{
+    public WeaponData weaponData;
+    public float Staibility;
+    public float BulletDamage;
+    public float BulletSpeed;
+    public float ReloadTime;
+    public int MaxMagazine;
+
+    public void Initialize(Character owner)
+    {
+        BulletDamage = owner.myStat.AttackDamage;
+        Staibility = owner.myStat.Stability;
+        BulletSpeed = weaponData.BulletSpeed;
+        ReloadTime = weaponData.ReloadTime;
+        MaxMagazine = weaponData.MaxMagazine;
     }
 }
 

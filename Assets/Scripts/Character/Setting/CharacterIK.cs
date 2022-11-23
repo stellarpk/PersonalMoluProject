@@ -16,8 +16,7 @@ public class CharacterIK : MonoBehaviour
             myAnim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandMount.position);
             myAnim.SetIKRotationWeight(AvatarIKGoal.LeftHand, weight);
             myAnim.SetIKRotation(AvatarIKGoal.LeftHand, leftHandMount.rotation);
-            //myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 1);
-            
         }
+
     }
 }

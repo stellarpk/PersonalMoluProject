@@ -19,12 +19,18 @@ public class Character : CharacterProperty, IBattle
     [Header("BuffList")]
     public List<Buff> myBuffList = new List<Buff>();
 
+    public PersonalWeapon myWeapon;
+
     public Scan scanner = null;
+
+    public Transform HitPos;
 
     NavMeshPath myPath = null;
     
     Vector3 Destination = Vector3.zero;
     public Transform targetPos;
+
+    public CharacterIK CIK;
     
     protected UnityAction fire = null;
 
@@ -37,7 +43,7 @@ public class Character : CharacterProperty, IBattle
     //public Transform myHitPos;
     public enum STATE
     {
-        Create, Wait, Move, Battle, Skill, Death, Clear
+        Create, Wait, Move, Battle, Skill, Reload, Death, Clear
     }
 
     public void InitializeSkill()
@@ -115,6 +121,14 @@ public class Character : CharacterProperty, IBattle
                 if (Rot != null) StopCoroutine(Rot);
                 if (Battle != null) StopCoroutine(Battle);
                 myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+                if(CIK!=null) CIK.weight = 0;
+                break;
+            case STATE.Reload:
+                if (Moving != null) StopCoroutine(Moving);
+                if (Move != null) StopCoroutine(Move);
+                if (Rot != null) StopCoroutine(Rot);
+                if (Battle != null) StopCoroutine(Battle);
+                if (CIK != null) CIK.weight = 0;
                 break;
             case STATE.Death:
                 StopAllCoroutines();
@@ -175,7 +189,7 @@ public class Character : CharacterProperty, IBattle
     #region STATE.Normal
     void OnMove(Vector3 target)
     {
-        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 1);
         Destination = target;
         myPath = new NavMeshPath();
         SetPath();
@@ -277,22 +291,44 @@ public class Character : CharacterProperty, IBattle
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(rotDeg), Time.deltaTime * 5.0f);
             //transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(dir), Time.deltaTime * 5.0f);
 
-            if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
-            else myAnim.SetFloat("AttackSpeed", 1);
-            delay += Time.deltaTime;
-            if (delay >= AttackDelay)
+            if (myState == STATE.Battle)
             {
-
-                fire?.Invoke();
-                delay = 0.0f;
+                if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
+                else myAnim.SetFloat("AttackSpeed", 1);
+                delay += Time.deltaTime;
+                if (delay >= AttackDelay)
+                {
+                    fire?.Invoke();
+                    myWeapon.curMagazine--;
+                    delay = 0.0f;
+                }
             }
             yield return null;
         }
     }
+    public void Reload()
+    {
+        ChangeState(STATE.Reload);
+        myAnim.SetTrigger("Reload");
+        Debug.Log("Reload");
+        myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
+    }
+
+    public void EndReload()
+    {
+        ChangeState(lastState);
+        if (CIK != null) CIK.weight = 1;
+    }
 
     public virtual void Shooting()
     {
-        myAnim.SetTrigger("Shoot");
+        
     }
     #endregion
+
+    public void EndSkillAnim()
+    {
+        ChangeState(lastState);
+        if (CIK != null) CIK.weight = 1;
+    }
 }

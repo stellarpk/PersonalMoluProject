@@ -17,3 +17,4 @@ MonoBehaviour:
   attackRange: 60
   attackSpeed: 1
   attackDamage: 100
+  stability: 50

@@ -9,6 +9,7 @@ public class AnimEvent : MonoBehaviour
     public UnityEvent EXSkillAnim;
     public UnityEvent NormalSkillAnim;
     public UnityEvent SubSkillAnim;
+    public UnityEvent Reload;
 
     
     public void EndNormalAnim()
@@ -24,5 +25,10 @@ public class AnimEvent : MonoBehaviour
     public void OnShoot()
     {
         Shoot?.Invoke();
+    }
+
+    public void EndReload()
+    {
+        Reload?.Invoke();
     }
 }
