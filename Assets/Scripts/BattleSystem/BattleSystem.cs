@@ -50,6 +50,11 @@ public struct Weapon
     }
 }
 
+public enum BuffType
+{
+    AttackDamage, AttackSpeed, HP, MoveSpeed
+}
+
 [Serializable]
 public struct Buff
 {
@@ -71,6 +76,9 @@ public enum SType { Buff, Active }
 
 public interface ISkill
 {
+    // 노말 - 액티브형
+    // 패시브 - 단순 스탯 증가
+    // 서브 - 조건부 스탯 변화/추가데미지,도트데미지,아군스탯증가
     void EX_Skill();
     void Normal_Skill();
     void Passive_Skill();
@@ -82,12 +90,12 @@ public class BattleSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

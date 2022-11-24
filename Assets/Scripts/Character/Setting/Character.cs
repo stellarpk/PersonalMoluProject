@@ -39,6 +39,8 @@ public class Character : CharacterProperty, IBattle
     protected Coroutine Moving;
     protected Coroutine Battle;
 
+    protected Coroutine coSubBuff;
+
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
@@ -120,8 +122,7 @@ public class Character : CharacterProperty, IBattle
                 if (Move != null) StopCoroutine(Move);
                 if (Rot != null) StopCoroutine(Rot);
                 if (Battle != null) StopCoroutine(Battle);
-                myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
-                if(CIK!=null) CIK.weight = 0;
+                
                 break;
             case STATE.Reload:
                 if (Moving != null) StopCoroutine(Moving);
@@ -177,6 +178,7 @@ public class Character : CharacterProperty, IBattle
         if (Move != null) StopCoroutine(Move);
         if (Rot != null) StopCoroutine(Rot);
         if (Battle != null) StopCoroutine(Battle);
+        myAnim.SetBool("Move", false);
     }
 
     protected IEnumerator ToMoveState()
@@ -293,13 +295,10 @@ public class Character : CharacterProperty, IBattle
 
             if (myState == STATE.Battle)
             {
-                if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
-                else myAnim.SetFloat("AttackSpeed", 1);
                 delay += Time.deltaTime;
                 if (delay >= AttackDelay)
                 {
                     fire?.Invoke();
-                    myWeapon.curMagazine--;
                     delay = 0.0f;
                 }
             }
@@ -310,11 +309,10 @@ public class Character : CharacterProperty, IBattle
     {
         ChangeState(STATE.Reload);
         myAnim.SetTrigger("Reload");
-        Debug.Log("Reload");
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
     }
 
-    public void EndReload()
+    public virtual void EndReload()
     {
         ChangeState(lastState);
         if (CIK != null) CIK.weight = 1;
@@ -322,11 +320,15 @@ public class Character : CharacterProperty, IBattle
 
     public virtual void Shooting()
     {
-        
+        if (myWeapon.curMagazine > 0)
+        {
+            myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
+        }
+        else Reload();
     }
     #endregion
 
-    public void EndSkillAnim()
+    public virtual void EndNormalSkillAnim()
     {
         ChangeState(lastState);
         if (CIK != null) CIK.weight = 1;

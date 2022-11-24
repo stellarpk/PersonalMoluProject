@@ -139,15 +139,15 @@ public class TestCharacter : Character, ISkill
         {
             if (myWeapon.curMagazine > 0)
             {
+                myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
                 attackCount++;
             }
-            myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
+            else Reload();
         }
         else
         {
             attackCount = 0;
             Sub_Skill();
         }
-        Debug.Log($"AttackCount:{attackCount}");
     }
 }

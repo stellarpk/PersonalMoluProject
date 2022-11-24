@@ -4,23 +4,44 @@ using UnityEngine;
 
 public class Serika : Character, ISkill
 {
+    bool NormalReady = false;
     // 일반 공격 3점사
-    MyAction Normal;
     private void Start()
     {
         myStat.Initialize();
         InitializeSkill();
         Passive_Skill();
+        myWeapon.weapon.Initialize(this);
+        myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
         scanner.Range.radius = myStat.AttackRange / 10.0f;
+        ChangeState(STATE.Wait);
+        StartCoroutine(ToMoveState());
+
+        Normal_Skill();
     }
 
     private void Update()
     {
         StateProcess();
+    }
+
+    public override void EndReload()
+    {
+        base.EndReload();
+        if (NormalReady)
+        {
+            Invoke("Normal", 0.5f);
+        }
+    }
+
+    public override void EndNormalSkillAnim()
+    {
+        base.EndNormalSkillAnim();
+        NormalReady = false;
     }
 
     // EX - 스킬 사용시 즉시 재장전, 공격력 N% 증가 (N초간)
@@ -43,24 +64,57 @@ public class Serika : Character, ISkill
             delay += Time.deltaTime;
             if (delay >= s_Normal.coolTime)
             {
-                ChangeState(STATE.Skill);
-                myAnim.SetTrigger("Skill_Normal");
-                Normal?.Invoke();
+                NormalReady = true;
+                if (myState != STATE.Reload)
+                {
+                    Normal();
+                }
                 delay = 0.0f;
             }
             yield return null;
         }
     }
+    void Normal()
+    {
+        ChangeState(STATE.Skill);
+        myAnim.SetTrigger("Skill_Normal");
+
+        ActiveNormalSkill();
+    }
 
     public void ActiveNormalSkill()
     {
+        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 1);
+        if (CIK != null) CIK.weight = 1;
+        if (scanner.myTarget != null)
+        {
+            StartCoroutine(FireNormalSkill());
+        }
+    }
 
+    public IEnumerator FireNormalSkill()
+    {
+        float skillDamage = myStat.AttackDamage * s_Normal.Percentage;
+        int divideDamage = 5;
+        float projectileDamage = skillDamage / divideDamage;
+        float stability = myWeapon.weapon.Staibility * 0.5f;
+        Transform target = scanner.myTarget.transform.GetComponent<Character>().HitPos;
+        for(int i=0; i < divideDamage; i++)
+        {
+            float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
+            GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
+            bullet.GetComponent<Bullet>().OnFire(target, damage, 5f);
+            if (i < divideDamage - 1)
+            {
+                yield return new WaitForSeconds(0.1f);
+            }
+        } 
+        yield break;
     }
 
     // Passive - 공격력 N% 증가
     public void Passive_Skill()
     {
-        myBuffList.Add(s_Passive.buff);
         myStat.AttackDamage *= s_Passive.Percentage;
         s_Passive.buff.isBuffOn = true;
     }
@@ -72,29 +126,27 @@ public class Serika : Character, ISkill
         if (s_Sub.buff.isBuffOn)
         {
             ResetSubSkillBuff();
-            StopCoroutine(IncreaseAttackSPD());
+            if (coSubBuff != null)
+            {
+                StopCoroutine(coSubBuff);
+                coSubBuff = null;
+            }
         }
-        StartCoroutine(IncreaseAttackSPD());
+        coSubBuff = StartCoroutine(IncreaseAttackSPD());
     }
 
     public IEnumerator IncreaseAttackSPD()
     {
-        myBuffList.Add(s_Sub.buff);
         myStat.AttackSpeed *= s_Sub.Percentage;
         s_Sub.buff.isBuffOn = true;
         yield return new WaitForSeconds(s_Sub.buff.buffTime);
+        s_Sub.buff.isBuffOn = false;
         ResetSubSkillBuff();
     }
 
     void ResetSubSkillBuff()
     {
-        s_Sub.buff.isBuffOn = false;
-        myBuffList.Remove(s_Sub.buff);
         myStat.AttackSpeed /= s_Sub.Percentage;
     }
 
-    public override void Shooting()
-    {
-        myWeapon.Fire(scanner.myTarget.transform);
-    }
 }

@@ -9,10 +9,7 @@ public class PersonalWeapon : MonoBehaviour
     public Weapon weapon;
     public int curMagazine;
     public Transform muzzle;
-    public Character owner;
     public GameObject Bullet;
-    public bool isReload;
-    public UnityEvent reload;
 
     private void OnEnable()
     {
@@ -21,8 +18,7 @@ public class PersonalWeapon : MonoBehaviour
 
     public void Fire(Transform myTarget)
     {
-        if (curMagazine > 0) StartCoroutine(Shoot(myTarget));
-        else reload?.Invoke();
+        StartCoroutine(Shoot(myTarget));
     }
     public IEnumerator Shoot(Transform targetPos)
     {
@@ -39,7 +35,6 @@ public class PersonalWeapon : MonoBehaviour
             }
         }
         curMagazine--;
-        Debug.Log($"Mag: {curMagazine}");
         yield break;
     }
 }
