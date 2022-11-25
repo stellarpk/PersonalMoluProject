@@ -34,6 +34,8 @@ public class Character : CharacterProperty, IBattle
     
     protected UnityAction fire = null;
 
+    public Projector Skill_Indicator;
+
     protected Coroutine Move;
     protected Coroutine Rot;
     protected Coroutine Moving;
@@ -46,6 +48,23 @@ public class Character : CharacterProperty, IBattle
     public enum STATE
     {
         Create, Wait, Move, Battle, Skill, Reload, Death, Clear
+    }
+
+    public void InitializeRange()
+    {
+        //range : 1 = orthosize: 1.05
+        StartCoroutine(FollowIndicator());
+        
+    }
+
+    public IEnumerator FollowIndicator()
+    {
+        Skill_Indicator.orthographicSize = myStat.AttackRange / 10.0f * 1.05f;
+        while (Skill_Indicator.gameObject.activeSelf)
+        {
+            Skill_Indicator.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
+            yield return null;
+        }
     }
 
     public void InitializeSkill()

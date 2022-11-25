@@ -18,6 +18,7 @@ public class Serika : Character, ISkill
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
         scanner.Range.radius = myStat.AttackRange / 10.0f;
+        InitializeRange();
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
