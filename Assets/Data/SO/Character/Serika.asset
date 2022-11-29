@@ -18,3 +18,4 @@ MonoBehaviour:
   attackSpeed: 0.75
   attackDamage: 310
   stability: 30
+  costRecover: 700

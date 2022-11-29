@@ -5,6 +5,7 @@ using UnityEngine;
 public class Serika : Character, ISkill
 {
     bool NormalReady = false;
+    Character Target;
     // 일반 공격 3점사
     private void Start()
     {
@@ -18,7 +19,7 @@ public class Serika : Character, ISkill
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
         scanner.Range.radius = myStat.AttackRange / 10.0f;
-        InitializeRange();
+
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
@@ -45,11 +46,74 @@ public class Serika : Character, ISkill
         NormalReady = false;
     }
 
+    public override void TurnOnIndicator()
+    {
+        base.TurnOnIndicator();
+        if (coEX != null) StopCoroutine(coEX);
+        else coEX = StartCoroutine(UseEX());
+    }
+
+    public override void TurnOffIndicator()
+    {
+        base.TurnOffIndicator();
+        if (coEX != null)
+        {
+            StopCoroutine(coEX);
+            coEX = null;
+        }
+    }
+
+    public IEnumerator UseEX()
+    {
+        while (indicatorOn)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit hit;
+                Physics.Raycast(ray, out hit);
+                if (hit.collider != null)
+                {
+                    EX_Skill();
+                }
+            }
+            yield return null;
+        }
+    }
+
     // EX - 스킬 사용시 즉시 재장전, 공격력 N% 증가 (N초간)
     public void EX_Skill()
     {
-        
+        Debug.Log("useEX");
+        SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+        Reload();
+        if (s_EX.buff.isBuffOn)
+        {
+            ResetEXSkillBuff();
+            if (coEXBuff != null)
+            {
+                StopCoroutine(coEXBuff);
+                coEXBuff = null;
+            }
+        }
+        coEXBuff = StartCoroutine(coEXSkill());
+        TurnOffIndicator();
     }
+
+
+    public IEnumerator coEXSkill()
+    {
+        myStat.AttackDamage *= s_EX.Percentage;
+        s_EX.buff.isBuffOn = true;
+        yield return new WaitForSeconds(s_EX.buff.buffTime);
+        s_EX.buff.isBuffOn = false;
+        ResetEXSkillBuff();
+    }
+    void ResetEXSkillBuff()
+    {
+        myStat.AttackDamage /= s_EX.Percentage;
+    }
+
 
     // Normal - N초마다 적 1인에게 공격력 N% 공격
     public void Normal_Skill()
@@ -79,7 +143,7 @@ public class Serika : Character, ISkill
     {
         ChangeState(STATE.Skill);
         myAnim.SetTrigger("Skill_Normal");
-
+        if (CIK != null) CIK.weight = 0;
         ActiveNormalSkill();
     }
 
@@ -100,7 +164,7 @@ public class Serika : Character, ISkill
         float projectileDamage = skillDamage / divideDamage;
         float stability = myWeapon.weapon.Staibility * 0.5f;
         Transform target = scanner.myTarget.transform.GetComponent<Character>().HitPos;
-        for(int i=0; i < divideDamage; i++)
+        for (int i = 0; i < divideDamage; i++)
         {
             float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
@@ -109,7 +173,7 @@ public class Serika : Character, ISkill
             {
                 yield return new WaitForSeconds(0.1f);
             }
-        } 
+        }
         yield break;
     }
 

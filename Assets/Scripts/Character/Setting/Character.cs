@@ -12,6 +12,7 @@ public class Character : CharacterProperty, IBattle
     public float AttackDelay;
 
     [Header("Character Skill")]
+    public Skill s_EX;
     public Skill s_Normal;
     public Skill s_Passive;
     public Skill s_Sub;
@@ -41,7 +42,13 @@ public class Character : CharacterProperty, IBattle
     protected Coroutine Moving;
     protected Coroutine Battle;
 
+    Coroutine indicator;
+    protected Coroutine coEX;
+
+    public Coroutine coEXBuff;
     protected Coroutine coSubBuff;
+
+    protected bool indicatorOn;
 
     //public Transform HitPos;
     //public Transform myHitPos;
@@ -50,15 +57,31 @@ public class Character : CharacterProperty, IBattle
         Create, Wait, Move, Battle, Skill, Reload, Death, Clear
     }
 
-    public void InitializeRange()
+    public virtual void TurnOnIndicator()
     {
-        //range : 1 = orthosize: 1.05
-        StartCoroutine(FollowIndicator());
-        
+        if (SkillSystem.Inst.curCost >= s_EX.sData.SkillCost)
+        {
+            //range : 1 = orthosize: 1.05
+            if (indicator != null) StopCoroutine(indicator);
+            indicator = StartCoroutine(FollowIndicator());
+            indicatorOn = true;
+        }
+        else
+        {
+            Debug.Log("스킬 사용에 필요한 코스트가 부족합니다.");
+        }
     }
 
-    public IEnumerator FollowIndicator()
+    public virtual void TurnOffIndicator()
     {
+        if (indicator != null) StopCoroutine(indicator);
+        Skill_Indicator.gameObject.SetActive(false);
+        indicatorOn = false;
+    }
+
+    public virtual IEnumerator FollowIndicator()
+    {
+        Skill_Indicator.gameObject.SetActive(true);
         Skill_Indicator.orthographicSize = myStat.AttackRange / 10.0f * 1.05f;
         while (Skill_Indicator.gameObject.activeSelf)
         {
@@ -69,6 +92,7 @@ public class Character : CharacterProperty, IBattle
 
     public void InitializeSkill()
     {
+        s_EX.Initialize(s_EX.sData);
         s_Normal.Initialize(s_Normal.sData);
         s_Passive.Initialize(s_Passive.sData);
         s_Sub.Initialize(s_Sub.sData);
@@ -77,6 +101,10 @@ public class Character : CharacterProperty, IBattle
 
     public void InitializeBuff()
     {
+        if (s_EX.buff.bData != null)
+        {
+            s_EX.buff.Initailize(s_EX.buff.bData);
+        }
         if (s_Normal.buff.bData != null)
         {
             s_Normal.buff.Initailize(s_Normal.buff.bData);

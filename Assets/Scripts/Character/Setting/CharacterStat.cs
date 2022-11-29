@@ -12,6 +12,7 @@ public class CharacterStat : MonoBehaviour
     [field: SerializeField] public float AttackSpeed { get; set; }
     [field: SerializeField] public float AttackDamage { get; set; }
     [field: SerializeField] public float Stability { get; set; }
+    [field: SerializeField] public float CostRecover { get; set; }
     private void Start()
     {
 
@@ -25,6 +26,7 @@ public class CharacterStat : MonoBehaviour
         AttackSpeed = myData.AttackSpeed;
         AttackDamage = myData.AttackDamage;
         Stability = myData.Stability;
+        CostRecover = myData.CostRecover;
     }
 
     public void SetHP()

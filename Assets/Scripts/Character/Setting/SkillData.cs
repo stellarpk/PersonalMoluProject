@@ -5,10 +5,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Skill Data", menuName = "Sciptable Object/Skill Data", order = -3)]
 public class SkillData : ScriptableObject
 {
+    [SerializeField] int skillCost;
     [SerializeField] float coolTime;
     [SerializeField] int skillLevel;
     [SerializeField] float[] percentage;
 
+    public int SkillCost { get { return skillCost; } set { skillCost = value; } }
     public float CoolTime { get { return coolTime; } set { coolTime = value; } }
     public float GetBuffPercentage(int lv)
     {
