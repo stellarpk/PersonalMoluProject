@@ -162,7 +162,7 @@ public class Serika : Character, ISkill
         float skillDamage = myStat.AttackDamage * s_Normal.Percentage;
         int divideDamage = 5;
         float projectileDamage = skillDamage / divideDamage;
-        float stability = myWeapon.weapon.Staibility * 0.5f;
+        float stability = myStat.Stability * 0.5f;
         Transform target = scanner.myTarget.transform.GetComponent<Character>().HitPos;
         for (int i = 0; i < divideDamage; i++)
         {

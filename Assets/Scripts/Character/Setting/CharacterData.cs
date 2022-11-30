@@ -12,6 +12,8 @@ public class CharacterData : ScriptableObject
     [SerializeField] float attackDamage;
     [SerializeField] float stability;
     [SerializeField] float costRecover;
+    [SerializeField] float critPer;
+    [SerializeField] float critDamage;
     public float MaxHP { get { return maxHP; } set { maxHP = value; } }
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public float AttackRange { get { return attackRange; } set { attackRange = value; } }
@@ -19,6 +21,8 @@ public class CharacterData : ScriptableObject
     public float AttackDamage { get { return attackDamage; } set { attackDamage = value; } }
     public float Stability { get { return stability; } set { stability = value; } } 
     public float CostRecover { get { return costRecover; } set { costRecover = value; } }
+    public float CritPer { get { return critPer; } set { critPer = value; } }
+    public float CritDamage { get { return critDamage; } set { critDamage = value; } }
 }
 
 

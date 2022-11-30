@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbdae64b39e09ba46bd003f32f936bab, type: 3}
   m_Name: SerikaWeapon
   m_EditorClassIdentifier: 
-  wState: 0
   bulletSpeed: 3
-  reloadTime: 1
-  maxMagazine: 10
+  maxMagazine: 5
   bulletPerAttack: 3

@@ -10,6 +10,7 @@ public class PersonalWeapon : MonoBehaviour
     public int curMagazine;
     public Transform muzzle;
     public GameObject Bullet;
+    public Character Owner;
 
     private void OnEnable()
     {
@@ -25,10 +26,18 @@ public class PersonalWeapon : MonoBehaviour
         int divideDmg = weapon.weaponData.BulletPerAttack;
         for (int i = 0; i < weapon.weaponData.BulletPerAttack; i++)
         {
-            float stabil = weapon.Staibility * 0.5f;
-            float bulletDamage = Random.Range(weapon.BulletDamage-stabil, weapon.BulletDamage + stabil)/divideDmg;
-            GameObject bullet =  Instantiate(Bullet,muzzle.position,muzzle.rotation);
-            bullet.GetComponent<Bullet>().OnFire(targetPos, bulletDamage, weapon.weaponData.BulletSpeed);
+            float stabil = Owner.myStat.Stability * 0.5f;
+            float bulletDamage = Random.Range(Owner.myStat.AttackDamage - stabil, Owner.myStat.AttackDamage + stabil) / divideDmg;
+            float rate = Owner.myStat.CritRate / (Owner.myStat.CritRate + 650.0f);
+            float finalDamage = 0;
+            if (Random.Range(0.0f, 100.0f) <= rate)
+            {
+                finalDamage = bulletDamage * (Owner.myStat.CritDmg * 0.01f);
+                Debug.Log("Critical");
+            }
+            else finalDamage = bulletDamage;
+            GameObject bullet = Instantiate(Bullet, muzzle.position, muzzle.rotation);
+            bullet.GetComponent<Bullet>().OnFire(targetPos, finalDamage, weapon.weaponData.BulletSpeed);
             if (i < weapon.weaponData.BulletPerAttack - 1)
             {
                 yield return new WaitForSeconds(0.1f);
