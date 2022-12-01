@@ -16,7 +16,7 @@ public class Grenade : MonoBehaviour
         while (target!=null)
         {
             float delta = Time.deltaTime * MoveSpeed;
-            float y = Mathf.Sin((Mathf.PI * (sdist - dist)) / sdist)*3.0f;
+            float y = Mathf.Sin((Mathf.PI * (sdist - dist)) / sdist)* (sdist/Mathf.PI);
             
             if (delta >= dist)
             {

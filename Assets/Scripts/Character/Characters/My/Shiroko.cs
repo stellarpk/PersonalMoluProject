@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Shiroko : Character, ISkill
@@ -13,6 +14,7 @@ public class Shiroko : Character, ISkill
     public Transform skillTarget;
     bool SubReady = true;
     bool NormalReady;
+    bool EXWorking;
     void Start()
     {
         myStat.Initialize();
@@ -81,13 +83,25 @@ public class Shiroko : Character, ISkill
                     if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
                     {
                         skillTarget = hit.collider.gameObject.transform;
-                        SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
-                        ChangeState(STATE.Skill);
-                        myAnim.SetTrigger("Skill_EX");
-                        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
-                        if (CIK != null) CIK.weight = 0;
-                        //EX_Skill(skillTarget.GetComponent<Character>().HitPos);
+                        float checkDist = (skillTarget.GetComponent<Character>().HitPos.position - HitPos.position).magnitude;
+                        if ((myStat.AttackRange*0.1f) + 0.3f >= checkDist)
+                        {
+                            SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+                            EXWorking = true;
+                            ChangeState(STATE.Skill);
+                            myAnim.SetTrigger("Skill_EX");
+                            myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+                            if (CIK != null) CIK.weight = 0;
+                        }
+                        else
+                        {
+                            Debug.Log("대상이 사거리보다 먼 곳에 있습니다.");
+                        }
                         TurnOffIndicator();
+                    }
+                    else
+                    {
+                        Debug.Log("적합한 대상이 아닙니다. 다시 지정해주세요");
                     }
                 }
             }
@@ -125,6 +139,7 @@ public class Shiroko : Character, ISkill
     public override void EndEXSkillAnim()
     {
         base.EndEXSkillAnim();
+        EXWorking = false;
     }
 
     // 25초마다 원형범위 내 적에게 공격력 N% 데미지
@@ -142,7 +157,7 @@ public class Shiroko : Character, ISkill
             if (delay >= s_Normal.coolTime)
             {
                 NormalReady = true;
-                if (myState != STATE.Reload)
+                if (myState != STATE.Reload && !EXWorking)
                 {
                     Normal();
                 }
@@ -158,7 +173,6 @@ public class Shiroko : Character, ISkill
         myAnim.SetTrigger("Skill_Normal");
         myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
         if (CIK != null) CIK.weight = 0;
-        Debug.Log("Normal");
         //ActiveNormalSkill();
     }
 
