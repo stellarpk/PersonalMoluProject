@@ -279,4 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ea8bfc3707c7254589a678d73a63151, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Owner: {fileID: 0}
+  myEnemy:
+    serializedVersion: 2
+    m_Bits: 128

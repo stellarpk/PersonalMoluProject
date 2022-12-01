@@ -7,6 +7,7 @@ public class AnimEvent : MonoBehaviour
 {
     public UnityEvent Shoot;
     public UnityEvent EXSkillAnim;
+    public UnityEvent ActiveEXSkill;
     public UnityEvent NormalSkillAnim;
     public UnityEvent ActiveNormalSkill;
     public UnityEvent Instantiating;
@@ -15,6 +16,11 @@ public class AnimEvent : MonoBehaviour
     public void EndEXSkillAnim()
     {
         EXSkillAnim?.Invoke();
+    }
+
+    public void ActionEXSkill()
+    {
+        ActiveEXSkill?.Invoke();    
     }
     
     public void ActionNormalSkill()

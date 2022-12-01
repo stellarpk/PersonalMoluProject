@@ -5,34 +5,38 @@ using UnityEngine;
 
 public class Grenade : MonoBehaviour
 {
-    public IEnumerator Throwing(Transform target, float MoveSpeed)
+    public LayerMask myEnemy;
+    public IEnumerator Throwing(Transform target, float MoveSpeed, float Damage)
     {
-        float movedis = 0;
         Vector3 sdir = target.position - transform.position;
-        float sdist = sdir.magnitude;
+        float sdist, dist = sdir.magnitude;
+        sdist = dist;
+        sdir.Normalize();
+        Vector3 pos = transform.position;
         while (target!=null)
         {
-            Vector3 dir = target.position - transform.position;
-            float dist = dir.magnitude;
             float delta = Time.deltaTime * MoveSpeed;
-            float y = Mathf.Sin((Mathf.PI * movedis) / sdist);
-            Debug.Log(y);
-            dir = new Vector3(dir.x, dir.y + y, dir.z);
-            dir.Normalize();
+            float y = Mathf.Sin((Mathf.PI * (sdist - dist)) / sdist)*3.0f;
+            
             if (delta >= dist)
             {
                 delta = dist;
                 break;
             }
-            transform.Translate(dir * delta, Space.World);
-            movedis += (dir * delta).magnitude;
+            dist -= delta;
+            pos += sdir * delta;
+            transform.position = pos + new Vector3(0,y,0);
             yield return null;
         }
         if (target != null)
         {
             transform.position = target.position;
-            Collider[] col = Physics.OverlapSphere(transform.position, 2.0f);
-
+            Collider[] col = Physics.OverlapSphere(transform.position, 2.0f,myEnemy);
+            for (int i = 0; i < col.Length; i++)
+            {
+                Debug.Log(col[i].gameObject.name);
+                col[i].gameObject.GetComponent<IBattle>().OnDamage(Damage);
+            }
         }
         Destroy(gameObject);
     }

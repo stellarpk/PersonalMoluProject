@@ -375,6 +375,12 @@ public class Character : CharacterProperty, IBattle
     }
     #endregion
 
+    public virtual void EndEXSkillAnim()
+    {
+        ChangeState(lastState);
+        if (CIK != null) CIK.weight = 1;
+    }
+
     public virtual void EndNormalSkillAnim()
     {
         ChangeState(lastState);
