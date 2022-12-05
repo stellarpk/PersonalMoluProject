@@ -23,6 +23,7 @@ public class Bullet : MonoBehaviour
                 break;
             }
             transform.Translate(dir * delta, Space.World);
+            transform.LookAt(target);
             yield return null;
         }
         if (target != null)

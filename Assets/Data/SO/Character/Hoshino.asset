@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1408ec685d1e52146b5bc569af86cac9, type: 3}
-  m_Name: Shiroko
+  m_Name: Hoshino
   m_EditorClassIdentifier: 
-  maxHP: 2492
+  maxHP: 2554
   moveSpeed: 3
-  attackRange: 65
-  skillRange: 120
+  attackRange: 45
+  skillRange: 35
   attackSpeed: 0.75
-  attackDamage: 340
+  attackDamage: 243
   stability: 30
   costRecover: 700
-  critPer: 202
+  critPer: 271
   critDamage: 200
-  defencePower: 0
-  healing: 0
+  defencePower: 123
+  healing: 1789

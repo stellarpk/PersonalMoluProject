@@ -180,7 +180,6 @@ public class Shiroko : Character, ISkill
     {
         if (scanner.myTarget != null)
         {
-            Debug.Log("Throw Grenade");
             if (Throw != null)
             {
                 Throw.transform.SetParent(null);

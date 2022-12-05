@@ -9,18 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1408ec685d1e52146b5bc569af86cac9, type: 3}
-  m_Name: Serika
+  m_Script: {fileID: 11500000, guid: 4afddebbc1a45c141b0a340116eba1b0, type: 3}
+  m_Name: EX
   m_EditorClassIdentifier: 
-  maxHP: 2301
-  moveSpeed: 3
-  attackRange: 60
-  skillRange: 5
-  attackSpeed: 0.75
-  attackDamage: 310
-  stability: 30
-  costRecover: 700
-  critPer: 0
-  critDamage: 0
-  defencePower: 0
-  healing: 0
+  skillCost: 6
+  coolTime: 0
+  skillLevel: 1
+  percentage:
+  - 1.265
+  - 1.285
+  - 1.325
+  - 1.345
+  - 1.385
+  percentage_2: []

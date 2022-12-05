@@ -49,7 +49,6 @@ public class Character : CharacterProperty, IBattle
     protected Coroutine coSubBuff;
 
     protected bool indicatorOn;
-
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
@@ -82,7 +81,7 @@ public class Character : CharacterProperty, IBattle
     public virtual IEnumerator FollowIndicator()
     {
         Skill_Indicator.gameObject.SetActive(true);
-        Skill_Indicator.orthographicSize = myStat.AttackRange / 10.0f * 1.05f;
+        Skill_Indicator.orthographicSize = myStat.SkillRange / 10.0f * 1.05f;
         while (Skill_Indicator.gameObject.activeSelf)
         {
             Skill_Indicator.transform.position = new Vector3(transform.position.x, 5, transform.position.z);
@@ -135,10 +134,11 @@ public class Character : CharacterProperty, IBattle
     }
 
 
-
+    // 방어력 계산 - 데미지 / (1+(방어력+1500))
     public void OnDamage(float damage)
     {
-        myStat.UpdateHP(-damage);
+        float finalDamage = damage / (1 + (myStat.DefencePower + 1500));
+        myStat.UpdateHP(-finalDamage);
         if (Mathf.Approximately(myStat.CurHP, 0.0f))
         {
             Destroy(gameObject);

@@ -19,6 +19,7 @@ public struct Skill
     public SkillData sData;
     public float coolTime;
     public float Percentage;
+    public float Percentage_2;
     public int SkillLevel;
     public Buff buff;
 
@@ -26,7 +27,8 @@ public struct Skill
     {
         coolTime = SDB.CoolTime;
         SkillLevel = SDB.SkillLevel;
-        Percentage = SDB.GetBuffPercentage(SDB.SkillLevel);
+        Percentage = SDB.GetPercentage(SDB.SkillLevel);
+        Percentage_2 = SDB.GetPercentage_2(SDB.SkillLevel);
     }
 }
 

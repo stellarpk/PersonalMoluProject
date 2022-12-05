@@ -77,7 +77,7 @@ public class DroneMissile : MonoBehaviour
             if (other.gameObject.GetComponent<IBattle>() != null)
             {
                 other.gameObject.GetComponent<IBattle>().OnDamage(damage);
-                Destroy(this.gameObject, 0.35f);
+                Destroy(this.gameObject, 0.1f);
             }
             
         }
