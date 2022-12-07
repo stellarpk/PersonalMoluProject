@@ -41,14 +41,14 @@ public class Character : CharacterProperty, IBattle
     protected Coroutine Rot;
     protected Coroutine Moving;
     protected Coroutine Battle;
-
+    
     Coroutine indicator;
     protected Coroutine coEX;
-
+    protected Coroutine coNormal;
     public Coroutine coEXBuff;
     protected Coroutine coSubBuff;
 
-    protected bool indicatorOn;
+    public bool indicatorOn;
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
@@ -58,6 +58,7 @@ public class Character : CharacterProperty, IBattle
 
     public virtual void TurnOnIndicator()
     {
+        //Time.timeScale = 0.5f;
         if (SkillSystem.Inst.curCost >= s_EX.sData.SkillCost)
         {
             //range : 1 = orthosize: 1.05
@@ -73,6 +74,7 @@ public class Character : CharacterProperty, IBattle
 
     public virtual void TurnOffIndicator()
     {
+        //Time.timeScale = 1f;
         if (indicator != null) StopCoroutine(indicator);
         Skill_Indicator.gameObject.SetActive(false);
         indicatorOn = false;

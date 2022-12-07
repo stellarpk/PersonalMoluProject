@@ -132,7 +132,8 @@ public class Shiroko : Character, ISkill
         float finalDamage = 0;
         if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = damage * (myStat.CritDmg * 0.01f);
         else finalDamage = damage;
-        StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage));
+        if(coEX != null) StopCoroutine(coEX);
+        coEX = StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage));
         
     }
 
@@ -145,7 +146,8 @@ public class Shiroko : Character, ISkill
     // 25초마다 원형범위 내 적에게 공격력 N% 데미지
     public void Normal_Skill()
     {
-        StartCoroutine(CoNormalSkill());
+        if (coNormal != null) StopCoroutine(coNormal);
+        coNormal = StartCoroutine(CoNormalSkill());
     }
 
     IEnumerator CoNormalSkill()
