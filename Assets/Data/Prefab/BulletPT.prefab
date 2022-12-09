@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8738063708871094741}
-  - component: {fileID: 7062408823627794397}
   - component: {fileID: 225198275025303574}
   - component: {fileID: 1442223760235529143}
   - component: {fileID: 2404692283510869438}
+  - component: {fileID: -591317818979478063}
   m_Layer: 0
   m_Name: BulletPT
   m_TagString: Untagged
@@ -35,18 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7062408823627794397
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3346700854374382463}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dcd4146a97166a147932f23d4e38e370, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!33 &225198275025303574
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -110,3 +98,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-591317818979478063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3346700854374382463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dcd4146a97166a147932f23d4e38e370, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

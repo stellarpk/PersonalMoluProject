@@ -49,6 +49,8 @@ public class Character : CharacterProperty, IBattle
     protected Coroutine coSubBuff;
 
     public bool indicatorOn;
+    public bool Casting;
+    public bool UsingEX;
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
@@ -61,10 +63,10 @@ public class Character : CharacterProperty, IBattle
         //Time.timeScale = 0.5f;
         if (SkillSystem.Inst.curCost >= s_EX.sData.SkillCost)
         {
-            //range : 1 = orthosize: 1.05
             if (indicator != null) StopCoroutine(indicator);
             indicator = StartCoroutine(FollowIndicator());
             indicatorOn = true;
+            Casting = true;
         }
         else
         {
@@ -78,6 +80,7 @@ public class Character : CharacterProperty, IBattle
         if (indicator != null) StopCoroutine(indicator);
         Skill_Indicator.gameObject.SetActive(false);
         indicatorOn = false;
+        Casting = false;
     }
 
     public virtual IEnumerator FollowIndicator()
@@ -139,8 +142,8 @@ public class Character : CharacterProperty, IBattle
     // 방어력 계산 - 데미지 / (1+(방어력+1500))
     public void OnDamage(float damage)
     {
-        float finalDamage = damage / (1 + (myStat.DefencePower + 1500));
-        myStat.UpdateHP(-finalDamage);
+        //float finalDamage = damage / (1 + (myStat.DefencePower + 1500));
+        myStat.UpdateHP(-damage);
         if (Mathf.Approximately(myStat.CurHP, 0.0f))
         {
             Destroy(gameObject);
@@ -387,5 +390,10 @@ public class Character : CharacterProperty, IBattle
     {
         ChangeState(lastState);
         if (CIK != null) CIK.weight = 1;
+    }
+
+    public virtual void Use_EX_Skill()
+    {
+
     }
 }

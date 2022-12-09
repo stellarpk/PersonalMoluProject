@@ -7,6 +7,8 @@ public class Haruna : Character, ISkill
     bool NormalReady;
     bool ActionEX;
     public HarunaEX drawEX;
+    public GameObject EX_Bullet;
+    Coroutine EX_Range;
     private void Start()
     {
         myStat.Initialize();
@@ -27,12 +29,20 @@ public class Haruna : Character, ISkill
         Sub_Skill();
     }
 
+    private void Update()
+    {
+        StateProcess();
+    }
+
 
     public override void TurnOnIndicator()
     {
         base.TurnOnIndicator();
+        drawEX.myRenderer.enabled = true;
+        drawEX.gameObject.transform.rotation = Quaternion.Euler(Vector3.zero);
         if (coEX != null) StopCoroutine(coEX);
-        else coEX = StartCoroutine(UseEX());
+        coEX = StartCoroutine(UseEX());
+        
     }
 
     public override void TurnOffIndicator()
@@ -42,7 +52,15 @@ public class Haruna : Character, ISkill
         {
             StopCoroutine(coEX);
             coEX = null;
+            drawEX.myRenderer.enabled = false;
         }
+        if(EX_Range != null)
+        {
+            StopCoroutine(EX_Range);
+            EX_Range = null;
+        }
+        if (UsingEX) UsingEX = false;
+        Debug.Log("Skill End");
     }
 
     public override void EndReload()
@@ -63,17 +81,46 @@ public class Haruna : Character, ISkill
     {
         while (indicatorOn)
         {
-            StartCoroutine(drawEX.DrawRange());
-            //StartCoroutine(drawEX.RotateIndicator());
-            //    EX_Skill();
-            //    if (CIK != null) CIK.weight = 0;
+            if(EX_Range != null)
+            {
+                StopCoroutine(EX_Range);
+                EX_Range = null;
+            }
+            EX_Range = StartCoroutine(drawEX.DrawRange());
             yield return null;
         }
     }
     // 직선 범위 내 적 공격력 N% 데미지
     public void EX_Skill()
     {
-        
+        SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+        ChangeState(STATE.Skill);
+        myAnim.SetTrigger("Skill_EX");
+        myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+        if (CIK != null) CIK.weight = 0;
+
+        transform.LookAt(drawEX.EndRange_T);
+    }
+
+    public override void Use_EX_Skill()
+    {
+        EX_Skill();
+    }
+
+    public void ShootEXSkill()
+    {
+        Debug.Log("Shoot");
+        float stabil = myStat.Stability * 0.5f;
+        float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
+        float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
+        float finalDamage = 0;
+        if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
+        else finalDamage = skillDamage;
+
+        GameObject bullet = Instantiate(EX_Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
+        bullet.GetComponent<Penetrate_Bullet>().Damage = finalDamage;
+        bullet.GetComponent<Penetrate_Bullet>().OnFire(drawEX.EndRange_T, myWeapon.weapon.weaponData.BulletSpeed * 3.0f);
+        EndEXSkillAnim();
     }
 
     public override void EndEXSkillAnim()

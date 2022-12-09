@@ -84,7 +84,7 @@ public class Shiroko : Character, ISkill
                     {
                         skillTarget = hit.collider.gameObject.transform;
                         float checkDist = (skillTarget.GetComponent<Character>().HitPos.position - HitPos.position).magnitude;
-                        if ((myStat.AttackRange*0.1f) + 0.3f >= checkDist)
+                        if ((myStat.SkillRange*0.1f) + 0.3f >= checkDist)
                         {
                             SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
                             EXWorking = true;
@@ -101,6 +101,7 @@ public class Shiroko : Character, ISkill
                     }
                     else
                     {
+                        Debug.Log(hit.collider.gameObject.name);
                         Debug.Log("적합한 대상이 아닙니다. 다시 지정해주세요");
                     }
                 }

@@ -9,15 +9,13 @@ public class HarunaEX : MonoBehaviour
 {
     public Character Owner;
     public MeshFilter myFilter;
+    public MeshRenderer myRenderer;
+    public Transform EndRange_T;
     Vector3[] default_vb_Pos = new Vector3[5];
     Vector3[] cur_vb_Pos = new Vector3[5];
     public Transform Target;
+    public LayerMask Ground;
     float[] dir = new float[4];
-    private void Start()
-    {
-    }
-
-
     public IEnumerator DrawRange()
     {
         while (true)
@@ -72,7 +70,6 @@ public class HarunaEX : MonoBehaviour
             {
                 cur_vb_Pos[i] = transform.rotation * (default_vb_Pos[i] - transform.position) + transform.position;
             }
-
             Vector3[] targetUV = new Vector3[4];
             Vector3 min = Target.GetComponent<BoxCollider>().bounds.min;
             Vector3 max = Target.GetComponent<BoxCollider>().bounds.max;
@@ -111,7 +108,7 @@ public class HarunaEX : MonoBehaviour
         }
     }
 
-    bool CheckScan(Vector3 T ,Vector3 checkL, Vector3[] L)
+    bool CheckScan(Vector3 T, Vector3 checkL, Vector3[] L)
     {
         float dis = Mathf.Abs(Vector3.Dot(T, checkL));
         float ra = Mathf.Abs(Vector3.Dot(checkL, L[0] * 0.5f)) + Mathf.Abs(Vector3.Dot(checkL, L[1] * 0.5f));
@@ -120,22 +117,45 @@ public class HarunaEX : MonoBehaviour
         else return true;
     }
 
-    public IEnumerator RotateIndicator()
+    private void Update()
     {
-        while (true)
+        // EventSystem.current.IsPointerOverGameObject() > UI Å¬¸¯½Ã true
+        if (Owner.indicatorOn)
         {
-            if (Input.GetMouseButton(0))
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                Ray CamRay = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit hit;
-                if (Physics.Raycast(CamRay, out hit))
+                if (Input.GetMouseButton(0))
                 {
-                    Vector3 mouseDir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
-                    transform.LookAt(mouseDir);
+                    Owner.Casting = true;
+                    Ray CamRay = Camera.main.ScreenPointToRay(Input.mousePosition);
+                    RaycastHit hit;
+                    if (Physics.Raycast(CamRay, out hit, Mathf.Infinity, Ground))
+                    {
+                        if (Owner.UsingEX)
+                        {
+                            myRenderer.enabled = true;
+                            Vector3 mouseDir = new Vector3(hit.point.x, transform.position.y, hit.point.z);
+                            transform.LookAt(mouseDir);
+                        }
+                    }
+                }
+
+                if (Input.GetMouseButtonUp(0))
+                {
+                    if (Owner.UsingEX)
+                    {
+                        Owner.Use_EX_Skill();
+                        Owner.TurnOffIndicator();
+                    }
                 }
             }
-            yield return null;
+            if (Input.GetMouseButton(0))
+            {
+                if (!Owner.UsingEX)
+                {
+                    myRenderer.enabled = false;
+                }
+            }
         }
     }
-
 }

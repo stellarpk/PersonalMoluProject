@@ -1,3 +1,4 @@
+using System.Buffers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -49,6 +50,8 @@ public class Serika : Character, ISkill
     public override void TurnOnIndicator()
     {
         base.TurnOnIndicator();
+        if(Casting) Debug.Log("Casting Serika EX");
+
         if (coEX != null) StopCoroutine(coEX);
         else coEX = StartCoroutine(UseEX());
     }
@@ -61,6 +64,7 @@ public class Serika : Character, ISkill
             StopCoroutine(coEX);
             coEX = null;
         }
+        if (UsingEX) UsingEX = false;
     }
 
     public IEnumerator UseEX()
@@ -72,9 +76,13 @@ public class Serika : Character, ISkill
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Physics.Raycast(ray, out hit);
-                if (hit.collider != null)
+                if (hit.collider != null && UsingEX)
                 {
-                    EX_Skill();
+                    Use_EX_Skill();
+                }
+                else
+                {
+                    Debug.Log("Cancel Serika Skill");
                 }
             }
             yield return null;
@@ -84,7 +92,7 @@ public class Serika : Character, ISkill
     // EX - 스킬 사용시 즉시 재장전, 공격력 N% 증가 (N초간)
     public void EX_Skill()
     {
-        Debug.Log("useEX");
+        Debug.Log("Use Serika EX");
         SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
         Reload();
         if (s_EX.buff.isBuffOn)
@@ -98,6 +106,11 @@ public class Serika : Character, ISkill
         }
         coEXBuff = StartCoroutine(coEXSkill());
         TurnOffIndicator();
+    }
+
+    public override void Use_EX_Skill()
+    {
+        EX_Skill();
     }
 
 
