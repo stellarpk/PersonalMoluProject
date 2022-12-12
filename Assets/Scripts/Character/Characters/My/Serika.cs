@@ -19,8 +19,7 @@ public class Serika : Character, ISkill
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
-        scanner.Range.radius = myStat.AttackRange / 10.0f;
-
+        StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
@@ -50,7 +49,6 @@ public class Serika : Character, ISkill
     public override void TurnOnIndicator()
     {
         base.TurnOnIndicator();
-        if(Casting) Debug.Log("Casting Serika EX");
 
         if (coEX != null) StopCoroutine(coEX);
         else coEX = StartCoroutine(UseEX());
@@ -80,10 +78,6 @@ public class Serika : Character, ISkill
                 {
                     Use_EX_Skill();
                 }
-                else
-                {
-                    Debug.Log("Cancel Serika Skill");
-                }
             }
             yield return null;
         }
@@ -92,7 +86,6 @@ public class Serika : Character, ISkill
     // EX - 스킬 사용시 즉시 재장전, 공격력 N% 증가 (N초간)
     public void EX_Skill()
     {
-        Debug.Log("Use Serika EX");
         SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
         Reload();
         if (s_EX.buff.isBuffOn)

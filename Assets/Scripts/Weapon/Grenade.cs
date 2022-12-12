@@ -34,7 +34,6 @@ public class Grenade : MonoBehaviour
             Collider[] col = Physics.OverlapSphere(transform.position, 2.0f,myEnemy);
             for (int i = 0; i < col.Length; i++)
             {
-                Debug.Log(col[i].gameObject.name);
                 col[i].gameObject.GetComponent<IBattle>().OnDamage(Damage);
             }
         }

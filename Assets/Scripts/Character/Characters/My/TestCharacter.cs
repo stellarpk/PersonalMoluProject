@@ -16,7 +16,6 @@ public class TestCharacter : Character, ISkill
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
-        scanner.Range.radius = myStat.AttackRange / 10.0f;
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
         //Normal_Skill();
@@ -121,8 +120,8 @@ public class TestCharacter : Character, ISkill
             // 캐릭터 공격
             if (myState == STATE.Battle) {
                 delay += Time.deltaTime;
-                if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
-                else myAnim.SetFloat("AttackSpeed", 1);
+                //if (myStat.AttackSpeed > 1) myAnim.SetFloat("AttackSpeed", myStat.AttackSpeed);
+                //else myAnim.SetFloat("AttackSpeed", 1);
                 if (delay >= AttackDelay)
                 {
                     fire?.Invoke();

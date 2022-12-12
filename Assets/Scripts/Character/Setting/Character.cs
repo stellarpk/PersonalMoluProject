@@ -51,6 +51,7 @@ public class Character : CharacterProperty, IBattle
     public bool indicatorOn;
     public bool Casting;
     public bool UsingEX;
+    public bool isCanceling;
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE

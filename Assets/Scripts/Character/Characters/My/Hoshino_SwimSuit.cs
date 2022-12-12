@@ -19,8 +19,7 @@ public class Hoshino_SwimSuit : Character, ISkill
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
-        scanner.Range.radius = myStat.AttackRange / 10.0f;
-
+        StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
@@ -54,6 +53,7 @@ public class Hoshino_SwimSuit : Character, ISkill
             StopCoroutine(coEX);
             coEX = null;
         }
+        if (UsingEX) UsingEX = false;
     }
 
     public IEnumerator UseEX()
@@ -65,14 +65,18 @@ public class Hoshino_SwimSuit : Character, ISkill
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Physics.Raycast(ray, out hit);
-                if (hit.collider != null)
+                if (hit.collider != null && UsingEX)
                 {
-                    EX_Skill();
-                    if (CIK != null) CIK.weight = 0;
+                    Use_EX_Skill();
                 }
             }
             yield return null;
         }
+    }
+
+    public override void Use_EX_Skill()
+    {
+        EX_Skill();
     }
 
     // 원형 범위내 아군 공격력 N% 증가 (50초간)
@@ -82,6 +86,7 @@ public class Hoshino_SwimSuit : Character, ISkill
         ChangeState(STATE.Skill);
         myAnim.SetTrigger("Skill_EX");
         myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+        if (CIK != null) CIK.weight = 0;
         if (s_EX.buff.isBuffOn)
         {
             ResetEXSkillBuff();

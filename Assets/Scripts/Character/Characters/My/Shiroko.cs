@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class Shiroko : Character, ISkill
 {
@@ -12,9 +14,11 @@ public class Shiroko : Character, ISkill
     public Transform LeftHand;
     public Transform DronePos;
     public Transform skillTarget;
+    public LayerMask myEnemy;
     bool SubReady = true;
     bool NormalReady;
     bool EXWorking;
+
     void Start()
     {
         myStat.Initialize();
@@ -26,8 +30,7 @@ public class Shiroko : Character, ISkill
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
-        scanner.Range.radius = myStat.AttackRange / 10.0f;
-
+        StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
@@ -56,7 +59,7 @@ public class Shiroko : Character, ISkill
     {
         base.TurnOnIndicator();
         if (coEX != null) StopCoroutine(coEX);
-        else coEX = StartCoroutine(UseEX());
+        coEX = StartCoroutine(UseEX());
     }
 
     public override void TurnOffIndicator()
@@ -67,53 +70,82 @@ public class Shiroko : Character, ISkill
             StopCoroutine(coEX);
             coEX = null;
         }
+        if (UsingEX) UsingEX = false;
+        isCanceling = false;
     }
 
     public IEnumerator UseEX()
     {
         while (indicatorOn)
         {
-            if (Input.GetMouseButtonDown(0))
+            Use_EX_Skill();
+            yield return null;
+        }
+    }
+    public override void Use_EX_Skill()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject())
+        {
+            if (Input.GetMouseButton(0))
             {
+                Casting = true;
+                isCanceling = true;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 Physics.Raycast(ray, out hit);
-                if(hit.collider != null)
+                if (hit.collider != null)
                 {
-                    if(hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                    Collider[] col = Physics.OverlapSphere(transform.position, myStat.SkillRange * 0.1f, myEnemy);
+                    float proximate = 0.0f;
+                    int index = 0;
+                    for (int i = 0; i < col.Length; i++)
                     {
-                        skillTarget = hit.collider.gameObject.transform;
-                        float checkDist = (skillTarget.GetComponent<Character>().HitPos.position - HitPos.position).magnitude;
-                        if ((myStat.SkillRange*0.1f) + 0.3f >= checkDist)
+                        float dis = Mathf.Abs((col[i].transform.position - hit.point).magnitude);
+                        if (i == 0)
                         {
-                            SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
-                            EXWorking = true;
-                            ChangeState(STATE.Skill);
-                            myAnim.SetTrigger("Skill_EX");
-                            myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
-                            if (CIK != null) CIK.weight = 0;
+                            proximate = dis;
+                            index = i;
                         }
-                        else
+                        else if (proximate > dis)
                         {
-                            Debug.Log("대상이 사거리보다 먼 곳에 있습니다.");
+                            proximate = dis;
+                            index = i;
                         }
-                        TurnOffIndicator();
                     }
-                    else
-                    {
-                        Debug.Log(hit.collider.gameObject.name);
-                        Debug.Log("적합한 대상이 아닙니다. 다시 지정해주세요");
-                    }
+                    skillTarget = col[index].transform;
                 }
             }
-            yield return null;
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (UsingEX)
+                {
+                    SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+                    EXWorking = true;
+                    ChangeState(STATE.Skill);
+                    myAnim.SetTrigger("Skill_EX");
+                    myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
+                    if (CIK != null) CIK.weight = 0;
+                    TurnOffIndicator();
+                }
+                else
+                {
+                    isCanceling = false;
+                }
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            if (!UsingEX && isCanceling)
+            {
+                TurnOffIndicator();
+            }
         }
     }
 
     // 적 1인에게 N%데미지
     public void EX_Skill()
     {
-        if(skillTarget != null)
+        if (skillTarget != null)
         {
             EX_Skill(skillTarget.GetComponent<Character>().HitPos);
         }
@@ -133,9 +165,9 @@ public class Shiroko : Character, ISkill
         float finalDamage = 0;
         if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = damage * (myStat.CritDmg * 0.01f);
         else finalDamage = damage;
-        if(coEX != null) StopCoroutine(coEX);
+        if (coEX != null) StopCoroutine(coEX);
         coEX = StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage));
-        
+
     }
 
     public override void EndEXSkillAnim()
@@ -188,14 +220,14 @@ public class Shiroko : Character, ISkill
                 Throw.transform.SetParent(null);
                 float stabil = myStat.Stability * 0.5f;
                 float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
-                float rate = myStat.CritRate / (myStat.CritRate+650.0f);
+                float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
                 float finalDamage = 0;
                 if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
                 else finalDamage = skillDamage;
                 StartCoroutine(Throw.GetComponent<Grenade>().Throwing(scanner.myTarget.transform.GetComponent<Character>().HitPos, 3f, finalDamage));
-                
+
             }
-            
+
         }
     }
 

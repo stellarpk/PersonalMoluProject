@@ -127,6 +127,7 @@ public class HarunaEX : MonoBehaviour
                 if (Input.GetMouseButton(0))
                 {
                     Owner.Casting = true;
+                    Owner.isCanceling = true;
                     Ray CamRay = Camera.main.ScreenPointToRay(Input.mousePosition);
                     RaycastHit hit;
                     if (Physics.Raycast(CamRay, out hit, Mathf.Infinity, Ground))
@@ -147,6 +148,10 @@ public class HarunaEX : MonoBehaviour
                         Owner.Use_EX_Skill();
                         Owner.TurnOffIndicator();
                     }
+                    else
+                    {
+                        Owner.isCanceling = false;
+                    }
                 }
             }
             if (Input.GetMouseButton(0))
@@ -154,6 +159,13 @@ public class HarunaEX : MonoBehaviour
                 if (!Owner.UsingEX)
                 {
                     myRenderer.enabled = false;
+                }
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                if (!Owner.UsingEX && Owner.isCanceling)
+                {
+                    Owner.TurnOffIndicator();
                 }
             }
         }

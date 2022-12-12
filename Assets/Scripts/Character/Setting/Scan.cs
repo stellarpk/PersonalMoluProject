@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class Scan : MonoBehaviour
 {
-    public LayerMask myEnemy = default;
+    public Character Owner;
+    public LayerMask myEnemy;
     public IBattle myTarget = null;
     public List<GameObject> enemyList = new List<GameObject>();
     public event MyAction FindTarget = null;
     public event MyAction LostTarget = null;
-    public SphereCollider Range;
     public GameObject CurTarget;
     public void OnLostTarget()
     {
@@ -25,33 +25,51 @@ public class Scan : MonoBehaviour
         {
             LostTarget?.Invoke();
         }
-        
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    public IEnumerator CheckEnemyInRange()
     {
-        if((myEnemy & 1 << other.gameObject.layer) != 0)
+        float range = Owner.myStat.AttackRange * 0.1f;
+        while (Owner.IsLive)
         {
-            enemyList.Add(other.gameObject);
-            if(myTarget == null)
+            Collider[] InAttackRange = Physics.OverlapSphere(transform.position, range, myEnemy);
+            for (int i = 0; i < InAttackRange.Length; i++)
             {
-                IBattle ib = other.transform.GetComponent<IBattle>();
-                if (ib != null)
+                if (!enemyList.Contains(InAttackRange[i].gameObject))
                 {
-                    if (ib.IsLive)
+                    enemyList.Add(InAttackRange[i].gameObject);
+                    if (myTarget == null)
                     {
-                        myTarget = other.transform.GetComponent<IBattle>();
-                        CurTarget = other.gameObject;
-                        FindTarget?.Invoke();
+                        IBattle ib = InAttackRange[i].transform.GetComponent<IBattle>();
+                        if (ib != null)
+                        {
+                            if (ib.IsLive)
+                            {
+                                myTarget = InAttackRange[i].transform.GetComponent<IBattle>();
+                                CurTarget = InAttackRange[i].gameObject;
+                                FindTarget?.Invoke();
+                            }
+                        }
                     }
                 }
             }
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                float distance = (enemyList[i].transform.position - transform.position).magnitude;
+                float colDistance = (Owner.myStat.AttackRange * 0.1f + 0.2f);
+                if (distance > colDistance)
+                {
+                    if (myTarget != null && enemyList[i].transform == myTarget.transform)
+                    {
+                        OnLostTarget();
+                        continue;
+                    }
+                    enemyList.Remove(enemyList[i].gameObject);
+                }
+            }
+            yield return null;
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (myTarget != null && other.transform == myTarget.transform) OnLostTarget();
-        enemyList.Remove(other.gameObject);
-    }
 }

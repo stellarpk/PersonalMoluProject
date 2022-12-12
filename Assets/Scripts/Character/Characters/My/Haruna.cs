@@ -17,11 +17,11 @@ public class Haruna : Character, ISkill
         myWeapon.weapon.Initialize(this);
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
+
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
-        scanner.Range.radius = myStat.AttackRange / 10.0f;
-
+        StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
@@ -60,7 +60,7 @@ public class Haruna : Character, ISkill
             EX_Range = null;
         }
         if (UsingEX) UsingEX = false;
-        Debug.Log("Skill End");
+        isCanceling = false;    
     }
 
     public override void EndReload()
