@@ -34,11 +34,16 @@ public class Shiroko : Character, ISkill
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
-        Normal_Skill();
+        
     }
     void Update()
     {
         StateProcess();
+    }
+
+    public override void StartSkillCool()
+    {
+        Normal_Skill();
     }
     public override void EndReload()
     {

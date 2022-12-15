@@ -25,6 +25,11 @@ public class Haruna : Character, ISkill
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
+        
+    }
+
+    public override void StartSkillCool()
+    {
         Normal_Skill();
         Sub_Skill();
     }

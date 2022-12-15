@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1408ec685d1e52146b5bc569af86cac9, type: 3}
   m_Name: Shiroko
   m_EditorClassIdentifier: 
+  charName: Shiroko
   maxHP: 2492
   moveSpeed: 3
   attackRange: 65

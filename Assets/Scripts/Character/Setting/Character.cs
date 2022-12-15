@@ -397,4 +397,9 @@ public class Character : CharacterProperty, IBattle
     {
 
     }
+
+    public virtual void StartSkillCool()
+    {
+
+    }
 }

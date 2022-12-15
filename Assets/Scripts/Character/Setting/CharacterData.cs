@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Character Data", menuName = "Sciptable Object/Character Data", order = -1)]
 public class CharacterData : ScriptableObject
 {
+    [SerializeField] string charName;
     [SerializeField] float maxHP;
     [SerializeField] float moveSpeed;
     [SerializeField] float attackRange;
@@ -17,6 +18,7 @@ public class CharacterData : ScriptableObject
     [SerializeField] float critDamage;
     [SerializeField] float defencePower;
     [SerializeField] float healing;
+    public string CharName { get { return charName; } set { charName = value; } }
     public float MaxHP { get { return maxHP; } set { maxHP = value; } }
     public float MoveSpeed { get { return moveSpeed; } set { moveSpeed = value; } }
     public float AttackRange { get { return attackRange; } set { attackRange = value; } }

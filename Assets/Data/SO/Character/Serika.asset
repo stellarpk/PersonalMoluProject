@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1408ec685d1e52146b5bc569af86cac9, type: 3}
   m_Name: Serika
   m_EditorClassIdentifier: 
+  charName: Serika
   maxHP: 2301
   moveSpeed: 3
   attackRange: 60

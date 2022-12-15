@@ -23,6 +23,11 @@ public class Serika : Character, ISkill
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
+        
+    }
+
+    public override void StartSkillCool()
+    {
         Normal_Skill();
     }
 

@@ -23,6 +23,11 @@ public class Hoshino_SwimSuit : Character, ISkill
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
 
+        
+    }
+
+    public override void StartSkillCool()
+    {
         Normal_Skill();
     }
     public override void EndReload()

@@ -12,6 +12,12 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
     public TMP_Text cost;
     public Character character;
     bool CheckAllySkill;
+
+    public void OnEnable()
+    {
+        Setting();
+    }
+
     public void Setting()
     {
         cost.text = character.s_EX.sData.SkillCost.ToString();
