@@ -101,23 +101,31 @@ public class Shiroko : Character, ISkill
                 if (hit.collider != null)
                 {
                     Collider[] col = Physics.OverlapSphere(transform.position, myStat.SkillRange * 0.1f, myEnemy);
-                    float proximate = 0.0f;
-                    int index = 0;
-                    for (int i = 0; i < col.Length; i++)
+                    if (col.Length > 0)
                     {
-                        float dis = Mathf.Abs((col[i].transform.position - hit.point).magnitude);
-                        if (i == 0)
+                        float proximate = 0.0f;
+                        int index = 0;
+                        for (int i = 0; i < col.Length; i++)
                         {
-                            proximate = dis;
-                            index = i;
+                            float dis = Mathf.Abs((col[i].transform.position - hit.point).magnitude);
+                            if (i == 0)
+                            {
+                                proximate = dis;
+                                index = i;
+                            }
+                            else if (proximate > dis)
+                            {
+                                proximate = dis;
+                                index = i;
+                            }
                         }
-                        else if (proximate > dis)
-                        {
-                            proximate = dis;
-                            index = i;
-                        }
+                        skillTarget = col[index].transform;
                     }
-                    skillTarget = col[index].transform;
+                    else
+                    {
+                        Debug.Log("범위 내에 적이 없습니다. 다시 사용해주세요");
+                        TurnOffIndicator();
+                    }
                 }
             }
             if (Input.GetMouseButtonUp(0))
@@ -125,6 +133,7 @@ public class Shiroko : Character, ISkill
                 if (UsingEX)
                 {
                     SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+                    SkillSystem.Inst.UseSkillCard(EX_Card);
                     EXWorking = true;
                     ChangeState(STATE.Skill);
                     myAnim.SetTrigger("Skill_EX");

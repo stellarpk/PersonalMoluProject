@@ -52,6 +52,9 @@ public class Character : CharacterProperty, IBattle
     public bool Casting;
     public bool UsingEX;
     public bool isCanceling;
+
+    public GameObject EX_Card;
+
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE

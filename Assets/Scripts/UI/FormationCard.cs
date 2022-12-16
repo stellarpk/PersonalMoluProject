@@ -14,7 +14,7 @@ public class FormationCard : MonoBehaviour
 
     public void UnorganizeCharacter()
     {
-        int idx = Array.FindIndex(FormationSystem.Inst.InSetting, i => i == character.GetComponent<Character>());
+        int idx = Array.FindIndex(FormationSystem.Inst.InSetting, i => i == character);
         FormationSystem.Inst.InSetting[idx] = null;
         character = null;
         charImg.SetActive(false);

@@ -18,17 +18,17 @@ public class CharacterCard : MonoBehaviour
     public void AddToFormation()
     {
         FormationSystem.Inst.FindEmptyIndex();
-        if (!FormationSystem.Inst.InSetting.Contains(character.GetComponent<Character>()))
+        if (!FormationSystem.Inst.InSetting.Contains(character))
         {
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].charImg.SetActive(true);
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].character = character;
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].test.text = charNameTest.text;
-            FormationSystem.Inst.InSetting[FormationSystem.Inst.index] = character.GetComponent<Character>();
+            FormationSystem.Inst.InSetting[FormationSystem.Inst.index] = character;
             FormationSystem.Inst.index++;
         }
         else
         {
-            int idx = Array.FindIndex(FormationSystem.Inst.InSetting, i => i == character.GetComponent<Character>());
+            int idx = Array.FindIndex(FormationSystem.Inst.InSetting, i => i == character);
             FormationSystem.Inst.InSetting[idx] = null;
             FormationSystem.Inst.FormationCard[idx].character = null;
             FormationSystem.Inst.FormationCard[idx].charImg.SetActive(false);

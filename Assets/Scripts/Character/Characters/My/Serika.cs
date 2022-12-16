@@ -92,6 +92,7 @@ public class Serika : Character, ISkill
     public void EX_Skill()
     {
         SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+        SkillSystem.Inst.UseSkillCard(EX_Card);
         Reload();
         if (s_EX.buff.isBuffOn)
         {

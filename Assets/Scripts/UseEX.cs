@@ -15,7 +15,7 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
 
     public void OnEnable()
     {
-        Setting();
+        
     }
 
     public void Setting()
@@ -45,6 +45,7 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
         if (character.UsingEX)
         {
             character.Use_EX_Skill();
+            SkillSystem.Inst.UseSkillCard(this.gameObject);
         }
         character.TurnOffIndicator();
     }

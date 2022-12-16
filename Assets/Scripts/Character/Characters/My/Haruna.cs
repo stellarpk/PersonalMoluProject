@@ -99,6 +99,7 @@ public class Haruna : Character, ISkill
     public void EX_Skill()
     {
         SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
+        SkillSystem.Inst.UseSkillCard(EX_Card);
         ChangeState(STATE.Skill);
         myAnim.SetTrigger("Skill_EX");
         myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);

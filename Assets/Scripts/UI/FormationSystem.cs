@@ -7,8 +7,8 @@ public class FormationSystem : MonoBehaviour
 {
     public static FormationSystem Inst = null;
     public FormationCard[] FormationCard;
-    public Character[] InSetting;
-    public Character[] InMain;
+    public GameObject[] InSetting;
+    public GameObject[] InMain;
     public int index = 0;
     private void Awake()
     {
@@ -22,12 +22,12 @@ public class FormationSystem : MonoBehaviour
 
     public void DecisionFormation()
     {
-        InMain = InSetting.Clone() as Character[];
+        InMain = InSetting.Clone() as GameObject[];
     }
 
     public void CancelFormation()
     {
-        InSetting = InMain.Clone() as Character[];
+        InSetting = InMain.Clone() as GameObject[];
         for (int i = 0; i < InSetting.Length; i++)
         {
             if (InSetting[i] != null) FormationCard[i].charImg.SetActive(true);
@@ -45,5 +45,11 @@ public class FormationSystem : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void ConveyFormation()
+    {
+        DataManager.Inst.Formation = InMain.Clone() as GameObject[];
+        MoveScene.Inst.Move(1);
     }
 }
