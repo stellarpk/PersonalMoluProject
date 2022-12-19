@@ -9,6 +9,8 @@ public class FormationSystem : MonoBehaviour
     public FormationCard[] FormationCard;
     public GameObject[] InSetting;
     public GameObject[] InMain;
+    public GameObject[] FormationBtn;
+    public Transform[] ShowFormation;
     public int index = 0;
     private void Awake()
     {
@@ -23,6 +25,22 @@ public class FormationSystem : MonoBehaviour
     public void DecisionFormation()
     {
         InMain = InSetting.Clone() as GameObject[];
+        for (int i = 0; i < InMain.Length; i++)
+        {
+            if (ShowFormation[i].childCount > 0)
+            {
+                Destroy(ShowFormation[i].GetChild(0).gameObject);
+            }
+            if (InMain[i] != null)
+            {
+                GameObject form = Instantiate(FormationCard[i].character, ShowFormation[i]);
+                FormationBtn[i].SetActive(false);
+            }
+            else
+            {
+                FormationBtn[i].SetActive(true);
+            }
+        }
     }
 
     public void CancelFormation()

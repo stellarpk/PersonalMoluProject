@@ -13,7 +13,7 @@ public class HarunaEX : MonoBehaviour
     public Transform EndRange_T;
     Vector3[] default_vb_Pos = new Vector3[5];
     Vector3[] cur_vb_Pos = new Vector3[5];
-    public Transform Target;
+    //public Transform Target;
     public LayerMask Ground;
     float[] dir = new float[4];
     public IEnumerator DrawRange()
@@ -58,7 +58,7 @@ public class HarunaEX : MonoBehaviour
 
             myFilter.mesh = _mesh;
 
-            bool isColl = true;
+            
 
             for (int i = 0; i < default_vb_Pos.Length - 1; i++)
             {
@@ -71,38 +71,44 @@ public class HarunaEX : MonoBehaviour
                 cur_vb_Pos[i] = transform.rotation * (default_vb_Pos[i] - transform.position) + transform.position;
             }
             Vector3[] targetUV = new Vector3[4];
-            Vector3 min = Target.GetComponent<BoxCollider>().bounds.min;
-            Vector3 max = Target.GetComponent<BoxCollider>().bounds.max;
-
-            targetUV[0] = new Vector3(min.x, 0, min.z);
-            targetUV[1] = new Vector3(max.x, 0, min.z);
-            targetUV[2] = new Vector3(max.x, 0, max.z);
-            targetUV[3] = new Vector3(min.x, 0, max.z);
-
-            Vector3[] L = new Vector3[4];
-            Vector3[] Center = new Vector3[2];
-            Center[0] = Target.transform.position;
-            Center[1] = cur_vb_Pos[4];
-            Vector3 T = Center[1] - Center[0];
-
-            L[0] = targetUV[3] - targetUV[0];
-            L[1] = targetUV[1] - targetUV[0];
-            L[2] = cur_vb_Pos[0] - cur_vb_Pos[2];
-            L[3] = cur_vb_Pos[3] - cur_vb_Pos[2];
-
-            for (int i = 0; i < L.Length; i++)
+            for (int i = 0; i < GameManager.Inst.EnemyPos.Count; i++)
             {
-                if (!CheckScan(T, L[i], L))
+                bool isColl = true;
+
+                Vector3 min = GameManager.Inst.EnemyPos[i].GetComponent<BoxCollider>().bounds.min;
+                Vector3 max = GameManager.Inst.EnemyPos[i].GetComponent<BoxCollider>().bounds.max;
+
+                targetUV[0] = new Vector3(min.x, 0, min.z);
+                targetUV[1] = new Vector3(max.x, 0, min.z);
+                targetUV[2] = new Vector3(max.x, 0, max.z);
+                targetUV[3] = new Vector3(min.x, 0, max.z);
+
+                Vector3[] L = new Vector3[4];
+                Vector3[] Center = new Vector3[2];
+                Center[0] = GameManager.Inst.EnemyPos[i].transform.position;
+                Center[1] = cur_vb_Pos[4];
+                Vector3 T = Center[1] - Center[0];
+
+                L[0] = targetUV[3] - targetUV[0];
+                L[1] = targetUV[1] - targetUV[0];
+                L[2] = cur_vb_Pos[0] - cur_vb_Pos[2];
+                L[3] = cur_vb_Pos[3] - cur_vb_Pos[2];
+
+                for (int s = 0; s < L.Length; s++)
                 {
-                    isColl = false;
-                    break;
+                    if (!CheckScan(T, L[s], L))
+                    {
+                        isColl = false;
+                        break;
+                    }
+                }
+
+                if (isColl)
+                {
+                    Debug.Log(GameManager.Inst.EnemyPos[i].gameObject.name);
                 }
             }
-
-            if (isColl)
-            {
-                Target.Rotate(Vector3.up * 360.0f * Time.deltaTime);
-            }
+            
 
             yield return null;
         }

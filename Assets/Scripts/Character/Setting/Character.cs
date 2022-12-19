@@ -405,4 +405,9 @@ public class Character : CharacterProperty, IBattle
     {
 
     }
+
+    public virtual void Setting()
+    {
+
+    }
 }

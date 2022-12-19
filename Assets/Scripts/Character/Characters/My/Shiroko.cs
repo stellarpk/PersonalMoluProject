@@ -21,6 +21,15 @@ public class Shiroko : Character, ISkill
 
     void Start()
     {
+
+    }
+    void Update()
+    {
+        StateProcess();
+    }
+
+    public override void Setting()
+    {
         myStat.Initialize();
         InitializeSkill();
         Passive_Skill();
@@ -33,12 +42,6 @@ public class Shiroko : Character, ISkill
         StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
-
-        
-    }
-    void Update()
-    {
-        StateProcess();
     }
 
     public override void StartSkillCool()

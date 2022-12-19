@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+
 public class SkillSystem : MonoBehaviour
 {
     public static SkillSystem Inst = null;
@@ -116,5 +117,19 @@ public class SkillSystem : MonoBehaviour
             characters[i].EX_Card = card;
             SkillCardReady.Add(card);
         }
+        ShuffleList(SkillCardReady);
+    }
+
+    public List<T> ShuffleList<T>(List<T> list)
+    {
+        for (int i = list.Count-1; i > 0; i--)
+        {
+            int rnd = UnityEngine.Random.Range(0, i);
+            T tmp = list[i];
+            list[i] = list[rnd];
+            list[rnd] = tmp;
+        }
+
+        return list;
     }
 }

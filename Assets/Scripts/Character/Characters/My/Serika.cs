@@ -10,6 +10,11 @@ public class Serika : Character, ISkill
     // 일반 공격 3점사
     private void Start()
     {
+        
+    }
+
+    public override void Setting()
+    {
         myStat.Initialize();
         InitializeSkill();
         Passive_Skill();
@@ -22,8 +27,6 @@ public class Serika : Character, ISkill
         StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
-
-        
     }
 
     public override void StartSkillCool()

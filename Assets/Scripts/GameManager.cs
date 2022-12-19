@@ -12,7 +12,11 @@ public class GameManager : MonoBehaviour
 
     public float playTime = 180.0f;
     public Transform[] Path;
+    public Transform TargetPos;
 
+    public List<Transform> EnemyPos;
+    public GameObject[] TestEnemy;
+    public Transform[] EnemySpawnPos;
     public int Wave;
 
     private void Awake()
@@ -32,9 +36,17 @@ public class GameManager : MonoBehaviour
             if(Characters[i] != null)
             {
                 InGameCharacters[i] = Instantiate(Characters[i], CharacterFormation[i]);
+                InGameCharacters[i].GetComponent<Character>().Setting();
+                InGameCharacters[i].GetComponent<Character>().targetPos = TargetPos;
                 InGameCharacters[i].GetComponent<Character>().Skill_Indicator = SkillIndicator;
+                InGameCharacters[i].GetComponent<Character>().StartSkillCool();
                 SkillSystem.Inst.characters.Add(InGameCharacters[i].GetComponent<Character>());
             }
+        }
+        for (int i = 0; i < TestEnemy.Length; i++)
+        {
+            GameObject enemyTest = Instantiate(TestEnemy[i], EnemySpawnPos[i]);
+            EnemyPos.Add(enemyTest.transform);
         }
         SkillSystem.Inst.SkillCardSetting();
         SkillSystem.Inst.ArrangeSkillCard();

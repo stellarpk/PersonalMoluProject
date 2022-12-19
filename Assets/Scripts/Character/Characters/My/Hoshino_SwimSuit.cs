@@ -10,6 +10,11 @@ public class Hoshino_SwimSuit : Character, ISkill
 
     private void Start()
     {
+        
+    }
+
+    public override void Setting()
+    {
         myStat.Initialize();
         InitializeSkill();
         Passive_Skill();
@@ -22,8 +27,10 @@ public class Hoshino_SwimSuit : Character, ISkill
         StartCoroutine(scanner.CheckEnemyInRange());
         ChangeState(STATE.Wait);
         StartCoroutine(ToMoveState());
-
-        
+    }
+    private void Update()
+    {
+        StateProcess();
     }
 
     public override void StartSkillCool()
