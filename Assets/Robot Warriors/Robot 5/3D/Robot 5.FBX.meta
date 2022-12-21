@@ -1,0 +1,139 @@
+fileFormatVersion: 2
+guid: 3efa5eaee7b3a964c81032708ed353db
+timeCreated: 1559757708
+licenseType: Store
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: L Back Leg 1
+    100004: L Back Leg 2
+    100006: L Back Leg IK
+    100008: L Front Leg 1
+    100010: L Front Leg 2
+    100012: L Front Leg IK
+    100014: L Gun
+    100016: Main Body
+    100018: R Back Leg 1
+    100020: R Back Leg 2
+    100022: R Back Leg IK
+    100024: R Front Leg 1
+    100026: R Front Leg 2
+    100028: R Front Leg IK
+    100030: R gun
+    100032: Robot 5
+    100034: Robot 5 Mesh
+    400000: //RootNode
+    400002: L Back Leg 1
+    400004: L Back Leg 2
+    400006: L Back Leg IK
+    400008: L Front Leg 1
+    400010: L Front Leg 2
+    400012: L Front Leg IK
+    400014: L Gun
+    400016: Main Body
+    400018: R Back Leg 1
+    400020: R Back Leg 2
+    400022: R Back Leg IK
+    400024: R Front Leg 1
+    400026: R Front Leg 2
+    400028: R Front Leg IK
+    400030: R gun
+    400032: Robot 5
+    400034: Robot 5 Mesh
+    2100000: Robot 5
+    2300000: //RootNode
+    2300002: Robot 5
+    3300000: //RootNode
+    3300002: Robot 5
+    4300000: Robot 5 Mesh
+    4300002: Group1
+    4300004: Robot 5
+    9500000: //RootNode
+    13700000: Robot 5
+    13700002: Robot 5 Mesh
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Robot 5
+    second: {fileID: 2100000, guid: 2bcf91c456018a74eadb3221caaa03ed, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: Main Body
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 1
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -25,13 +25,20 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
 
     public void Test()
     {
-        if (!character.Skill_Indicator.gameObject.activeSelf)
+        if (character.s_EX.sData.SkillCost <= SkillSystem.Inst.curCost)
         {
-            character.TurnOnIndicator();
+            if (!character.Skill_Indicator.gameObject.activeSelf)
+            {
+                character.TurnOnIndicator();
+            }
+            else
+            {
+                character.TurnOffIndicator();
+            }
         }
         else
         {
-            character.TurnOffIndicator();
+            Debug.Log("스킬 사용에 필요한 코스트가 부족합니다.");
         }
     }
 
@@ -45,7 +52,6 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
         if (character.UsingEX)
         {
             character.Use_EX_Skill();
-            SkillSystem.Inst.UseSkillCard(this.gameObject);
         }
         character.TurnOffIndicator();
     }

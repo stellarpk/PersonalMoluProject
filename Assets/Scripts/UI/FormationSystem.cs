@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-
+using TMPro;
 public class FormationSystem : MonoBehaviour
 {
     public static FormationSystem Inst = null;
@@ -11,6 +11,8 @@ public class FormationSystem : MonoBehaviour
     public GameObject[] InMain;
     public GameObject[] FormationBtn;
     public Transform[] ShowFormation;
+    public GameObject[] CharArrangedPanel;
+    public TMP_Text[] CharacterName;
     public int index = 0;
     private void Awake()
     {
@@ -34,11 +36,14 @@ public class FormationSystem : MonoBehaviour
             if (InMain[i] != null)
             {
                 GameObject form = Instantiate(FormationCard[i].character, ShowFormation[i]);
+                CharArrangedPanel[i].SetActive(true);
+                CharacterName[i].text = form.GetComponent<Character>().myStat.myData.CharName;
                 FormationBtn[i].SetActive(false);
             }
             else
             {
                 FormationBtn[i].SetActive(true);
+                CharArrangedPanel[i].SetActive(true);
             }
         }
     }

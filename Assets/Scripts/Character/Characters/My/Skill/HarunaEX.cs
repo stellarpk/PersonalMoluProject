@@ -105,7 +105,7 @@ public class HarunaEX : MonoBehaviour
 
                 if (isColl)
                 {
-                    Debug.Log(GameManager.Inst.EnemyPos[i].gameObject.name);
+
                 }
             }
             
