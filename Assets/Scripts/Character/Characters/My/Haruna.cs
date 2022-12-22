@@ -185,7 +185,7 @@ public class Haruna : Character, ISkill
             else finalDamage = skillDamage;
 
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponent<Bullet>().OnFire(scanner.myTarget.transform.GetComponent<Character>().HitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f);
+            bullet.GetComponentInChildren<Bullet>().OnFire(scanner.myTarget.transform.GetComponent<Character>().HitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f);
         }
         EndNormalSkillAnim();
     }

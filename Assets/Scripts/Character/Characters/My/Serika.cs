@@ -183,10 +183,10 @@ public class Serika : Character, ISkill
         {
             float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponent<Bullet>().OnFire(target, damage, 5f);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, damage, 5f);
             if (i < divideDamage - 1)
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.2f);
             }
         }
         yield break;

@@ -2308,7 +2308,6 @@ MonoBehaviour:
   myFilter: {fileID: 3781311318367397363}
   myRenderer: {fileID: 3781311318367397362}
   EndRange_T: {fileID: 3781311319730521416}
-  Target: {fileID: 0}
   Ground:
     serializedVersion: 2
     m_Bits: 2048
@@ -2641,6 +2640,7 @@ MonoBehaviour:
   Casting: 0
   UsingEX: 0
   isCanceling: 0
+  EX_Card: {fileID: 0}
   myState: 0
   lastState: 0
   drawEX: {fileID: 3781311318367397360}
@@ -2882,9 +2882,10 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 992308bd74c055440a39537ce0b2ed06, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
+  muzzleEffect: {fileID: 2270355002459759859, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
   curMagazine: 0
   muzzle: {fileID: 3781311318559233698}
-  Bullet: {fileID: 3346700854374382463, guid: f85f216fbb761fd42a65cbac101c67e0, type: 3}
+  Bullet: {fileID: 1097439738301168199, guid: f1413bed16be9e2418c48c5e4a5b4033, type: 3}
   Owner: {fileID: 3781311318635152923}
 --- !u!1 &3781311319516088567
 GameObject:

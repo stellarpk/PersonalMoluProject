@@ -7,8 +7,8 @@ public class Drone : MonoBehaviour
     public GameObject missilePrefab;
     public Transform FirePos;
     float m_speed = 1.0f;
-    float m_disFromStart = 6.0f;
-    float m_disFromEnd = 3.0f;
+    float m_disFromStart = 4.0f;
+    float m_disFromEnd = 2.0f;
     public int shotCount = 12;
     float m_interval = 0.15f;
     int shotCountPerInterval = 2;

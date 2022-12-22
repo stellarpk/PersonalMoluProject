@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
+    public GameObject Impact;
     public void OnFire(Transform target, float dmg, float moveSpeed)
     {
         StartCoroutine(Move(target, dmg, moveSpeed));
@@ -29,6 +30,7 @@ public class Bullet : MonoBehaviour
         if (target != null)
         {
             transform.position = target.position;
+            Instantiate(Impact, target.position, Quaternion.Euler(0,180,0));
             target.parent.GetComponent<IBattle>().OnDamage(dmg);
             // Add hitEffect 
         }

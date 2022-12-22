@@ -40,7 +40,6 @@ public class Penetrate_Bullet : MonoBehaviour
             if (other.gameObject.GetComponent<IBattle>() != null)
             {
                 other.gameObject.GetComponent<IBattle>().OnDamage(Damage);
-                Debug.Log($"total Damage: {Damage}, DamagePercentage: {decreasing}");
                 if (DecreaseCount > 0)
                 {
                     DecreaseCount--;

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbdae64b39e09ba46bd003f32f936bab, type: 3}
   m_Name: HoshinoWeapon
   m_EditorClassIdentifier: 
-  bulletSpeed: 5
+  bulletSpeed: 6
   maxMagazine: 5
   bulletPerAttack: 1

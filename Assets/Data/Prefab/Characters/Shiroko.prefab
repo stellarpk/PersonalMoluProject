@@ -296,6 +296,7 @@ MonoBehaviour:
   Casting: 0
   UsingEX: 0
   isCanceling: 0
+  EX_Card: {fileID: 0}
   myState: 0
   lastState: 0
   Grenade: {fileID: 6594398068887840906, guid: ed536f08defbf6c40b11d2caa4d015c4, type: 3}
@@ -3308,9 +3309,10 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 839ca1a32115beb4ebc6d4880555edbb, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
+  muzzleEffect: {fileID: 2270355002459759859, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
   curMagazine: 0
   muzzle: {fileID: 5651607243078425733}
-  Bullet: {fileID: 3346700854374382463, guid: f85f216fbb761fd42a65cbac101c67e0, type: 3}
+  Bullet: {fileID: 1097439738301168199, guid: f1413bed16be9e2418c48c5e4a5b4033, type: 3}
   Owner: {fileID: 5651607242766482047}
 --- !u!1 &5651607243868974371
 GameObject:

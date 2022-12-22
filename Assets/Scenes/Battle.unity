@@ -2891,6 +2891,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Robot 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1503544837637808, guid: 5e7528208ddc35042a36e1927712e367, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4810282346762418, guid: 5e7528208ddc35042a36e1927712e367, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -16075,6 +16079,7 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 52477a807fd8c3c4db08d52a11f60482, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
+  muzzleEffect: {fileID: 0}
   curMagazine: 0
   muzzle: {fileID: 94811013}
   Bullet: {fileID: 3346700854374382463, guid: f85f216fbb761fd42a65cbac101c67e0, type: 3}

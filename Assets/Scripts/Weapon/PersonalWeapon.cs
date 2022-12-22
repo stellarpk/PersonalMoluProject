@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class PersonalWeapon : MonoBehaviour
 {
     public Weapon weapon;
+    public GameObject muzzleEffect;
     public int curMagazine;
     public Transform muzzle;
     public GameObject Bullet;
@@ -37,10 +38,11 @@ public class PersonalWeapon : MonoBehaviour
             }
             else finalDamage = bulletDamage;
             GameObject bullet = Instantiate(Bullet, muzzle.position, muzzle.rotation);
-            bullet.GetComponent<Bullet>().OnFire(targetPos, finalDamage, weapon.weaponData.BulletSpeed);
+            Instantiate(muzzleEffect, muzzle.position, muzzle.rotation);
+            bullet.GetComponentInChildren<Bullet>().OnFire(targetPos, finalDamage, weapon.weaponData.BulletSpeed);
             if (i < weapon.weaponData.BulletPerAttack - 1)
             {
-                yield return new WaitForSeconds(0.1f);
+                yield return new WaitForSeconds(0.2f);
             }
         }
         curMagazine--;
