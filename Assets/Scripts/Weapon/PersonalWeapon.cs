@@ -39,7 +39,7 @@ public class PersonalWeapon : MonoBehaviour
             else finalDamage = bulletDamage;
             GameObject bullet = Instantiate(Bullet, muzzle.position, muzzle.rotation);
             Instantiate(muzzleEffect, muzzle.position, muzzle.rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(targetPos, finalDamage, weapon.weaponData.BulletSpeed);
+            bullet.GetComponentInChildren<Bullet>().OnFire(targetPos, finalDamage, weapon.weaponData.BulletSpeed, bullet);
             if (i < weapon.weaponData.BulletPerAttack - 1)
             {
                 yield return new WaitForSeconds(0.2f);

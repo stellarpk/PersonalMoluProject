@@ -5,12 +5,12 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public GameObject Impact;
-    public void OnFire(Transform target, float dmg, float moveSpeed)
+    public void OnFire(Transform target, float dmg, float moveSpeed, GameObject bullet)
     {
-        StartCoroutine(Move(target, dmg, moveSpeed));
+        StartCoroutine(Move(target, dmg, moveSpeed, bullet));
     }
 
-    IEnumerator Move(Transform target, float dmg, float moveSpeed)
+    IEnumerator Move(Transform target, float dmg, float moveSpeed,GameObject bullet)
     {
         while (target != null)
         {
@@ -32,8 +32,7 @@ public class Bullet : MonoBehaviour
             transform.position = target.position;
             Instantiate(Impact, target.position, Quaternion.Euler(0,180,0));
             target.parent.GetComponent<IBattle>().OnDamage(dmg);
-            // Add hitEffect 
         }
-        Destroy(gameObject);
+        Destroy(bullet);
     }
 }
