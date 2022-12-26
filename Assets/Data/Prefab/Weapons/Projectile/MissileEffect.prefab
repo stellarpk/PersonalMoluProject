@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6672395557425636883}
   - component: {fileID: 6693632085631784385}
   - component: {fileID: -4548809503210143825}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: MissileEffect
   m_TagString: FX
   m_Icon: {fileID: 0}
@@ -4998,7 +4998,7 @@ GameObject:
   - component: {fileID: 6797573276942644549}
   - component: {fileID: 6693632085899923201}
   - component: {fileID: 6672395558672873745}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: flarespikes_wide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9808,7 +9808,7 @@ GameObject:
   - component: {fileID: 6797377212853079295}
   - component: {fileID: 6672466054810158403}
   - component: {fileID: 6674280541288352261}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14690,7 +14690,7 @@ GameObject:
   - component: {fileID: 6794746332335263907}
   - component: {fileID: 6673012381994466683}
   - component: {fileID: 6674228238187565063}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: muzzleflare_Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19500,7 +19500,7 @@ GameObject:
   - component: {fileID: 6794743380863071277}
   - component: {fileID: 6672582181016303975}
   - component: {fileID: 6673981484798192327}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

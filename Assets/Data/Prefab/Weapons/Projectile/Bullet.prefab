@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8245693536149814363}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7394179045009539762}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 7776078998953734585}
   - component: {fileID: 1326493206727302030}
   - component: {fileID: 6115670367649261015}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Bullet
   m_TagString: FX
   m_Icon: {fileID: 0}
@@ -5043,7 +5043,7 @@ GameObject:
   - component: {fileID: 7581862315815910831}
   - component: {fileID: 7775660702130569757}
   - component: {fileID: 7776315455209471799}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: flarespikes_thin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9853,7 +9853,7 @@ GameObject:
   - component: {fileID: 7582090468262214091}
   - component: {fileID: 7776133001286672675}
   - component: {fileID: 7776624683629228955}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14717,7 +14717,7 @@ GameObject:
   - component: {fileID: 7577027223675371093}
   - component: {fileID: 7776297821356199367}
   - component: {fileID: 7776312582303413317}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}

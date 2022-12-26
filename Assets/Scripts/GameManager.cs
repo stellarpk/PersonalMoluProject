@@ -10,13 +10,15 @@ public class GameManager : MonoBehaviour
     public GameObject[] InGameCharacters = new GameObject[4];
     public Transform[] CharacterFormation = new Transform[4];
 
-    public float playTime = 180.0f;
+    public float playTime;
     public Transform[] Path;
     public Transform TargetPos;
 
     public List<Transform> EnemyPos;
-    public GameObject[] TestEnemy;
     public Transform[] EnemySpawnPos;
+
+    public GameObject BossCharacter;
+    public Transform BossSpawn;
     public int Wave;
 
     private void Awake()
@@ -43,11 +45,11 @@ public class GameManager : MonoBehaviour
                 SkillSystem.Inst.characters.Add(InGameCharacters[i].GetComponent<Character>());
             }
         }
-        for (int i = 0; i < TestEnemy.Length; i++)
-        {
-            GameObject enemyTest = Instantiate(TestEnemy[i], EnemySpawnPos[i]);
-            EnemyPos.Add(enemyTest.transform);
-        }
+        GameObject boss = Instantiate(BossCharacter, BossSpawn.position, BossSpawn.rotation);
+        boss.transform.rotation = Quaternion.Euler(0, 180, 0);
+        boss.GetComponent<Boss>().Setting();
+        boss.GetComponent<Boss>().bossInfo.SetHP();
+        playTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         SkillSystem.Inst.SkillCardSetting();
         SkillSystem.Inst.ArrangeSkillCard();
     }

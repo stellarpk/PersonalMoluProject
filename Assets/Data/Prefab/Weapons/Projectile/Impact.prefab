@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4063207894740009029}
   - component: {fileID: 4228196876191638515}
   - component: {fileID: 4226880577781731983}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: impactSparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4794,7 +4794,7 @@ GameObject:
   - component: {fileID: 4070420473148565739}
   - component: {fileID: 4227893899051772719}
   - component: {fileID: 4227084533511434119}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: smokePuff
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9469,7 +9469,7 @@ GameObject:
   - component: {fileID: 4063347729530085225}
   - component: {fileID: 4227911816890961373}
   - component: {fileID: 4227078292411161821}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: decals_component
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14295,7 +14295,7 @@ GameObject:
   - component: {fileID: 4063128177320297315}
   - component: {fileID: 4227826866184502613}
   - component: {fileID: 4228595637150597509}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19105,7 +19105,7 @@ GameObject:
   - component: {fileID: 4070323759146309867}
   - component: {fileID: 4227853595626356469}
   - component: {fileID: 4227070355991930211}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: flarespikes_Thin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -23861,7 +23861,7 @@ GameObject:
   - component: {fileID: 4070531368694048301}
   - component: {fileID: 4227834125224472563}
   - component: {fileID: 4227627607184068783}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: decal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28619,7 +28619,7 @@ GameObject:
   - component: {fileID: 4178146304783346479}
   - component: {fileID: 4227742930032077941}
   - component: {fileID: 4228085465919721271}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Impact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33670,7 +33670,7 @@ GameObject:
   - component: {fileID: 4062930931928219371}
   - component: {fileID: 4228694603613115933}
   - component: {fileID: 4228471323808423181}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: flarespikes_wide
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -38426,7 +38426,7 @@ GameObject:
   - component: {fileID: 4062987396362061355}
   - component: {fileID: 4228183422009993397}
   - component: {fileID: 4226943266173060177}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: decal_heatedStrike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
