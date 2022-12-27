@@ -21,6 +21,7 @@ public class Hoshino_SwimSuit : Character, ISkill
         myWeapon.weapon.Initialize(this);
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
+        SetHpBar();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };

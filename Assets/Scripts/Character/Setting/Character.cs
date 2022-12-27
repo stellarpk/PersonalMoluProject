@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -55,11 +57,26 @@ public class Character : CharacterProperty, IBattle
 
     public GameObject EX_Card;
 
+    public GameObject HPBar;
+    public Transform myHeadPos;
+    HpBar myHpBar;
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
     {
         Create, Wait, Move, Battle, Skill, Reload, Death, Clear
+    }
+
+    public void SetHpBar()
+    {
+        GameObject bar = Instantiate(HPBar);
+        myHpBar = bar.GetComponent<HpBar>();
+        myHpBar.myTarget = myHeadPos;
+        bar.transform.SetParent(UIManager.Inst.Hpbar);
+        myHpBar.slider.maxValue = myStat.MaxHP;
+        myHpBar.slider.value = myStat.CurHP;
+        myHpBar.slider.minValue = 0;
+        myHpBar.available = true;
     }
 
     public virtual void TurnOnIndicator()
@@ -150,6 +167,12 @@ public class Character : CharacterProperty, IBattle
         myStat.UpdateHP(-damage);
         if (Mathf.Approximately(myStat.CurHP, 0.0f))
         {
+            SkillSystem.Inst.OnCharacterDead(this);
+            int index = Array.IndexOf(GameManager.Inst.InGameCharacters, this.gameObject);
+            GameManager.Inst.InGameCharacters[index] = null;
+            GameManager.Inst.CheckCharacterDead();
+            Destroy(EX_Card);
+            Destroy(myHpBar.gameObject);
             Destroy(gameObject);
         }
     }
@@ -378,7 +401,8 @@ public class Character : CharacterProperty, IBattle
     {
         if (myWeapon.curMagazine > 0)
         {
-            myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
+            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+            myWeapon.Fire(hitPos);
         }
         else Reload();
     }

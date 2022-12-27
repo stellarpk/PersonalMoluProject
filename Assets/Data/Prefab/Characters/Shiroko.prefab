@@ -297,6 +297,8 @@ MonoBehaviour:
   UsingEX: 0
   isCanceling: 0
   EX_Card: {fileID: 0}
+  HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
+  myHeadPos: {fileID: 856365115920162304}
   myState: 0
   lastState: 0
   Grenade: {fileID: 6594398068887840906, guid: ed536f08defbf6c40b11d2caa4d015c4, type: 3}
@@ -3309,7 +3311,7 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 839ca1a32115beb4ebc6d4880555edbb, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
-  muzzleEffect: {fileID: 2270355002459759859, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
+  muzzleEffect: {fileID: 961132786075301603, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
   curMagazine: 0
   muzzle: {fileID: 5651607243078425733}
   Bullet: {fileID: 1097439738301168199, guid: f1413bed16be9e2418c48c5e4a5b4033, type: 3}
@@ -4969,6 +4971,7 @@ Transform:
   - {fileID: 5651607243966741188}
   - {fileID: 5651607244496634294}
   - {fileID: 5651607243614703726}
+  - {fileID: 856365115920162304}
   m_Father: {fileID: 5651607242962431255}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5807,6 +5810,37 @@ MonoBehaviour:
   height: 0.12
   linkedRenderer: {fileID: 0}
   shouldDrawGizmosThisFrame: 0
+--- !u!1 &8721534055744098985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 856365115920162304}
+  m_Layer: 6
+  m_Name: HeadPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &856365115920162304
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8721534055744098985}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.85, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5651607244474653755}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5651607242822169411
 PrefabInstance:
   m_ObjectHideFlags: 0

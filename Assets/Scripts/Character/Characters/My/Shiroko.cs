@@ -36,6 +36,7 @@ public class Shiroko : Character, ISkill
         myWeapon.weapon.Initialize(this);
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
+        SetHpBar();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
@@ -241,7 +242,8 @@ public class Shiroko : Character, ISkill
                 float finalDamage = 0;
                 if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
                 else finalDamage = skillDamage;
-                StartCoroutine(Throw.GetComponent<Grenade>().Throwing(scanner.myTarget.transform.GetComponent<Character>().HitPos, 3f, finalDamage));
+                Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+                StartCoroutine(Throw.GetComponent<Grenade>().Throwing(hitPos, 3f, finalDamage));
 
             }
 
@@ -299,7 +301,8 @@ public class Shiroko : Character, ISkill
     {
         if (myWeapon.curMagazine > 0)
         {
-            myWeapon.Fire(scanner.myTarget.transform.GetComponent<Character>().HitPos);
+            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+            myWeapon.Fire(hitPos);
             if (Random.Range(0.0f, 100.0f) <= 25.0f)
             {
                 if (SubReady) Sub_Skill();

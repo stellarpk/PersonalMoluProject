@@ -21,6 +21,7 @@ public class Serika : Character, ISkill
         myWeapon.weapon.Initialize(this);
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
+        SetHpBar();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
@@ -178,12 +179,12 @@ public class Serika : Character, ISkill
         int divideDamage = 5;
         float projectileDamage = skillDamage / divideDamage;
         float stability = myStat.Stability * 0.5f;
-        Transform target = scanner.myTarget.transform.GetComponent<Character>().HitPos;
+        Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
         for (int i = 0; i < divideDamage; i++)
         {
             float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, damage, 5f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, damage, 5f, bullet);
             if (i < divideDamage - 1)
             {
                 yield return new WaitForSeconds(0.2f);

@@ -31,7 +31,14 @@ public class Bullet : MonoBehaviour
         {
             transform.position = target.position;
             Instantiate(Impact, target.position, Quaternion.Euler(0,180,0));
-            target.parent.GetComponent<IBattle>().OnDamage(dmg);
+            if (target.GetComponent<IBattle>() != null)
+            {
+                if (target.GetComponent<IBattle>().IsLive) target.GetComponent<IBattle>().OnDamage(dmg);
+            }
+            else
+            {
+                if (target.parent.GetComponent<IBattle>().IsLive) target.parent.GetComponent<IBattle>().OnDamage(dmg);
+            }
         }
         Destroy(bullet);
     }

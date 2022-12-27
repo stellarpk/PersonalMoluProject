@@ -107,6 +107,31 @@ public class SkillSystem : MonoBehaviour
         NotArranged.RemoveAt(0);
     }
 
+    public void OnCharacterDead(Character dead)
+    {
+        // 사망한 캐릭터 카드 제거
+        characters.Remove(dead);
+        Debug.Log(dead.gameObject.name);
+        int index = Array.FindIndex(Arranged, i => i == dead.EX_Card);
+        if(index != -1)
+        {
+            Arranged[index] = null;
+            if (NotArranged.Count > 0)
+            {
+                NotArranged[0].transform.SetParent(ArrangedPos[index]);
+                NotArranged[0].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+                Arranged[index] = NotArranged[0];
+                NotArranged.RemoveAt(0);
+            }
+        }
+        else
+        {
+            index = NotArranged.FindIndex(i => i == dead.EX_Card);
+            NotArranged.RemoveAt(index);
+        }
+        SkillCardReady.Remove(dead.EX_Card);
+    }
+
     public void SkillCardSetting()
     {
         for(int i = 0; i < characters.Count; i++)

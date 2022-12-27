@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Transform[] CharacterFormation = new Transform[4];
 
     public float playTime;
+    public float maxPlayTime;
     public Transform[] Path;
     public Transform TargetPos;
 
@@ -19,7 +20,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject BossCharacter;
     public Transform BossSpawn;
-    public int Wave;
+
+    public bool GameOver;
 
     private void Awake()
     {
@@ -50,7 +52,26 @@ public class GameManager : MonoBehaviour
         boss.GetComponent<Boss>().Setting();
         boss.GetComponent<Boss>().bossInfo.SetHP();
         playTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
+        maxPlayTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         SkillSystem.Inst.SkillCardSetting();
         SkillSystem.Inst.ArrangeSkillCard();
+    }
+
+    public void CheckCharacterDead()
+    {
+        int count = 0;
+        for (int i = 0; i < InGameCharacters.Length; i++)
+        {
+            if (InGameCharacters[i] == null)
+            {
+                count++;
+            }
+        }
+        if (count == InGameCharacters.Length) GameOver = true;
+    }
+
+    private void Update()
+    {
+        if (GameOver || playTime <= 0) Debug.Log("Game Over");
     }
 }

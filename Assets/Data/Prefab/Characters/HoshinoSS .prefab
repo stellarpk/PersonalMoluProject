@@ -1038,6 +1038,7 @@ Transform:
   - {fileID: 6584701633745697870}
   - {fileID: 5373692675439645754}
   - {fileID: 4487144458897086513}
+  - {fileID: 5329147034542113242}
   m_Father: {fileID: 6260138620053977520}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1265,6 +1266,37 @@ Transform:
   - {fileID: 8943327874179988586}
   m_Father: {fileID: 3255653733229642280}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2714933499390912402
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5329147034542113242}
+  m_Layer: 0
+  m_Name: HeadPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5329147034542113242
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2714933499390912402}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.85, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7700850163730487120}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2731603577246084835
 GameObject:
@@ -3786,7 +3818,7 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 3f8d935de002c594d9aeb326243c484f, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
-  muzzleEffect: {fileID: 2270355002459759859, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
+  muzzleEffect: {fileID: 961132786075301603, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
   curMagazine: 0
   muzzle: {fileID: 5667611703145362269}
   Bullet: {fileID: 1097439738301168199, guid: f1413bed16be9e2418c48c5e4a5b4033, type: 3}
@@ -4059,6 +4091,8 @@ MonoBehaviour:
   UsingEX: 0
   isCanceling: 0
   EX_Card: {fileID: 0}
+  HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
+  myHeadPos: {fileID: 5329147034542113242}
   myState: 0
   lastState: 0
   EX: {fileID: 5667611702738011460}

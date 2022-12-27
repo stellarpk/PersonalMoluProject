@@ -828,7 +828,7 @@ MonoBehaviour:
     weaponData: {fileID: 11400000, guid: 52477a807fd8c3c4db08d52a11f60482, type: 2}
     BulletSpeed: 0
     MaxMagazine: 0
-  muzzleEffect: {fileID: 2270355002459759859, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
+  muzzleEffect: {fileID: 961132786075301603, guid: 6f6e5ec1affc6bc499854408b93970ea, type: 3}
   curMagazine: 0
   muzzle: {fileID: 4662498491963647555}
   Bullet: {fileID: 1097439738301168199, guid: f1413bed16be9e2418c48c5e4a5b4033, type: 3}
@@ -3162,6 +3162,7 @@ Transform:
   - {fileID: 4662498490544119974}
   - {fileID: 4662498492162912328}
   - {fileID: 4662498490393982442}
+  - {fileID: 5933416914714908455}
   m_Father: {fileID: 4662498490197812320}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3709,6 +3710,8 @@ MonoBehaviour:
   UsingEX: 0
   isCanceling: 0
   EX_Card: {fileID: 0}
+  HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
+  myHeadPos: {fileID: 5933416914714908455}
   myState: 0
   lastState: 0
 --- !u!54 &4662498491646049353
@@ -5687,6 +5690,37 @@ MonoBehaviour:
   - {fileID: 4662498491266661658}
   - {fileID: 4662498491733156685}
   panelColliders: []
+--- !u!1 &5143769318542622612
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5933416914714908455}
+  m_Layer: 6
+  m_Name: HeadPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5933416914714908455
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5143769318542622612}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.85, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4662498491473373029}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4662498490312049908
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,6 +22,7 @@ public class Haruna : Character, ISkill
         myWeapon.weapon.Initialize(this);
         myWeapon.curMagazine = myWeapon.weapon.MaxMagazine;
         myStat.SetHP();
+        SetHpBar();
         fire = () => Shooting();
         scanner.FindTarget += () => { if (Changable()) ChangeState(STATE.Battle); };
         scanner.LostTarget += () => { if (Changable()) ChangeState(STATE.Move); };
@@ -183,9 +184,9 @@ public class Haruna : Character, ISkill
             float finalDamage = 0;
             if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
             else finalDamage = skillDamage;
-
+            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(scanner.myTarget.transform.GetComponent<Character>().HitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);
         }
         EndNormalSkillAnim();
     }

@@ -85,7 +85,7 @@ public class Boss : CharacterProperty, IBattle
                 //StartCoroutine(Skill_2());
                 //break;
             case 4:
-                StartCoroutine(Skill_3());
+                StartCoroutine(Skill_1());
                 break;
             default:
                 break;
@@ -162,7 +162,7 @@ public class Boss : CharacterProperty, IBattle
         {
             GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
             Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(1.5f), 10f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(0), 10f, bullet);
         }
         yield return new WaitForSeconds(3f);
         ResetTarget();
@@ -184,7 +184,7 @@ public class Boss : CharacterProperty, IBattle
             Vector3 dir = new Vector3(Mathf.Cos(i * Mathf.Deg2Rad), Mathf.Sin(i * Mathf.Deg2Rad));
             Vector3 turn = Quaternion.Euler(270,0,0)*dir;
             bullet.transform.forward = turn;
-            bullet.GetComponentInChildren<NoneTargetBullet>().OnFire(Damage(2.0f), 10f, bullet);
+            bullet.GetComponentInChildren<NoneTargetBullet>().OnFire(Damage(0), 10f, bullet);
             Destroy(bullet, 5f);
         }
         yield return new WaitForSeconds(3f);
@@ -215,7 +215,7 @@ public class Boss : CharacterProperty, IBattle
             GameObject bullet = Instantiate(Skill_3_Projectile, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
             Instantiate(Skill_3_Flare, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
             bullet.GetComponent<Rigidbody>().AddForce(Vector3.up*10f, ForceMode.Impulse);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(2.5f), 20f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(0), 20f, bullet);
         }
         ResetTarget();
         yield return new WaitForSeconds(3f);
