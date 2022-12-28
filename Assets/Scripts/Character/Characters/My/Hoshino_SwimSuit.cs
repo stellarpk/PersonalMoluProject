@@ -184,10 +184,15 @@ public class Hoshino_SwimSuit : Character, ISkill
             float stabil = myStat.Stability * 0.5f;
             float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
             float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
-            float finalDamage = 0;
-            if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
-            else finalDamage = skillDamage;
-            scanner.myTarget.OnDamage(finalDamage);
+            int finalDamage = 0;
+            bool isCrit = false;
+            if (Random.Range(0.0f, 100.0f) <= rate)
+            {
+                finalDamage = (int)(skillDamage * (myStat.CritDmg * 0.01f));
+                isCrit = true;
+            }
+            else finalDamage = (int)skillDamage;
+            scanner.myTarget.OnDamage(finalDamage, isCrit);
             float RecoverHP = myStat.Healing * s_Normal.Percentage_2;
             myStat.UpdateHP(RecoverHP);
         }

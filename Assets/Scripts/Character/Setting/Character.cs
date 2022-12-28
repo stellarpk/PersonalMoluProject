@@ -60,6 +60,8 @@ public class Character : CharacterProperty, IBattle
     public GameObject HPBar;
     public Transform myHeadPos;
     HpBar myHpBar;
+
+    public GameObject DmgTxt;
     //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
@@ -161,16 +163,21 @@ public class Character : CharacterProperty, IBattle
 
 
     // 방어력 계산 - 데미지 / (1+(방어력+1500))
-    public void OnDamage(float damage)
+    public void OnDamage(int damage, bool crit)
     {
         //float finalDamage = damage / (1 + (myStat.DefencePower + 1500));
+        GameObject txt = Instantiate(DmgTxt);
+        txt.GetComponent<DamageText>().myTarget = myHeadPos;
+        txt.GetComponent<DamageText>().damage = damage;
+        if (crit) txt.GetComponent<DamageText>().critImg.SetActive(true);
+        txt.transform.SetParent(UIManager.Inst.DmgText);
         myStat.UpdateHP(-damage);
         if (Mathf.Approximately(myStat.CurHP, 0.0f))
         {
             SkillSystem.Inst.OnCharacterDead(this);
             int index = Array.IndexOf(GameManager.Inst.InGameCharacters, this.gameObject);
             GameManager.Inst.InGameCharacters[index] = null;
-            GameManager.Inst.CheckCharacterDead();
+            GameManager.Inst.CharacterDeathCount++;
             Destroy(EX_Card);
             Destroy(myHpBar.gameObject);
             Destroy(gameObject);
@@ -234,7 +241,6 @@ public class Character : CharacterProperty, IBattle
             case STATE.Battle:
                 if (scanner.myTarget != null && !scanner.myTarget.IsLive)
                 {
-                    Debug.Log("Enemy Dead");
                     scanner.OnLostTarget();
                 }
                 break;
@@ -433,5 +439,10 @@ public class Character : CharacterProperty, IBattle
     public virtual void Setting()
     {
 
+    }
+
+    public virtual void EndCoroutine()
+    {
+        StopAllCoroutines();
     }
 }

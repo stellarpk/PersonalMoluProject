@@ -4093,6 +4093,7 @@ MonoBehaviour:
   EX_Card: {fileID: 0}
   HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
   myHeadPos: {fileID: 5329147034542113242}
+  DmgTxt: {fileID: 402102151435888008, guid: 02be208b3bff5af43840ee54265dca92, type: 3}
   myState: 0
   lastState: 0
   EX: {fileID: 5667611702738011460}

@@ -17,6 +17,9 @@ public class UIManager : MonoBehaviour
     public Sprite[] doubleSprite = new Sprite[3];
     public Transform Hpbar;
     public TMP_Text time;
+    public Transform DmgText;
+    public GameObject Over;
+    public GameObject Clear;
     int speedMag = 0;
     bool pause;
     float[] timeSpeed = { 1.0f, 1.5f, 2.0f };
@@ -29,8 +32,6 @@ public class UIManager : MonoBehaviour
             return;
         }
         Inst = this;
-
-        DontDestroyOnLoad(gameObject);
     }
 
     void SetSKillUI()
@@ -120,6 +121,26 @@ public class UIManager : MonoBehaviour
         }
         DoubleSpeed.GetComponent<Image>().sprite = doubleSprite[speedMag];
         Time.timeScale = timeSpeed[speedMag];
+    }
+
+    public void GameOver()
+    {
+        Over.SetActive(true);
+    }
+
+    public void GameClear()
+    {
+        Clear.SetActive(true);
+    }
+
+    public void RestartGame()
+    {
+        MoveScene.Inst.Move(1);
+    }
+
+    public void ExitGame()
+    {
+        MoveScene.Inst.Move(0);
     }
 
     public void ChangeSpeedWhenUseSkill()

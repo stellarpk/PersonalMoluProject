@@ -122,11 +122,16 @@ public class Haruna : Character, ISkill
         float stabil = myStat.Stability * 0.5f;
         float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
         float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
-        float finalDamage = 0;
-        if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
-        else finalDamage = skillDamage;
-
+        int finalDamage = 0;
+        
         GameObject bullet = Instantiate(EX_Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
+        if (Random.Range(0.0f, 100.0f) <= rate)
+        {
+            finalDamage = (int)(skillDamage * (myStat.CritDmg * 0.01f));
+            bullet.GetComponent<Penetrate_Bullet>().isCritical = true;
+        }
+        else finalDamage = (int)skillDamage;
+
         bullet.GetComponent<Penetrate_Bullet>().Damage = finalDamage;
         bullet.GetComponent<Penetrate_Bullet>().OnFire(drawEX.EndRange_T, myWeapon.weapon.weaponData.BulletSpeed * 3.0f);
         EndEXSkillAnim();
@@ -181,9 +186,9 @@ public class Haruna : Character, ISkill
             float stabil = myStat.Stability * 0.5f;
             float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
             float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
-            float finalDamage = 0;
-            if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
-            else finalDamage = skillDamage;
+            int finalDamage = 0;
+            if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = (int)(skillDamage * (myStat.CritDmg * 0.01f));
+            else finalDamage = (int)skillDamage;
             Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
             bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);

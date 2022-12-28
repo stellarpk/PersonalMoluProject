@@ -299,6 +299,7 @@ MonoBehaviour:
   EX_Card: {fileID: 0}
   HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
   myHeadPos: {fileID: 856365115920162304}
+  DmgTxt: {fileID: 402102151435888008, guid: 02be208b3bff5af43840ee54265dca92, type: 3}
   myState: 0
   lastState: 0
   Grenade: {fileID: 6594398068887840906, guid: ed536f08defbf6c40b11d2caa4d015c4, type: 3}

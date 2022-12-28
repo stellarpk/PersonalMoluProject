@@ -6,6 +6,7 @@ using UnityEngine;
 public class Grenade : MonoBehaviour
 {
     public LayerMask myEnemy;
+    public bool isCritical;
     public IEnumerator Throwing(Transform target, float MoveSpeed, float Damage)
     {
         Vector3 sdir = target.position - transform.position;
@@ -34,7 +35,7 @@ public class Grenade : MonoBehaviour
             Collider[] col = Physics.OverlapSphere(transform.position, 2.0f,myEnemy);
             for (int i = 0; i < col.Length; i++)
             {
-                col[i].gameObject.GetComponent<IBattle>().OnDamage(Damage);
+                col[i].gameObject.GetComponent<IBattle>().OnDamage((int)Damage, isCritical);
             }
         }
         Destroy(gameObject);

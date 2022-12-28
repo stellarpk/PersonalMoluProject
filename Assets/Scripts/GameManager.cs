@@ -19,10 +19,13 @@ public class GameManager : MonoBehaviour
     public Transform[] EnemySpawnPos;
 
     public GameObject BossCharacter;
+    GameObject curBoss;
     public Transform BossSpawn;
 
-    public bool GameOver;
+    public int CharacterDeathCount;
 
+    public bool GameOver;
+    public bool GameClear;
     private void Awake()
     {
         if( Inst != null)
@@ -51,6 +54,7 @@ public class GameManager : MonoBehaviour
         boss.transform.rotation = Quaternion.Euler(0, 180, 0);
         boss.GetComponent<Boss>().Setting();
         boss.GetComponent<Boss>().bossInfo.SetHP();
+        curBoss = boss;
         playTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         maxPlayTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         SkillSystem.Inst.SkillCardSetting();
@@ -59,19 +63,27 @@ public class GameManager : MonoBehaviour
 
     public void CheckCharacterDead()
     {
-        int count = 0;
-        for (int i = 0; i < InGameCharacters.Length; i++)
-        {
-            if (InGameCharacters[i] == null)
-            {
-                count++;
-            }
-        }
-        if (count == InGameCharacters.Length) GameOver = true;
+        if (CharacterDeathCount == InGameCharacters.Length || playTime <= 0) GameOver = true;
+    }
+
+    public void CheckBossDead()
+    {
+        if (!curBoss.GetComponent<Boss>().IsLive && CharacterDeathCount != InGameCharacters.Length && playTime>0) GameClear = true;
     }
 
     private void Update()
     {
-        if (GameOver || playTime <= 0) Debug.Log("Game Over");
+        CheckCharacterDead();
+        if (GameClear)
+        {
+            for (int i = 0; i < InGameCharacters.Length; i++)
+            {
+                //InGameCharacters[i].GetComponent<Character>().scanner.OnLostTarget();
+                InGameCharacters[i].GetComponent<Character>().ChangeState(Character.STATE.Wait);
+                InGameCharacters[i].GetComponent<Character>().EndCoroutine();
+            }
+            UIManager.Inst.GameClear();
+        }
+        if (GameOver) UIManager.Inst.GameOver();
     }
 }

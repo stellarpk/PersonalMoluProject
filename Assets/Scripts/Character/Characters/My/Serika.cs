@@ -30,6 +30,7 @@ public class Serika : Character, ISkill
         StartCoroutine(ToMoveState());
     }
 
+
     public override void StartSkillCool()
     {
         Normal_Skill();
@@ -182,9 +183,17 @@ public class Serika : Character, ISkill
         Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
         for (int i = 0; i < divideDamage; i++)
         {
-            float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
+            float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
+            int finalDamage = 0;
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, damage, 5f, bullet);
+            int Damage = (int)Random.Range(projectileDamage - stability, projectileDamage + stability);
+            if (Random.Range(0.0f, 100.0f) <= rate)
+            {
+                finalDamage = (int)(Damage * (myStat.CritDmg * 0.01f));
+                bullet.GetComponent<Bullet>().isCritical = true;
+            }
+            else finalDamage = Damage;
+            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, finalDamage, 5f, bullet);
             if (i < divideDamage - 1)
             {
                 yield return new WaitForSeconds(0.2f);

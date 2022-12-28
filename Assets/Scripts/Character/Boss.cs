@@ -29,6 +29,9 @@ public class Boss : CharacterProperty, IBattle
     public GameObject Skill_3_Flare;
     public LayerMask character;
 
+    public Transform TextPos;
+    public GameObject DmgTxt;
+
     float CurDamaged;
     private void Start()
     {
@@ -48,13 +51,20 @@ public class Boss : CharacterProperty, IBattle
         }
     }
 
-    public void OnDamage(float damage)
+    public void OnDamage(int damage, bool crit)
     {
+        GameObject txt = Instantiate(DmgTxt);
+        txt.GetComponent<DamageText>().myTarget = TextPos;
+        txt.GetComponent<DamageText>().damage = damage;
+        if (crit) txt.GetComponent<DamageText>().critImg.SetActive(true);
+        txt.transform.SetParent(UIManager.Inst.DmgText);
         bossInfo.UpdateHP(-damage);
         CurDamaged += damage;
         if (Mathf.Approximately(bossInfo.CurHP, 0.0f))
         {
-            Destroy(gameObject);
+            GameManager.Inst.CheckBossDead();
+            Debug.Log(IsLive);
+            gameObject.SetActive(false);
         }
     }
 
@@ -140,14 +150,14 @@ public class Boss : CharacterProperty, IBattle
         }
     }
 
-    public float Damage(float skillPercentage)
+    public int Damage(float skillPercentage)
     {
         float skillDamage = bossInfo.AttackDamage * skillPercentage;
         int divideDamage = MissileMuzzle.Length;
         float projectileDamage = skillDamage / divideDamage;
         float stabil = bossInfo.Stability * 0.5f;
 
-        return UnityEngine.Random.Range(projectileDamage - stabil, projectileDamage + stabil);
+        return (int)UnityEngine.Random.Range(projectileDamage - stabil, projectileDamage + stabil);
     }
 
     // 적 1인에게 공격력 N% 데미지
@@ -162,7 +172,7 @@ public class Boss : CharacterProperty, IBattle
         {
             GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
             Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(0), 10f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(1.5f), 10f, bullet);
         }
         yield return new WaitForSeconds(3f);
         ResetTarget();

@@ -7,6 +7,7 @@ public class Penetrate_Bullet : MonoBehaviour
     public float DecreaseDamage;
     public float DecreaseCount;
     public float Damage;
+    public bool isCritical;
     float decreasing = 1.0f;
     public void OnFire(Transform target,  float moveSpeed)
     {
@@ -39,7 +40,7 @@ public class Penetrate_Bullet : MonoBehaviour
         {
             if (other.gameObject.GetComponent<IBattle>() != null)
             {
-                other.gameObject.GetComponent<IBattle>().OnDamage(Damage);
+                other.gameObject.GetComponent<IBattle>().OnDamage((int)Damage, isCritical);
                 if (DecreaseCount > 0)
                 {
                     DecreaseCount--;

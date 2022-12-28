@@ -12,6 +12,7 @@ public class Drone : MonoBehaviour
     public int shotCount = 12;
     float m_interval = 0.15f;
     int shotCountPerInterval = 2;
+    public bool isCritical;
     public IEnumerator OpenFire(Transform myTarget, float Damage)
     {
         int _shotCount = shotCount;
@@ -22,6 +23,7 @@ public class Drone : MonoBehaviour
                 if (_shotCount>0)
                 {
                     GameObject missile = Instantiate(missilePrefab);
+                    missile.GetComponent<DroneMissile>().isCritical = isCritical;
                     missile.GetComponent<DroneMissile>().target = myTarget;
                     missile.GetComponent<DroneMissile>().damage = Damage;
                     missile.GetComponent<DroneMissile>().Init(FirePos,myTarget,m_speed,m_disFromStart,m_disFromEnd);

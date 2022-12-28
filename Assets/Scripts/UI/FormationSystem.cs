@@ -43,7 +43,7 @@ public class FormationSystem : MonoBehaviour
             else
             {
                 FormationBtn[i].SetActive(true);
-                CharArrangedPanel[i].SetActive(true);
+                CharArrangedPanel[i].SetActive(false);
             }
         }
     }

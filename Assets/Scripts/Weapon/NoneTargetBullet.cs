@@ -8,8 +8,8 @@ public class NoneTargetBullet : MonoBehaviour
     public GameObject Bullet;
     public LayerMask character;
     public LayerMask structure;
-    public float Damage;
-    public void OnFire(float dmg, float moveSpeed, GameObject bullet)
+    public int Damage;
+    public void OnFire(int dmg, float moveSpeed, GameObject bullet)
     {
         Damage = dmg;
         Bullet = bullet;
@@ -32,7 +32,7 @@ public class NoneTargetBullet : MonoBehaviour
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Ally"))
             {
-                other.GetComponent<IBattle>().OnDamage(Damage);
+                other.GetComponent<IBattle>().OnDamage(Damage, false);
             }
         }
         Destroy(Bullet);

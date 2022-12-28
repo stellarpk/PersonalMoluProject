@@ -165,7 +165,8 @@ public class Shiroko : Character, ISkill
     {
         if (skillTarget != null)
         {
-            EX_Skill(skillTarget.GetComponent<Character>().HitPos);
+            Transform hitPos = skillTarget.transform.GetComponent<IBattle>().transform;
+            EX_Skill(hitPos);
         }
     }
 
@@ -180,9 +181,13 @@ public class Shiroko : Character, ISkill
 
         float damage = Random.Range(projectileDamage - stability, projectileDamage + stability);
         float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
-        float finalDamage = 0;
-        if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = damage * (myStat.CritDmg * 0.01f);
-        else finalDamage = damage;
+        int finalDamage = 0;
+        if (Random.Range(0.0f, 100.0f) <= rate)
+        {
+            finalDamage = (int)(damage * (myStat.CritDmg * 0.01f));
+            coDrone.GetComponent<Drone>().isCritical = true;
+        }
+        else finalDamage = (int)damage;
         if (coEX != null) StopCoroutine(coEX);
         coEX = StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage));
 
@@ -239,9 +244,13 @@ public class Shiroko : Character, ISkill
                 float stabil = myStat.Stability * 0.5f;
                 float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
                 float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
-                float finalDamage = 0;
-                if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = skillDamage * (myStat.CritDmg * 0.01f);
-                else finalDamage = skillDamage;
+                int finalDamage = 0;
+                if (Random.Range(0.0f, 100.0f) <= rate)
+                {
+                    finalDamage = (int)(skillDamage * (myStat.CritDmg * 0.01f));
+                    Throw.GetComponent<Grenade>().isCritical = true;
+                }
+                else finalDamage = (int)skillDamage;
                 Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
                 StartCoroutine(Throw.GetComponent<Grenade>().Throwing(hitPos, 3f, finalDamage));
 

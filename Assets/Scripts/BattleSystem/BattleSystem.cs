@@ -6,7 +6,7 @@ using UnityEngine;
 
 public interface IBattle
 {
-    void OnDamage(float damage);
+    void OnDamage(int damage,bool crit);
     Transform transform { get; }
     bool IsLive
     {

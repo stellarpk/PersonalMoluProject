@@ -5,12 +5,13 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     public GameObject Impact;
-    public void OnFire(Transform target, float dmg, float moveSpeed, GameObject bullet)
+    public bool isCritical;
+    public void OnFire(Transform target, int dmg, float moveSpeed, GameObject bullet)
     {
         StartCoroutine(Move(target, dmg, moveSpeed, bullet));
     }
 
-    IEnumerator Move(Transform target, float dmg, float moveSpeed,GameObject bullet)
+    IEnumerator Move(Transform target, int dmg, float moveSpeed,GameObject bullet)
     {
         while (target != null)
         {
@@ -33,11 +34,11 @@ public class Bullet : MonoBehaviour
             Instantiate(Impact, target.position, Quaternion.Euler(0,180,0));
             if (target.GetComponent<IBattle>() != null)
             {
-                if (target.GetComponent<IBattle>().IsLive) target.GetComponent<IBattle>().OnDamage(dmg);
+                if (target.GetComponent<IBattle>().IsLive) target.GetComponent<IBattle>().OnDamage(dmg, isCritical);
             }
             else
             {
-                if (target.parent.GetComponent<IBattle>().IsLive) target.parent.GetComponent<IBattle>().OnDamage(dmg);
+                if (target.parent.GetComponent<IBattle>().IsLive) target.parent.GetComponent<IBattle>().OnDamage(dmg, isCritical);
             }
         }
         Destroy(bullet);
