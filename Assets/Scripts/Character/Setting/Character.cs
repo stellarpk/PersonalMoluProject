@@ -75,9 +75,6 @@ public class Character : CharacterProperty, IBattle
         myHpBar = bar.GetComponent<HpBar>();
         myHpBar.myTarget = myHeadPos;
         bar.transform.SetParent(UIManager.Inst.Hpbar);
-        myHpBar.slider.maxValue = myStat.MaxHP;
-        myHpBar.slider.value = myStat.CurHP;
-        myHpBar.slider.minValue = 0;
         myHpBar.available = true;
     }
 
@@ -174,14 +171,19 @@ public class Character : CharacterProperty, IBattle
         myStat.UpdateHP(-damage);
         if (Mathf.Approximately(myStat.CurHP, 0.0f))
         {
+            ChangeState(STATE.Death);
             SkillSystem.Inst.OnCharacterDead(this);
             int index = Array.IndexOf(GameManager.Inst.InGameCharacters, this.gameObject);
             GameManager.Inst.InGameCharacters[index] = null;
             GameManager.Inst.CharacterDeathCount++;
             Destroy(EX_Card);
             Destroy(myHpBar.gameObject);
-            Destroy(gameObject);
         }
+    }
+
+    public virtual void DestroyChar()
+    {
+        gameObject.SetActive(false);
     }
 
     public void ChangeState(STATE s)
@@ -219,7 +221,7 @@ public class Character : CharacterProperty, IBattle
                 break;
             case STATE.Death:
                 StopAllCoroutines();
-                myAnim.SetBool("Die", true);
+                myAnim.SetTrigger("Die");
                 break;
             case STATE.Clear:
                 OnClear();

@@ -32,11 +32,15 @@ public class Boss : CharacterProperty, IBattle
     public Transform TextPos;
     public GameObject DmgTxt;
 
-    float CurDamaged;
+    public BossHpBar hpbar;
+
+    bool Attacked = false;
+
+    public float CurDamaged;
     private void Start()
     {
-        StartPattern();
-        
+        //StartPattern();
+
     }
 
     public bool IsLive
@@ -53,19 +57,30 @@ public class Boss : CharacterProperty, IBattle
 
     public void OnDamage(int damage, bool crit)
     {
+        if (!myAnim.GetBool("Attacked"))
+        {
+            myAnim.SetBool("Attacked", true);
+            StartPattern();
+        }
         GameObject txt = Instantiate(DmgTxt);
         txt.GetComponent<DamageText>().myTarget = TextPos;
         txt.GetComponent<DamageText>().damage = damage;
         if (crit) txt.GetComponent<DamageText>().critImg.SetActive(true);
         txt.transform.SetParent(UIManager.Inst.DmgText);
         bossInfo.UpdateHP(-damage);
-        CurDamaged += damage;
+        hpbar.Damaged();
+        //CurDamaged += damage;
         if (Mathf.Approximately(bossInfo.CurHP, 0.0f))
         {
+            StopAllCoroutines();
             GameManager.Inst.CheckBossDead();
-            Debug.Log(IsLive);
-            gameObject.SetActive(false);
+            myAnim.SetTrigger("Die");
         }
+    }
+
+    public void Dead()
+    {
+        gameObject.SetActive(false);
     }
 
     public void Setting()
@@ -88,12 +103,12 @@ public class Boss : CharacterProperty, IBattle
         {
             case 0:
             case 1:
-                //StartCoroutine(Skill_1());
-                //break;
+                StartCoroutine(Skill_1());
+                break;
             case 2:
             case 3:
-                //StartCoroutine(Skill_2());
-                //break;
+                StartCoroutine(Skill_1());
+                break;
             case 4:
                 StartCoroutine(Skill_1());
                 break;
@@ -165,14 +180,14 @@ public class Boss : CharacterProperty, IBattle
     {
         myAnim.SetTrigger("Skill_1");
         ScanEnemy();
-        
+
         Transform target = single.transform.GetComponent<Character>().HitPos;
         transform.LookAt(target);
         for (int i = 0; i < Muzzle.Length; i++)
         {
             GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
             Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(1.5f), 10f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(4.5f), 10f, bullet);
         }
         yield return new WaitForSeconds(3f);
         ResetTarget();
@@ -187,14 +202,14 @@ public class Boss : CharacterProperty, IBattle
         int startAngle = 45;
         int endAngle = 135;
         int angleInterval = 15;
-        
+
         for (int i = startAngle; i <= endAngle; i += angleInterval)
         {
             GameObject bullet = Instantiate(Skill_2_Projectile, ArcMuzzle.position, ArcMuzzle.rotation);
             Vector3 dir = new Vector3(Mathf.Cos(i * Mathf.Deg2Rad), Mathf.Sin(i * Mathf.Deg2Rad));
-            Vector3 turn = Quaternion.Euler(270,0,0)*dir;
+            Vector3 turn = Quaternion.Euler(270, 0, 0) * dir;
             bullet.transform.forward = turn;
-            bullet.GetComponentInChildren<NoneTargetBullet>().OnFire(Damage(0), 10f, bullet);
+            bullet.GetComponentInChildren<NoneTargetBullet>().OnFire(Damage(3.5f), 10f, bullet);
             Destroy(bullet, 5f);
         }
         yield return new WaitForSeconds(3f);
@@ -214,18 +229,18 @@ public class Boss : CharacterProperty, IBattle
             {
                 for (int j = 0; j < i; j++)
                 {
-                    if (multipleTarget[j]!=null)
+                    if (multipleTarget[j] != null)
                     {
                         target = multipleTarget[j].transform.GetComponent<Character>().HitPos;
                         break;
                     }
                 }
             }
-            
+
             GameObject bullet = Instantiate(Skill_3_Projectile, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
             Instantiate(Skill_3_Flare, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
-            bullet.GetComponent<Rigidbody>().AddForce(Vector3.up*10f, ForceMode.Impulse);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(0), 20f, bullet);
+            bullet.GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
+            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(7.0f), 20f, bullet);
         }
         ResetTarget();
         yield return new WaitForSeconds(3f);
@@ -239,14 +254,5 @@ public class Boss : CharacterProperty, IBattle
         singularTarget = null;
         Array.Clear(multi, 0, multi.Length);
         Array.Clear(multipleTarget, 0, multipleTarget.Length);
-    }
-
-    void Stun()
-    {
-        if (CurDamaged >= bossInfo.StunGauge)
-        {
-            CurDamaged = 0;
-            myAnim.SetBool("Stun", true);
-        }
     }
 }

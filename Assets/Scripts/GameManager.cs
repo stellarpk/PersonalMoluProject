@@ -54,6 +54,9 @@ public class GameManager : MonoBehaviour
         boss.transform.rotation = Quaternion.Euler(0, 180, 0);
         boss.GetComponent<Boss>().Setting();
         boss.GetComponent<Boss>().bossInfo.SetHP();
+        UIManager.Inst.BHB.boss = boss.GetComponent<Boss>();
+        UIManager.Inst.BHB.Setting();
+        boss.GetComponent<Boss>().hpbar = UIManager.Inst.BHB;
         curBoss = boss;
         playTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         maxPlayTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
@@ -78,9 +81,12 @@ public class GameManager : MonoBehaviour
         {
             for (int i = 0; i < InGameCharacters.Length; i++)
             {
-                //InGameCharacters[i].GetComponent<Character>().scanner.OnLostTarget();
-                InGameCharacters[i].GetComponent<Character>().ChangeState(Character.STATE.Wait);
-                InGameCharacters[i].GetComponent<Character>().EndCoroutine();
+                if (InGameCharacters[i] != null)
+                {
+                    //InGameCharacters[i].GetComponent<Character>().scanner.OnLostTarget();
+                    InGameCharacters[i].GetComponent<Character>().ChangeState(Character.STATE.Wait);
+                    InGameCharacters[i].GetComponent<Character>().EndCoroutine();
+                }
             }
             UIManager.Inst.GameClear();
         }

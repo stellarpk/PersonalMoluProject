@@ -14,7 +14,7 @@ public class SkillSystem : MonoBehaviour
     public Transform NotArrangedPos;
     public Transform SkillCardReadyPos;
 
-    
+
     [Header("Skill Card")]
     public GameObject[] Arranged;
     public List<GameObject> NotArranged;
@@ -65,7 +65,7 @@ public class SkillSystem : MonoBehaviour
         }
     }
 
-    
+
 
     public void ArrangeSkillCard()
     {
@@ -95,7 +95,18 @@ public class SkillSystem : MonoBehaviour
     public void UseSkillCard(GameObject used)
     {
         // 사용한 카드 제거
-        int index = Array.FindIndex(Arranged, i => i.GetComponent<UseEX>().character == used.GetComponent<UseEX>().character);
+        int index = -1;
+        for (int i = 0; i < Arranged.Length; i++)
+        {
+            if (Arranged[i] != null)
+            {
+                if (Arranged[i].GetComponent<UseEX>().character == used.GetComponent<UseEX>().character)
+                {
+                    index = i;
+                    break;
+                }
+            }
+        }
         NotArranged.Add(Arranged[index]);
         Arranged[index].transform.SetParent(NotArrangedPos);
         Arranged[index].GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
@@ -111,9 +122,8 @@ public class SkillSystem : MonoBehaviour
     {
         // 사망한 캐릭터 카드 제거
         characters.Remove(dead);
-        Debug.Log(dead.gameObject.name);
         int index = Array.FindIndex(Arranged, i => i == dead.EX_Card);
-        if(index != -1)
+        if (index != -1)
         {
             Arranged[index] = null;
             if (NotArranged.Count > 0)
@@ -134,7 +144,7 @@ public class SkillSystem : MonoBehaviour
 
     public void SkillCardSetting()
     {
-        for(int i = 0; i < characters.Count; i++)
+        for (int i = 0; i < characters.Count; i++)
         {
             GameObject card = Instantiate(SkillCard, SkillCardReadyPos);
             card.GetComponent<UseEX>().character = characters[i];
@@ -147,7 +157,7 @@ public class SkillSystem : MonoBehaviour
 
     public List<T> ShuffleList<T>(List<T> list)
     {
-        for (int i = list.Count-1; i > 0; i--)
+        for (int i = list.Count - 1; i > 0; i--)
         {
             int rnd = UnityEngine.Random.Range(0, i);
             T tmp = list[i];

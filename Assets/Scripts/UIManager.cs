@@ -20,6 +20,7 @@ public class UIManager : MonoBehaviour
     public Transform DmgText;
     public GameObject Over;
     public GameObject Clear;
+    public BossHpBar BHB;
     int speedMag = 0;
     bool pause;
     float[] timeSpeed = { 1.0f, 1.5f, 2.0f };

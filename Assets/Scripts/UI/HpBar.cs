@@ -17,7 +17,7 @@ public class HpBar : MonoBehaviour
     void Update()
     {
         Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);
-        if(available) slider.value = myTarget.GetComponentInParent<Character>().myStat.CurHP;
+        if (available) slider.value = myTarget.GetComponentInParent<Character>().myStat.CurHP / myTarget.GetComponentInParent<Character>().myStat.MaxHP;
         transform.position = pos;
     }
 }

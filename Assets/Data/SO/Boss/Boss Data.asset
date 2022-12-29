@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4536455145ccef748a81f39c49ae3ab1, type: 3}
   m_Name: Boss Data
   m_EditorClassIdentifier: 
-  stunGauge: 10000
+  stunGauge: 5000
   timeLimit: 180

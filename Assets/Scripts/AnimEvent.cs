@@ -12,6 +12,8 @@ public class AnimEvent : MonoBehaviour
     public UnityEvent ActiveNormalSkill;
     public UnityEvent Instantiating;
     public UnityEvent Reload;
+    public UnityEvent Die;
+    public UnityEvent StopAnim;
 
     public void EndEXSkillAnim()
     {
@@ -46,5 +48,15 @@ public class AnimEvent : MonoBehaviour
     public void EndReload()
     {
         Reload?.Invoke();
+    }
+
+    public void Dead()
+    {
+        Die?.Invoke();
+    }
+
+    public void Stop()
+    {
+        StopAnim?.Invoke();
     }
 }
