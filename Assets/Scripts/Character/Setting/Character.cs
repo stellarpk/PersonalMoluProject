@@ -166,6 +166,7 @@ public class Character : CharacterProperty, IBattle
         GameObject txt = Instantiate(DmgTxt);
         txt.GetComponent<DamageText>().myTarget = myHeadPos;
         txt.GetComponent<DamageText>().damage = damage;
+        txt.GetComponent<DamageText>().OnAction();
         if (crit) txt.GetComponent<DamageText>().critImg.SetActive(true);
         txt.transform.SetParent(UIManager.Inst.DmgText);
         myStat.UpdateHP(-damage);
@@ -247,6 +248,7 @@ public class Character : CharacterProperty, IBattle
                 }
                 break;
         }
+        if (!IsLive) ChangeState(STATE.Death);
     }
 
     void OnClear()

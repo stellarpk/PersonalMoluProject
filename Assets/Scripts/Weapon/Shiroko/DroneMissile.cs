@@ -12,6 +12,7 @@ public class DroneMissile : MonoBehaviour
     public Transform target;
     public float damage;
     public bool isCritical;
+    public GameObject Impact;
     private void OnEnable()
     {
         rigid = GetComponent<Rigidbody>();
@@ -77,6 +78,7 @@ public class DroneMissile : MonoBehaviour
         {
             if (other.gameObject.GetComponent<IBattle>() != null)
             {
+                Instantiate(Impact, transform.position, transform.rotation);
                 other.gameObject.GetComponent<IBattle>().OnDamage((int)damage, isCritical);
                 Destroy(this.gameObject, 0.1f);
             }

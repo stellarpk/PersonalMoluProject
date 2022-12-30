@@ -21,6 +21,8 @@ public class UIManager : MonoBehaviour
     public GameObject Over;
     public GameObject Clear;
     public BossHpBar BHB;
+    public GameObject BattleUI;
+    public GameObject[] HPBar;
     int speedMag = 0;
     bool pause;
     float[] timeSpeed = { 1.0f, 1.5f, 2.0f };
@@ -66,10 +68,14 @@ public class UIManager : MonoBehaviour
 
     void Timer()
     {
-        UpdateTime(Time.deltaTime);
-        int Min = (int)(GameManager.Inst.playTime / 60);
-        float sec = GameManager.Inst.playTime % 60;
-        time.text = string.Format("{0:D2}:{1:D2}", Min, (int)sec);
+        if (!GameManager.Inst.GameEnd)
+        {
+            UpdateTime(Time.deltaTime);
+            int Min = (int)(GameManager.Inst.playTime / 60);
+            float sec = GameManager.Inst.playTime % 60;
+            time.text = string.Format("{0:D2}:{1:D2}", Min, (int)sec);
+        }
+        
     }
 
     public void PauseGame()
@@ -124,14 +130,17 @@ public class UIManager : MonoBehaviour
         Time.timeScale = timeSpeed[speedMag];
     }
 
-    public void GameOver()
-    {
-        Over.SetActive(true);
-    }
 
-    public void GameClear()
+    public void GameEnd(GameObject endUI)
     {
-        Clear.SetActive(true);
+        Time.timeScale = 1;
+        BattleUI.SetActive(false);
+        for (int i = 0; i < HPBar.Length; i++)
+        {
+            HPBar[i].SetActive(false);
+        }
+        endUI.SetActive(true);
+        GameManager.Inst.GameEnd = true;
     }
 
     public void RestartGame()

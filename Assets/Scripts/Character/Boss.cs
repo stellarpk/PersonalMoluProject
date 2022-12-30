@@ -34,8 +34,6 @@ public class Boss : CharacterProperty, IBattle
 
     public BossHpBar hpbar;
 
-    bool Attacked = false;
-
     public float CurDamaged;
     private void Start()
     {
@@ -63,8 +61,10 @@ public class Boss : CharacterProperty, IBattle
             StartPattern();
         }
         GameObject txt = Instantiate(DmgTxt);
+        
         txt.GetComponent<DamageText>().myTarget = TextPos;
         txt.GetComponent<DamageText>().damage = damage;
+        txt.GetComponent<DamageText>().OnAction();
         if (crit) txt.GetComponent<DamageText>().critImg.SetActive(true);
         txt.transform.SetParent(UIManager.Inst.DmgText);
         bossInfo.UpdateHP(-damage);
@@ -107,10 +107,10 @@ public class Boss : CharacterProperty, IBattle
                 break;
             case 2:
             case 3:
-                StartCoroutine(Skill_1());
+                StartCoroutine(Skill_2());
                 break;
             case 4:
-                StartCoroutine(Skill_1());
+                StartCoroutine(Skill_3());
                 break;
             default:
                 break;
@@ -178,20 +178,23 @@ public class Boss : CharacterProperty, IBattle
     // 적 1인에게 공격력 N% 데미지
     public IEnumerator Skill_1()
     {
-        myAnim.SetTrigger("Skill_1");
         ScanEnemy();
-
-        Transform target = single.transform.GetComponent<Character>().HitPos;
-        transform.LookAt(target);
-        for (int i = 0; i < Muzzle.Length; i++)
+        if (single!=null)
         {
-            GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
-            Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(4.5f), 10f, bullet);
+            myAnim.SetTrigger("Skill_1");
+
+            Transform target = single.transform.GetComponent<Character>().HitPos;
+            transform.LookAt(target);
+            for (int i = 0; i < Muzzle.Length; i++)
+            {
+                GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
+                Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
+                bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(5f), 10f, bullet);
+            }
+            yield return new WaitForSeconds(3f);
+            ResetTarget();
+            StartCoroutine(Think());
         }
-        yield return new WaitForSeconds(3f);
-        ResetTarget();
-        StartCoroutine(Think());
     }
 
     // Robot 5 Land
@@ -219,30 +222,38 @@ public class Boss : CharacterProperty, IBattle
     // 적 4인에게 공격력 N% 데미지(투사체 4개 발사)
     public IEnumerator Skill_3()
     {
-        myAnim.SetTrigger("Skill_3");
         ScanMultipleEnemy();
-        for (int i = 0; i < MissileMuzzle.Length; i++)
+        bool AllEnemyLive = false;
+        for (int i = 0; i < multi.Length; i++)
         {
-            Transform target = null;
-            if (multipleTarget[i] != null) target = multipleTarget[i].transform.GetComponent<Character>().HitPos;
-            else
+            if (multi[i] != null) AllEnemyLive = true;
+        }
+        if (AllEnemyLive)
+        {
+            myAnim.SetTrigger("Skill_3");
+            for (int i = 0; i < MissileMuzzle.Length; i++)
             {
-                for (int j = 0; j < i; j++)
+                Transform target = null;
+                if (multipleTarget[i] != null) target = multipleTarget[i].transform.GetComponent<Character>().HitPos;
+                else
                 {
-                    if (multipleTarget[j] != null)
+                    for (int j = 0; j < i; j++)
                     {
-                        target = multipleTarget[j].transform.GetComponent<Character>().HitPos;
-                        break;
+                        if (multipleTarget[j] != null)
+                        {
+                            target = multipleTarget[j].transform.GetComponent<Character>().HitPos;
+                            break;
+                        }
                     }
                 }
-            }
 
-            GameObject bullet = Instantiate(Skill_3_Projectile, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
-            Instantiate(Skill_3_Flare, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
-            bullet.GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
-            bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(7.0f), 20f, bullet);
+                GameObject bullet = Instantiate(Skill_3_Projectile, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
+                Instantiate(Skill_3_Flare, MissileMuzzle[i].position, MissileMuzzle[i].rotation);
+                bullet.GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
+                bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(7.0f), 20f, bullet);
+            }
+            ResetTarget();
         }
-        ResetTarget();
         yield return new WaitForSeconds(3f);
         StartCoroutine(Think());
     }

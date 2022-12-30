@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Scan : MonoBehaviour
@@ -57,7 +58,7 @@ public class Scan : MonoBehaviour
             for (int i = 0; i < enemyList.Count; i++)
             {
                 float distance = (enemyList[i].transform.position - transform.position).magnitude;
-                float colDistance = (Owner.myStat.AttackRange * 0.1f + 0.2f);
+                float colDistance = (Owner.myStat.AttackRange * 0.1f + 0.3f + enemyList[i].GetComponent<BoxCollider>().size.x);
                 if (distance > colDistance)
                 {
                     if (myTarget != null && enemyList[i].transform == myTarget.transform)

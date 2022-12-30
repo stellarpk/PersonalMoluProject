@@ -37,6 +37,8 @@ public class FormationSystem : MonoBehaviour
             {
                 GameObject form = Instantiate(FormationCard[i].character, ShowFormation[i]);
                 CharArrangedPanel[i].SetActive(true);
+                form.GetComponent<Character>().myStat.Initialize();
+                form.GetComponent<Character>().myStat.SetHP();
                 CharacterName[i].text = form.GetComponent<Character>().myStat.myData.CharName;
                 FormationBtn[i].SetActive(false);
             }

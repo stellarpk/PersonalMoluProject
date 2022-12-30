@@ -17,9 +17,9 @@ public class DamageText : MonoBehaviour
 
     private void Start()
     {
-        moveSpeed = 2.0f;
+        moveSpeed = 150.0f;
         alphaSpeed = 2.0f;
-        destroyTime = 2.0f;
+        destroyTime = 1.0f;
         dmgText = GetComponentInChildren<TMP_Text>();
         alpha = dmgText.color;
         dmgText.text = damage.ToString();
@@ -31,11 +31,27 @@ public class DamageText : MonoBehaviour
 
     private void Update()
     {
-        Vector3 pos = Camera.main.WorldToScreenPoint(myTarget.position);
+        
+    }
+
+    public void OnAction()
+    {
+        StartCoroutine(Actioning(Camera.main.WorldToScreenPoint(myTarget.position)));
+    }
+
+    IEnumerator Actioning(Vector3 pos)
+    {
         transform.position = pos;
-        transform.Translate(pos*moveSpeed*Time.deltaTime);
-        //transform.Translate(new Vector3(0, moveSpeed * Time.deltaTime, 0));
-        alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed);
-        dmgText.color = alpha;
+
+        yield return new WaitForSeconds(0.25f);
+        float t = 1.0f;
+        while(t > 0.0f)
+        {
+            t -= Time.deltaTime;
+            transform.Translate(Vector3.up*moveSpeed * Time.deltaTime);
+            alpha.a = Mathf.Lerp(alpha.a, 0, Time.deltaTime * alphaSpeed);
+            dmgText.color = alpha;
+            yield return null;
+        }
     }
 }
