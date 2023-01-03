@@ -145,7 +145,7 @@ public class UIManager : MonoBehaviour
 
     public void RestartGame()
     {
-        MoveScene.Inst.Move(1);
+        MoveScene.Inst.Move(2);
     }
 
     public void ExitGame()

@@ -25,9 +25,16 @@ public class GameManager : MonoBehaviour
     public Transform CamPos;
     public int CharacterDeathCount;
 
+    
+
     public bool GameEnd;
     public bool GameOver;
     public bool GameClear;
+
+    public int RewardGold;
+    public List<Item> RewardItem = new List<Item>();
+    public Transform RewardPos;
+
     private void Awake()
     {
         if (Inst != null)
@@ -36,6 +43,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         Inst = this;
+    }
+
+    public void Start()
+    {
+        StartCoroutine(CheckGameSet());
     }
 
     public void InGameSetting(GameObject[] Characters)
@@ -80,6 +92,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator GameCleared()
     {
         yield return new WaitForSeconds(2f);
+        GetReward(RewardGold,RewardItem);
         UIManager.Inst.GameEnd(UIManager.Inst.Clear);
     }
 
@@ -100,16 +113,40 @@ public class GameManager : MonoBehaviour
         CamPos.position = camPos;
     }
 
+    public void GetReward(int Gold, List<Item> rewardItems)
+    {
+        for (int i = 0; i < rewardItems.Count; i++)
+        {
+            int DropRate = Random.Range(0, 100);
+            if (rewardItems[i].itemValue.Droprate >= DropRate)
+            {
+                DataManager.Inst.AddItem(rewardItems[i]);
+                GameObject showReward = Instantiate(rewardItems[i].gameObject);
+                showReward.transform.SetParent(RewardPos);
+                showReward.GetComponent<Item>().SetItem(rewardItems[i].itemValue.ItemCount);
+                showReward.GetComponent<Item>().Setting();
+                showReward.GetComponent<Item>().SetUI();
+
+            }
+        }
+        DataManager.Inst.SaveItemData();
+        DataManager.Inst.TotalGold += Gold;
+    }
+
     public IEnumerator GameSet()
     {
         yield return new WaitForSeconds(2f);
         UIManager.Inst.GameEnd(UIManager.Inst.Over);
     }
 
-    private void Update()
+    public IEnumerator CheckGameSet()
     {
-        CheckCharacterDead();
-        UpdateCameraPos();
+        while (!GameClear && !GameOver)
+        {
+            CheckCharacterDead();
+            UpdateCameraPos();
+            yield return null;
+        }
         if (GameClear)
         {
             for (int i = 0; i < InGameCharacters.Length; i++)
@@ -123,5 +160,9 @@ public class GameManager : MonoBehaviour
             StartCoroutine(GameCleared());
         }
         if (GameOver) StartCoroutine(GameSet());
+    }
+
+    private void Update()
+    {
     }
 }

@@ -28,8 +28,13 @@ public class MoveScene : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.buildIndex == 1)
+        if(scene.name == "MainScene")
         {
+            DataManager.Inst.GetJsonItemData();
+        }
+        if(scene.buildIndex == 2)
+        {
+            InventoryManager.Inst.items.Clear();
             GameManager.Inst.InGameSetting(DataManager.Inst.Formation);
         }
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Boss Stat
   m_EditorClassIdentifier: 
   charName: 
-  maxHP: 20000
+  maxHP: 1000
   moveSpeed: 3
   attackRange: 200
   skillRange: 0

@@ -75,6 +75,6 @@ public class FormationSystem : MonoBehaviour
     public void ConveyFormation()
     {
         DataManager.Inst.Formation = InMain.Clone() as GameObject[];
-        MoveScene.Inst.Move(1);
+        MoveScene.Inst.Move(2);
     }
 }
