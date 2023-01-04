@@ -10,7 +10,6 @@ public class Boss : CharacterProperty, IBattle
     public BossStat bossInfo;
 
     public Transform HitPos;
-
     public IBattle singularTarget;
     public GameObject single;
     public IBattle[] multipleTarget = new IBattle[4];
@@ -52,6 +51,8 @@ public class Boss : CharacterProperty, IBattle
             return true;
         }
     }
+
+    public Transform hitPos => HitPos;
 
     public void OnDamage(int damage, bool crit)
     {
@@ -234,14 +235,14 @@ public class Boss : CharacterProperty, IBattle
             for (int i = 0; i < MissileMuzzle.Length; i++)
             {
                 Transform target = null;
-                if (multipleTarget[i] != null) target = multipleTarget[i].transform.GetComponent<Character>().HitPos;
+                if (multipleTarget[i] != null) target = multipleTarget[i].transform.GetComponent<IBattle>().hitPos;
                 else
                 {
                     for (int j = 0; j < i; j++)
                     {
                         if (multipleTarget[j] != null)
                         {
-                            target = multipleTarget[j].transform.GetComponent<Character>().HitPos;
+                            target = multipleTarget[j].transform.GetComponent<IBattle>().hitPos;
                             break;
                         }
                     }

@@ -165,8 +165,8 @@ public class Shiroko : Character, ISkill
     {
         if (skillTarget != null)
         {
-            Transform hitPos = skillTarget.transform.GetComponent<IBattle>().transform;
-            EX_Skill(hitPos);
+            Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
+            EX_Skill(HitPos);
         }
     }
 
@@ -251,8 +251,8 @@ public class Shiroko : Character, ISkill
                     Throw.GetComponent<Grenade>().isCritical = true;
                 }
                 else finalDamage = (int)skillDamage;
-                Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
-                StartCoroutine(Throw.GetComponent<Grenade>().Throwing(hitPos, 3f, finalDamage));
+                Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
+                StartCoroutine(Throw.GetComponent<Grenade>().Throwing(HitPos, 3f, finalDamage));
 
             }
 
@@ -271,13 +271,13 @@ public class Shiroko : Character, ISkill
     public void Passive_Skill()
     {
         myStat.CritRate *= s_Passive.Percentage;
-        s_Passive.buff.isBuffOn = true;
+        s_Passive.isBuffOn = true;
     }
 
     // 일반 공격 시 20% 확률로 공격속도 N% 증가(30초간)(쿨타임 25초)
     public void Sub_Skill()
     {
-        if (s_Sub.buff.isBuffOn)
+        if (s_Sub.isBuffOn)
         {
             ResetSubSkillBuff();
             if (coSubBuff != null)
@@ -293,11 +293,11 @@ public class Shiroko : Character, ISkill
     {
         SubReady = false;
         myStat.AttackSpeed *= s_Sub.Percentage;
-        s_Sub.buff.isBuffOn = true;
+        s_Sub.isBuffOn = true;
         yield return new WaitForSeconds(s_Sub.coolTime);
         SubReady = true;
-        yield return new WaitForSeconds(s_Sub.buff.buffTime - s_Sub.coolTime);
-        s_Sub.buff.isBuffOn = false;
+        yield return new WaitForSeconds(s_Sub.BuffTime - s_Sub.coolTime);
+        s_Sub.isBuffOn = false;
         ResetSubSkillBuff();
     }
 
@@ -310,7 +310,7 @@ public class Shiroko : Character, ISkill
     {
         if (myWeapon.curMagazine > 0)
         {
-            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
             myWeapon.Fire(hitPos);
             if (Random.Range(0.0f, 100.0f) <= 25.0f)
             {

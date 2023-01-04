@@ -75,6 +75,12 @@ public class FormationSystem : MonoBehaviour
     public void ConveyFormation()
     {
         DataManager.Inst.Formation = InMain.Clone() as GameObject[];
+        DataManager.Inst.RInfo.CurBossTicket--;
         MoveScene.Inst.Move(2);
+    }
+
+    public void BackToMain()
+    {
+        MoveScene.Inst.Move(0);
     }
 }

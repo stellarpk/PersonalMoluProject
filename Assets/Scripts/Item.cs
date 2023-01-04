@@ -13,6 +13,13 @@ public struct ItemInfo
     public string IconName;
 }
 
+public struct ResourceInfo
+{
+    public double Gold;
+    public int MaxBossTicket;
+    public int CurBossTicket;
+}
+
 public class Item : UIProperty
 {
     public ItemValue itemValue;

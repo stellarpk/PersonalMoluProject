@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12750,6 +12750,7 @@ MonoBehaviour:
   - {fileID: -8248055769452133590, guid: b4f2cd64f5bd4864f858ad297fb7ed54, type: 3}
   - {fileID: -6005755431212473761, guid: de8e40311ada02b4a89e1fadf05ef0e4, type: 3}
   - {fileID: 3802554929513437982, guid: fe363ebf26b427b40849f1bdc7e76131, type: 3}
+  GoldGO: {fileID: 3652842539716266762, guid: 5ad6466f4742aec4eb04dda621dccce1, type: 3}
   RewardPos: {fileID: 2800387441162797183}
 --- !u!4 &453852264
 Transform:

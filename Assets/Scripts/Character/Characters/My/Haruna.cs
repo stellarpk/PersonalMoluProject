@@ -189,9 +189,9 @@ public class Haruna : Character, ISkill
             int finalDamage = 0;
             if (Random.Range(0.0f, 100.0f) <= rate) finalDamage = (int)(skillDamage * (myStat.CritDmg * 0.01f));
             else finalDamage = (int)skillDamage;
-            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+            Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
-            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(HitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);
         }
         EndNormalSkillAnim();
     }
@@ -206,7 +206,7 @@ public class Haruna : Character, ISkill
     public void Passive_Skill()
     {
         myStat.MaxHP *= s_Passive.Percentage;
-        s_Passive.buff.isBuffOn = true;
+        s_Passive.isBuffOn = true;
     }
 
     // 이동하지 않으면 공격력 N%증가
@@ -221,18 +221,18 @@ public class Haruna : Character, ISkill
         {
             if (myState != STATE.Move)
             {
-                if (!s_Sub.buff.isBuffOn)
+                if (!s_Sub.isBuffOn)
                 {
                     myStat.AttackDamage *= s_Sub.Percentage;
-                    s_Sub.buff.isBuffOn = true;
+                    s_Sub.isBuffOn = true;
                 }
             }
             else
             {
-                if (s_Sub.buff.isBuffOn)
+                if (s_Sub.isBuffOn)
                 {
                     myStat.AttackDamage /= s_Sub.Percentage;
-                    s_Sub.buff.isBuffOn = false;
+                    s_Sub.isBuffOn = false;
                 }
             }
             yield return null;

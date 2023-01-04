@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
 
     public int RewardGold;
     public List<Item> RewardItem = new List<Item>();
+    public GameObject GoldGO;
     public Transform RewardPos;
 
     private void Awake()
@@ -130,7 +131,11 @@ public class GameManager : MonoBehaviour
             }
         }
         DataManager.Inst.SaveItemData();
-        DataManager.Inst.TotalGold += Gold;
+        DataManager.Inst.RInfo.Gold += Gold;
+        GameObject goldIcon = Instantiate(GoldGO);
+        goldIcon.transform.SetParent(RewardPos);
+        goldIcon.GetComponent<Item>().countText.text = Gold.ToString();
+        DataManager.Inst.SaveGoldData();
     }
 
     public IEnumerator GameSet()

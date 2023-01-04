@@ -8,6 +8,7 @@ public interface IBattle
 {
     void OnDamage(int damage,bool crit);
     Transform transform { get; }
+    Transform hitPos { get; }
     bool IsLive
     {
         get;
@@ -21,7 +22,8 @@ public struct Skill
     public float Percentage;
     public float Percentage_2;
     public int SkillLevel;
-    public Buff buff;
+    public bool isBuffOn;
+    public float BuffTime;
 
     public void Initialize(SkillData SDB)
     {
@@ -29,6 +31,7 @@ public struct Skill
         SkillLevel = SDB.SkillLevel;
         Percentage = SDB.GetPercentage(SDB.SkillLevel);
         Percentage_2 = SDB.GetPercentage_2(SDB.SkillLevel);
+        BuffTime = SDB.BuffTime;
     }
 }
 

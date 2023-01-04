@@ -31,6 +31,7 @@ public class MoveScene : MonoBehaviour
         if(scene.name == "MainScene")
         {
             DataManager.Inst.GetJsonItemData();
+            DataManager.Inst.GetJsonGoldData();
         }
         if(scene.buildIndex == 2)
         {

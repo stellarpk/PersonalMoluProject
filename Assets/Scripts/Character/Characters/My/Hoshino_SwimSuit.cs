@@ -101,7 +101,7 @@ public class Hoshino_SwimSuit : Character, ISkill
         myAnim.SetTrigger("Skill_EX");
         myAnim.SetLayerWeight(myAnim.GetLayerIndex("UpperLayer"), 0);
         if (CIK != null) CIK.weight = 0;
-        if (s_EX.buff.isBuffOn)
+        if (s_EX.isBuffOn)
         {
             ResetEXSkillBuff();
             if (coEXBuff != null)
@@ -126,10 +126,10 @@ public class Hoshino_SwimSuit : Character, ISkill
         }
         Sub_Skill();
         EX.gameObject.SetActive(true);
-        s_EX.buff.isBuffOn = true;
-        yield return new WaitForSeconds(s_EX.buff.buffTime);
+        s_EX.isBuffOn = true;
+        yield return new WaitForSeconds(s_EX.BuffTime);
         EX.gameObject.SetActive(false);
-        s_EX.buff.isBuffOn = false;
+        s_EX.isBuffOn = false;
         ResetEXSkillBuff();
     }
     void ResetEXSkillBuff()
@@ -204,18 +204,18 @@ public class Hoshino_SwimSuit : Character, ISkill
     {
         myStat.AttackDamage *= s_Passive.Percentage;
         myStat.DefencePower *= s_Passive.Percentage;
-        s_Passive.buff.isBuffOn = true;
+        s_Passive.isBuffOn = true;
     }
     // EX스킬 사용 중 코스트 회복력 증가
     public void Sub_Skill()
     {
         myStat.CostRecover += s_Sub.Percentage;
-        s_Sub.buff.isBuffOn = true;
+        s_Sub.isBuffOn = true;
     }
 
     void ResetSubSkillBuff()
     {
         myStat.CostRecover -= s_Sub.Percentage;
-        s_Sub.buff.isBuffOn = false;
+        s_Sub.isBuffOn = false;
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 using System.IO;
 using System.Linq;
 using System;
+using System.Globalization;
 
 public class DataManager : MonoBehaviour
 {
@@ -14,12 +15,16 @@ public class DataManager : MonoBehaviour
     public int CurBossTicket;
 
     public int TotalGold;
-
+    public ResourceInfo RInfo;
     private Dictionary<int, ItemValue> IID = new Dictionary<int, ItemValue>();
     public List<ItemValue> IVs;
+    public List<CharacterData> CVs;
     public static string itemData;
+    public static string goldData;
+    public static string charData;
     public ItemValue ForGetJson;
     public GameObject Slot;
+    public GameObject curCharacter;
     private void Awake()
     {
         if (Inst != null)
@@ -29,6 +34,7 @@ public class DataManager : MonoBehaviour
         }
         Inst = this;
         IVs = Resources.LoadAll<ItemValue>("SO").ToList();
+        CVs = Resources.LoadAll<CharacterData>("SO").ToList();
         IID = IVs.ToDictionary(x => x.ID);
         DontDestroyOnLoad(gameObject);
     }
@@ -50,7 +56,7 @@ public class DataManager : MonoBehaviour
                 string[] items = itemData.Split("=");
                 GetItemJson(items, InventoryManager.Inst.items);
                 GetItemJson(items, InventoryManager.Inst.Copy);
-                
+
                 for (int i = 0; i < InventoryManager.Inst.Copy.Count; i++)
                 {
                     InventoryManager.Inst.Copy[i].transform.SetParent(InventoryManager.Inst.gameObject.transform);
@@ -59,6 +65,42 @@ public class DataManager : MonoBehaviour
 
             ClearSO();
         }
+    }
+
+    public void GetJsonGoldData()
+    {
+        string fileName = @"Player_Resource.Json";
+        string filePath = Application.dataPath + "/" + fileName;
+        if (File.Exists(filePath))
+        {
+            goldData = LoadText(filePath);
+            if (goldData != string.Empty)
+            {
+                RInfo = JsonUtility.FromJson<ResourceInfo>(goldData);
+                MainScene.Inst.GoldText.text = InputCommaToText(RInfo.Gold).ToString();
+                MainScene.Inst.BossTicket.text = RInfo.CurBossTicket.ToString() + " / " + RInfo.MaxBossTicket.ToString();
+            }
+        }
+    }
+
+    public void GetJsonCharacterData(Character toSave,CharacterData toGet)
+    {
+        string fileName = @$"{toGet.CharName}_Data.Json";
+        string filePath = Application.dataPath + "/Jsons/" + fileName;
+        if (File.Exists(filePath))
+        {
+            charData = LoadText(filePath);
+            if (charData != null)
+            {
+                toGet = JsonUtility.FromJson<CharacterData>(charData);
+                toSave.myStat.myData = toGet;
+            }
+        }
+    }
+
+    string InputCommaToText(double Data)
+    {
+        return string.Format("{0:#,###}", Data);
     }
 
     public void GetItemJson(string[] items, List<Item> list)
@@ -98,7 +140,7 @@ public class DataManager : MonoBehaviour
             if (item.itemValue.ID == InventoryManager.Inst.Copy[i].ID)
             {
                 Contain = true;
-                count = InventoryManager.Inst.Copy[i].ItemCount+1;
+                count = InventoryManager.Inst.Copy[i].ItemCount + 1;
                 idx = i;
             }
         }
@@ -137,5 +179,27 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(path, item);
 
         InventoryManager.Inst.ClearCopy();
+    }
+
+    public void SaveGoldData()
+    {
+        string resource = string.Empty;
+        string resourceValueToJson = string.Empty;
+        resourceValueToJson = JsonUtility.ToJson(RInfo, true);
+        resource += resourceValueToJson;
+
+        string fileName = "Player_Resource";
+        string path = Application.dataPath + "/" + fileName + ".Json";
+        File.WriteAllText(path, resource);
+    }
+
+    public void SaveCharacterData(CharacterData toSave)
+    {
+        string character = string.Empty;
+        character = JsonUtility.ToJson(toSave, true);
+
+        string fileName = $"{toSave.CharName}_Data";
+        string path = Application.dataPath + "/Jsons/" + fileName + ".Json";
+        File.WriteAllText(path, character);
     }
 }

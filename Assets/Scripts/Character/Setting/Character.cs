@@ -19,15 +19,13 @@ public class Character : CharacterProperty, IBattle
     public Skill s_Passive;
     public Skill s_Sub;
 
-    [Header("BuffList")]
-    public List<Buff> myBuffList = new List<Buff>();
-
     public PersonalWeapon myWeapon;
 
     public Scan scanner = null;
 
     public Transform HitPos;
 
+    public Transform hitPos => HitPos;
     NavMeshPath myPath = null;
     
     Vector3 Destination = Vector3.zero;
@@ -62,7 +60,6 @@ public class Character : CharacterProperty, IBattle
     HpBar myHpBar;
 
     public GameObject DmgTxt;
-    //public Transform HitPos;
     //public Transform myHitPos;
     public enum STATE
     {
@@ -120,27 +117,6 @@ public class Character : CharacterProperty, IBattle
         s_Normal.Initialize(s_Normal.sData);
         s_Passive.Initialize(s_Passive.sData);
         s_Sub.Initialize(s_Sub.sData);
-        InitializeBuff();
-    }
-
-    public void InitializeBuff()
-    {
-        if (s_EX.buff.bData != null)
-        {
-            s_EX.buff.Initailize(s_EX.buff.bData);
-        }
-        if (s_Normal.buff.bData != null)
-        {
-            s_Normal.buff.Initailize(s_Normal.buff.bData);
-        }
-        if (s_Passive.buff.bData != null)
-        {
-            s_Passive.buff.Initailize(s_Passive.buff.bData);
-        }
-        if (s_Sub.buff.bData != null)
-        {
-            s_Sub.buff.Initailize(s_Sub.buff.bData);
-        }
     }
 
     public STATE myState = STATE.Create;
@@ -157,6 +133,7 @@ public class Character : CharacterProperty, IBattle
             return true;
         }
     }
+
 
 
     // 방어력 계산 - 데미지 / (1+(방어력+1500))
@@ -411,8 +388,8 @@ public class Character : CharacterProperty, IBattle
     {
         if (myWeapon.curMagazine > 0)
         {
-            Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
-            myWeapon.Fire(hitPos);
+            Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
+            myWeapon.Fire(HitPos);
         }
         else Reload();
     }

@@ -7,6 +7,7 @@ public class MainScene : MonoBehaviour
     public static MainScene Inst = null;
     public Transform ItemContainer;
     public TMP_Text GoldText;
+    public TMP_Text BossTicket;
 
     private void Awake()
     {
@@ -20,9 +21,8 @@ public class MainScene : MonoBehaviour
 
     public void MoveToBoss()
     {
-        if (DataManager.Inst.CurBossTicket > 0)
+        if (DataManager.Inst.RInfo.CurBossTicket > 0)
         {
-            DataManager.Inst.CurBossTicket--;
             MoveScene.Inst.Move(1);
         }
         else Debug.Log("보스 입장에 필요한 티켓이 없습니다.");

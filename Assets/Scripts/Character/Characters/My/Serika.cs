@@ -99,7 +99,7 @@ public class Serika : Character, ISkill
         SkillSystem.Inst.curCost -= s_EX.sData.SkillCost;
         SkillSystem.Inst.UseSkillCard(EX_Card);
         Reload();
-        if (s_EX.buff.isBuffOn)
+        if (s_EX.isBuffOn)
         {
             ResetEXSkillBuff();
             if (coEXBuff != null)
@@ -121,9 +121,9 @@ public class Serika : Character, ISkill
     public IEnumerator coEXSkill()
     {
         myStat.AttackDamage *= s_EX.Percentage;
-        s_EX.buff.isBuffOn = true;
-        yield return new WaitForSeconds(s_EX.buff.buffTime);
-        s_EX.buff.isBuffOn = false;
+        s_EX.isBuffOn = true;
+        yield return new WaitForSeconds(s_EX.BuffTime);
+        s_EX.isBuffOn = false;
         ResetEXSkillBuff();
     }
     void ResetEXSkillBuff()
@@ -180,7 +180,7 @@ public class Serika : Character, ISkill
         int divideDamage = 5;
         float projectileDamage = skillDamage / divideDamage;
         float stability = myStat.Stability * 0.5f;
-        Transform hitPos = scanner.myTarget.transform.GetComponent<IBattle>().transform;
+        Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
         for (int i = 0; i < divideDamage; i++)
         {
             float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
@@ -193,7 +193,7 @@ public class Serika : Character, ISkill
                 bullet.GetComponent<Bullet>().isCritical = true;
             }
             else finalDamage = Damage;
-            bullet.GetComponentInChildren<Bullet>().OnFire(hitPos, finalDamage, 5f, bullet);
+            bullet.GetComponentInChildren<Bullet>().OnFire(HitPos, finalDamage, 5f, bullet);
             if (i < divideDamage - 1)
             {
                 yield return new WaitForSeconds(0.2f);
@@ -206,14 +206,13 @@ public class Serika : Character, ISkill
     public void Passive_Skill()
     {
         myStat.AttackDamage *= s_Passive.Percentage;
-        s_Passive.buff.isBuffOn = true;
     }
 
     // Sub - EX 스킬 사용시 공격속도 N% 증가 (N초간)
     public void Sub_Skill()
     {
         // 버프가 유지중이라면 기존에 있던 버프 삭제 후 갱신
-        if (s_Sub.buff.isBuffOn)
+        if (s_Sub.isBuffOn)
         {
             ResetSubSkillBuff();
             if (coSubBuff != null)
@@ -228,9 +227,9 @@ public class Serika : Character, ISkill
     public IEnumerator IncreaseAttackSPD()
     {
         myStat.AttackSpeed *= s_Sub.Percentage;
-        s_Sub.buff.isBuffOn = true;
-        yield return new WaitForSeconds(s_Sub.buff.buffTime);
-        s_Sub.buff.isBuffOn = false;
+        s_Sub.isBuffOn = true;
+        yield return new WaitForSeconds(s_Sub.BuffTime);
+        s_Sub.isBuffOn = false;
         ResetSubSkillBuff();
     }
 

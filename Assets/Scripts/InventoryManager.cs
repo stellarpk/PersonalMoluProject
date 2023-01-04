@@ -26,7 +26,7 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        //DataManager.Inst.GetJsonItemData();
+        
     }
 
     public void ClearCopy()
