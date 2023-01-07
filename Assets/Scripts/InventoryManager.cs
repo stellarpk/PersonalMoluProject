@@ -13,6 +13,7 @@ public class InventoryManager : MonoBehaviour
     public Transform itemContainer;
     public int Gold;
     public TMP_Text GoldText;
+    public bool InventoryAdded = true;
     private void Awake()
     {
         if (Inst != null)
@@ -36,6 +37,15 @@ public class InventoryManager : MonoBehaviour
             Destroy(Copy[i].gameObject);
         }
         Copy.Clear();
+    }
+
+    public void ClearItem()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            Destroy(items[i].gameObject);
+        }
+        items.Clear();
     }
 
     public void ChangeGoldText()

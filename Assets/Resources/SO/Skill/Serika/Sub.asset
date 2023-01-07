@@ -27,7 +27,8 @@ MonoBehaviour:
   - 1.342
   - 1.383
   percentage_2: []
-  BuffTime: 0
-  SkillExplain: When Use EX, ATKSPD *% Increase
+  isBuff: 1
+  BuffTime: 30
+  SkillExplain: When Use EX, ATKSPD [Skill_1]% Increase For [Duration] sec
   SkillName: 
   SkillIcon: Buff_1

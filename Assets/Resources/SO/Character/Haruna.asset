@@ -16,8 +16,8 @@ MonoBehaviour:
   CharName: Haruna
   MaxHP: 2451
   MoveSpeed: 3
-  AttackRange: 750
-  SkillRange: 750
+  AttackRange: 75
+  SkillRange: 75
   AttackSpeed: 1.25
   AttackDamage: 457
   Stability: 150

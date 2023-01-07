@@ -27,7 +27,8 @@ MonoBehaviour:
   - 612
   - 684
   percentage_2: []
+  isBuff: 1
   BuffTime: 0
-  SkillExplain: CostRecover *Increase
+  SkillExplain: while Ex Skill On, CostRecover [Skill_1]Increase
   SkillName: 
   SkillIcon: CostRecover

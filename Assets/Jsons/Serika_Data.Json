@@ -1,10 +1,10 @@
 {
-    "Level": 2,
+    "Level": 1,
     "CharName": "Serika",
     "MaxHP": 2302.0,
     "MoveSpeed": 3.0,
-    "AttackRange": 650.0,
-    "SkillRange": 50.0,
+    "AttackRange": 65.0,
+    "SkillRange": 5.0,
     "AttackSpeed": 3.0,
     "AttackDamage": 311.0,
     "Stability": 150.0,

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   SkillCost: 0
-  CoolTime: 0
+  CoolTime: 40
   SkillLevel: 1
   percentage:
   - 2.83
@@ -38,6 +38,7 @@ MonoBehaviour:
   - 0.901
   - 0.976
   BuffTime: 0
-  SkillExplain: Damage *% to singleTarget, Heal &% to this
+  SkillExplain: Every [CoolTime] Damage [Skill_1]% to singleTarget, Heal [Skill_2]%
+    to this Character
   SkillName: 
   SkillIcon: Healing

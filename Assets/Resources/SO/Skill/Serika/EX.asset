@@ -22,7 +22,8 @@ MonoBehaviour:
   - 1.57
   - 1.677
   percentage_2: []
-  BuffTime: 0
-  SkillExplain: Reloading, ATK Increase *%
+  isBuff: 1
+  BuffTime: 30
+  SkillExplain: Reload Immediately, ATK Increase [Skill_1]% for [Duration] sec
   SkillName: 
   SkillIcon: Buff_1

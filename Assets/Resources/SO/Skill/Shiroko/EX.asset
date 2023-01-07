@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SkillCost: 3
   CoolTime: 0
-  SkillLevel: 1
+  SkillLevel: 5
   percentage:
   - 4
   - 4.6
@@ -22,7 +22,8 @@ MonoBehaviour:
   - 6.4
   - 7.6
   percentage_2: []
+  isBuff: 0
   BuffTime: 0
-  SkillExplain: 
+  SkillExplain: Damage Single Target ATK [Skill_1]%
   SkillName: 
   SkillIcon: Damage

@@ -1,0 +1,18 @@
+{
+    "SkillCost": 1,
+    "CoolTime": 0.0,
+    "SkillLevel": 4,
+    "percentage": [
+        5.059999942779541,
+        5.820000171661377,
+        7.349999904632568,
+        8.109999656677246,
+        8.869999885559082
+    ],
+    "percentage_2": [],
+    "isBuff": false,
+    "BuffTime": 0.0,
+    "SkillExplain": "Attack [Skill_1]% Damage",
+    "SkillName": "",
+    "SkillIcon": "Damage"
+}

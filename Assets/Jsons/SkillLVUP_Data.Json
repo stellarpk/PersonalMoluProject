@@ -1,0 +1,41 @@
+{
+  "ItemID": 1000,
+  "Count": 1,
+  "Gold": 1000
+}= {
+  "ItemID": 1000,
+  "Count": 2,
+  "Gold": 1000
+}= {
+  "ItemID": 1001,
+  "Count": 2,
+  "Gold": 1000
+}= {
+  "ItemID": 1001,
+  "Count": 3,
+  "Gold": 1000
+}= {
+  "ItemID": 1001,
+  "Count": 5,
+  "Gold": 1000
+}= {
+  "ItemID": 1002,
+  "Count": 3,
+  "Gold": 1000
+}= {
+  "ItemID": 1002,
+  "Count": 5,
+  "Gold": 1000
+}= {
+  "ItemID": 1002,
+  "Count": 7,
+  "Gold": 1000
+}= {
+  "ItemID": 1003,
+  "Count": 4,
+  "Gold": 1000
+}= {
+  "ItemID": 1003,
+  "Count": 7,
+  "Gold": 1000
+}

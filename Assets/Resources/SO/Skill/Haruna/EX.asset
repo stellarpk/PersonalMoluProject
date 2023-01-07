@@ -23,6 +23,6 @@ MonoBehaviour:
   - 8.87
   percentage_2: []
   BuffTime: 0
-  SkillExplain: Attack *% Damage
+  SkillExplain: Attack [Skill_1]% Damage
   SkillName: 
   SkillIcon: Damage

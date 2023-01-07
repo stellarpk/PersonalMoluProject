@@ -10,6 +10,7 @@ public class SkillData : ScriptableObject
     [SerializeField] public int SkillLevel;
     [SerializeField] public float[] percentage;
     [SerializeField] public float[] percentage_2;
+    [SerializeField] public bool isBuff;
     [SerializeField] public float BuffTime;
     [Multiline (3)]
     [SerializeField] public string SkillExplain;

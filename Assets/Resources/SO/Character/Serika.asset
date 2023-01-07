@@ -16,8 +16,8 @@ MonoBehaviour:
   CharName: Serika
   MaxHP: 2302
   MoveSpeed: 3
-  AttackRange: 650
-  SkillRange: 50
+  AttackRange: 65
+  SkillRange: 5
   AttackSpeed: 3
   AttackDamage: 311
   Stability: 150

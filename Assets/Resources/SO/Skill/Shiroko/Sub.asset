@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Sub
   m_EditorClassIdentifier: 
   SkillCost: 0
-  CoolTime: 0
+  CoolTime: 25
   SkillLevel: 1
   percentage:
   - 1.302
@@ -27,7 +27,9 @@ MonoBehaviour:
   - 1.514
   - 1.574
   percentage_2: []
-  BuffTime: 0
-  SkillExplain: 
+  isBuff: 1
+  BuffTime: 30
+  SkillExplain: Every Normal Attack, 20% Chance to Increase ATKSPD [Skill_1]% for
+    [Duration] sec. (CoolTime [CoolTime] sec)
   SkillName: 
   SkillIcon: Buff_1

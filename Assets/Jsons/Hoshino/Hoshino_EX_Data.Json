@@ -1,0 +1,18 @@
+{
+    "SkillCost": 5,
+    "CoolTime": 0.0,
+    "SkillLevel": 2,
+    "percentage": [
+        1.2649999856948853,
+        1.284999966621399,
+        1.3250000476837159,
+        1.3450000286102296,
+        1.3849999904632569
+    ],
+    "percentage_2": [],
+    "isBuff": true,
+    "BuffTime": 50.0,
+    "SkillExplain": "InCircleRange, Ally Gain [Skill_1]%ATK Bonus for [Duration] sec",
+    "SkillName": "",
+    "SkillIcon": "AllyBuff2"
+}

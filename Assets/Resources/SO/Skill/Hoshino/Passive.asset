@@ -27,7 +27,8 @@ MonoBehaviour:
   - 1.151
   - 1.162
   percentage_2: []
+  isBuff: 1
   BuffTime: 0
-  SkillExplain: DEF Increase *%, ATK Increase &%
+  SkillExplain: DEF Increase [Skill_1]%, ATK Increase [Skill_1]%
   SkillName: 
   SkillIcon: Passive_1

@@ -16,8 +16,8 @@ MonoBehaviour:
   CharName: Hoshino
   MaxHP: 2554
   MoveSpeed: 3
-  AttackRange: 450
-  SkillRange: 500
+  AttackRange: 45
+  SkillRange: 50
   AttackSpeed: 1.5
   AttackDamage: 243
   Stability: 150

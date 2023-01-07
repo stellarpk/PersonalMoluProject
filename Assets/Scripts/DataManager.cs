@@ -16,13 +16,17 @@ public class DataManager : MonoBehaviour
 
     public int TotalGold;
     public ResourceInfo RInfo;
+    public SkillLVUP SLVInfo;
     private Dictionary<int, ItemValue> IID = new Dictionary<int, ItemValue>();
     public List<ItemValue> IVs;
     public List<CharacterData> CVs;
     public static string itemData;
     public static string goldData;
     public static string charData;
+    public static string skillupData;
+    public static string skillData;
     public ItemValue ForGetJson;
+    public CharacterData Dummy;
     public GameObject Slot;
     public GameObject curCharacter;
     private void Awake()
@@ -92,8 +96,63 @@ public class DataManager : MonoBehaviour
             charData = LoadText(filePath);
             if (charData != null)
             {
-                toGet = JsonUtility.FromJson<CharacterData>(charData);
+                JsonUtility.FromJsonOverwrite(charData, toGet);
                 toSave.myStat.myData = toGet;
+                MainScene.Inst.UpChar.LV.text = toSave.myStat.myData.Level.ToString();
+            }
+        }
+    }
+
+    public void GetJsonSkillUPData()
+    {
+        string fileName = "SkillLVUP_Data.Json";
+        string filePath = Application.dataPath + "/Jsons/" + fileName;
+        if (File.Exists(filePath))
+        {
+            skillupData = LoadText(filePath);
+            if (skillupData != null)
+            {
+                string[] data = skillupData.Split("=");
+                for (int i = 0; i < data.Length; i++)
+                {
+                    MainScene.Inst.UpChar.UData.Materials[i] = JsonUtility.FromJson<SkillLVUP>(data[i]);
+                }
+            }
+        }
+    }
+
+    public void GetJsonCharacterSkillData(CharacterData owner, SkillData toGet)
+    {
+        string fileName = $"{owner.CharName}_{toGet.name}_Data.Json";
+        string filepath = Application.dataPath + $"/Jsons/{owner.CharName}/" + fileName;
+        if (File.Exists(filepath))
+        {
+            skillData = LoadText(filepath);
+            if (skillData != null)
+            {
+                JsonUtility.FromJsonOverwrite(skillData, toGet);
+            }
+        }
+    }
+
+    public ItemValue GetItemByID(int ID)
+    {
+        return IID[ID];
+    }
+
+    public void SetJsonCharacterData()
+    {
+        for (int i = 0; i < CVs.Count; i++)
+        {
+            string fileName = @$"{CVs[i].CharName}_Data.Json";
+            string filePath = Application.dataPath + "/Jsons/" + fileName;
+            if (File.Exists(filePath))
+            {
+                charData = LoadText(filePath);
+                if (charData != null)
+                {
+                    JsonUtility.FromJsonOverwrite(charData, CVs[i]);
+                }
             }
         }
     }
@@ -158,8 +217,6 @@ public class DataManager : MonoBehaviour
             InventoryManager.Inst.Copy.Add(added.GetComponent<Item>());
         }
     }
-
-
     public void SaveItemData()
     {
         string item = string.Empty;
@@ -179,6 +236,7 @@ public class DataManager : MonoBehaviour
         File.WriteAllText(path, item);
 
         InventoryManager.Inst.ClearCopy();
+        InventoryManager.Inst.ClearItem();
     }
 
     public void SaveGoldData()
@@ -201,5 +259,15 @@ public class DataManager : MonoBehaviour
         string fileName = $"{toSave.CharName}_Data";
         string path = Application.dataPath + "/Jsons/" + fileName + ".Json";
         File.WriteAllText(path, character);
+    }
+
+    public void SaveCharacterSkillData(CharacterData owner,SkillData toSave)
+    {
+        string skillLv = string.Empty;
+        skillLv = JsonUtility.ToJson(toSave, true);
+
+        string fileName = $"{owner.CharName}_{toSave.name}_Data";
+        string path = Application.dataPath + $"/Jsons/{owner.CharName}/" + fileName + ".Json";
+        File.WriteAllText(path, skillLv);
     }
 }

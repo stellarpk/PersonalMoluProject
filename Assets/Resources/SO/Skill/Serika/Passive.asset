@@ -27,7 +27,8 @@ MonoBehaviour:
   - 1.238
   - 1.266
   percentage_2: []
+  isBuff: 1
   BuffTime: 0
-  SkillExplain: ATK *% Increase
+  SkillExplain: ATK [Skill_1]% Increase
   SkillName: 
   SkillIcon: Buff_1

@@ -1,0 +1,18 @@
+{
+    "SkillCost": 3,
+    "CoolTime": 0.0,
+    "SkillLevel": 3,
+    "percentage": [
+        4.0,
+        4.599999904632568,
+        5.800000190734863,
+        6.400000095367432,
+        7.599999904632568
+    ],
+    "percentage_2": [],
+    "isBuff": false,
+    "BuffTime": 0.0,
+    "SkillExplain": "Damage Single Target ATK [Skill_1]%",
+    "SkillName": "",
+    "SkillIcon": "Damage"
+}

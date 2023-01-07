@@ -1,0 +1,16 @@
+{
+    "Level": 1,
+    "CharName": "Shiroko",
+    "MaxHP": 2492.0,
+    "MoveSpeed": 3.0,
+    "AttackRange": 65.0,
+    "SkillRange": 65.0,
+    "AttackSpeed": 3.0,
+    "AttackDamage": 340.0,
+    "Stability": 150.0,
+    "CostRecover": 1050.0,
+    "CritPer": 202.0,
+    "CritDamage": 200.0,
+    "DefencePower": 19.0,
+    "Healing": 300.0
+}

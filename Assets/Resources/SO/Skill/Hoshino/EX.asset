@@ -22,7 +22,8 @@ MonoBehaviour:
   - 1.345
   - 1.385
   percentage_2: []
-  BuffTime: 0
-  SkillExplain: InCircleRange, Ally Gain *%ATK Bonus
+  isBuff: 1
+  BuffTime: 50
+  SkillExplain: InCircleRange, Ally Gain [Skill_1]%ATK Bonus for [Duration] sec
   SkillName: 
   SkillIcon: AllyBuff2

@@ -27,7 +27,8 @@ MonoBehaviour:
   - 1.238
   - 1.266
   percentage_2: []
+  isBuff: 1
   BuffTime: 0
-  SkillExplain: HP Increase *%
+  SkillExplain: MaxHP Increase [Skill_1]%
   SkillName: 
   SkillIcon: Passive_1

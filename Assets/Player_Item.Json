@@ -2,28 +2,28 @@
     "ID": 1000,
     "ItemName": "일반재료",
     "Droprate": 80.0,
-    "ItemCount": 14,
+    "ItemCount": 10,
     "SpriteName": "Normal_Frame",
     "IconName": "Book"
 }={
     "ID": 1001,
     "ItemName": "레어재료",
     "Droprate": 65.0,
-    "ItemCount": 15,
+    "ItemCount": 13,
     "SpriteName": "Rare_Frame",
     "IconName": "Book"
 }={
     "ID": 1002,
     "ItemName": "에픽재료",
     "Droprate": 50.0,
-    "ItemCount": 13,
+    "ItemCount": 14,
     "SpriteName": "Epic_Frame",
     "IconName": "Book"
 }={
     "ID": 1003,
     "ItemName": "레전드재료",
     "Droprate": 35.0,
-    "ItemCount": 7,
+    "ItemCount": 8,
     "SpriteName": "Legend_Frame",
     "IconName": "Book"
 }

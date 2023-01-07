@@ -25,5 +25,6 @@ public class CharacterListCard : MonoBehaviour
     public void UpgradingCharacter()
     {
         DataManager.Inst.curCharacter = myCharacter;
+        MainScene.Inst.UpChar.curCard = this;
     }
 }

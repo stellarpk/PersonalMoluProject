@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   SkillCost: 0
-  CoolTime: 0
+  CoolTime: 25
   SkillLevel: 1
   percentage:
   - 2.23
@@ -27,7 +27,8 @@ MonoBehaviour:
   - 3.8
   - 4.25
   percentage_2: []
+  isBuff: 0
   BuffTime: 0
-  SkillExplain: Damage *% to SingleTarget
+  SkillExplain: Every Damage [CoolTime] sec Damage  ATK [Skill_1]% to SingleTarget
   SkillName: 
   SkillIcon: Damage

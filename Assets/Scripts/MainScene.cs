@@ -5,6 +5,7 @@ using TMPro;
 public class MainScene : MonoBehaviour
 {
     public static MainScene Inst = null;
+    public UpgradeCharacter UpChar;
     public Transform ItemContainer;
     public TMP_Text GoldText;
     public TMP_Text BossTicket;
@@ -17,6 +18,11 @@ public class MainScene : MonoBehaviour
             return;
         }
         Inst = this;
+    }
+
+    private void Start()
+    {
+        DataManager.Inst.SetJsonCharacterData();
     }
 
     public void MoveToBoss()
