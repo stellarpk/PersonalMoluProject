@@ -18,7 +18,7 @@ MonoBehaviour:
   MoveSpeed: 3
   AttackRange: 75
   SkillRange: 75
-  AttackSpeed: 1.25
+  AttackSpeed: 0.3
   AttackDamage: 457
   Stability: 150
   CostRecover: 1050

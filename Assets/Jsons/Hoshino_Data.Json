@@ -5,7 +5,7 @@
     "MoveSpeed": 3.0,
     "AttackRange": 45.0,
     "SkillRange": 50.0,
-    "AttackSpeed": 1.5,
+    "AttackSpeed": 0.4,
     "AttackDamage": 243.0,
     "Stability": 150.0,
     "CostRecover": 1050.0,
