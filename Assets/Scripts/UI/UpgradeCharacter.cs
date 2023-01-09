@@ -11,6 +11,8 @@ public struct UpgradeData
     public int[] SkillUpgradeGold;
     public int[] LevelUpgradeGold;
     public SkillLVUP[] Materials;
+    public int MaxLevel;
+    public int MaxSkillLevel;
 
     public int GetSkillUpgradeGold(int lv)
     {
@@ -54,22 +56,29 @@ public class UpgradeCharacter : MonoBehaviour
     public UpgradeData UData;
     public GameObject StatDetails;
     public TMP_Text[] Details = new TMP_Text[9];
+    public Button LevelUpgrade;
 
     [Header("Skill UI")]
     public Image Skill_Icon;
     public TMP_Text Skill_Name;
     public TMP_Text Skill_Type;
     public TMP_Text[] Skill_Level;
-    public TMP_Text CostText;
-    public GameObject MaxLevel;
+    public TMP_Text[] CostText;
+    public GameObject[] MaxLevel;
     public TMP_Text[] Skill_Explain;
     public TMP_Text Gold;
     public GameObject[] UpgradeSkillIcon;
     public GameObject Selected;
     public GameObject MaterialPos;
+    public GameObject Alert;
+    public Button SkillUpgradeButton;
     public SkillData curSkillData;
     public SkillType curType;
     public string[] change = { "[Skill_1]", "[Skill_2]", "[CoolTime]", "[Duration]" };
+
+    bool MaterialEnough;
+    bool GoldEnough;
+    bool isMaxSkillLevel;
 
     public GameObject Slot;
     public void SetUI()
@@ -88,6 +97,15 @@ public class UpgradeCharacter : MonoBehaviour
         Skills[1].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Normal.sData);
         Skills[2].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Passive.sData);
         Skills[3].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Sub.sData);
+
+        if (curCharacter.GetComponent<Character>().myStat.myData.Level == UData.MaxLevel)
+        {
+            LevelUpgrade.interactable = false;
+        }
+        else
+        {
+            LevelUpgrade.interactable = true;
+        }
     }
 
     public void SetDetailsUI()
@@ -143,21 +161,90 @@ public class UpgradeCharacter : MonoBehaviour
         Skill_Icon.sprite = Set.Skill_Icon.sprite;
         Skill_Name.text = data.SkillName;
         Skill_Type.text = $"{data.name} Skill";
-        Skill_Level[0].text = $"Lv.{data.SkillLevel}";
-        Skill_Level[1].text = $"Lv.{data.SkillLevel + 1}";
+
+
         if (type == SkillType.EX)
         {
-            if (!CostText.gameObject.activeSelf) CostText.gameObject.SetActive(true);
-            CostText.text = $"Cost: {data.SkillCost}";
+            if (!CostText[0].gameObject.activeSelf) CostText[0].gameObject.SetActive(true);
+            CostText[0].text = $"Cost: {data.SkillCost}";
+            if (!CostText[1].gameObject.activeSelf) CostText[0].gameObject.SetActive(true);
+            CostText[1].text = $"Cost: {data.SkillCost}";
         }
-        else CostText.gameObject.SetActive(false);
+        else
+        {
+            CostText[0].gameObject.SetActive(false);
+            CostText[1].gameObject.SetActive(false);
+        }
 
-        SkillExplain(data);
+        Skill_Level[0].text = $"Lv.{data.SkillLevel}";
+        SkillExplainT(data, data.GetPercentage(data.SkillLevel), 0);
+        
+        if (data.SkillLevel < UData.MaxSkillLevel)
+        {
+            if (data.SkillLevel == (UData.MaxSkillLevel - 1))
+            {
+                Skill_Level[1].gameObject.SetActive(true);
+                Skill_Level[1].text = $"Lv.{data.SkillLevel + 1}";
+                MaxLevel[0].SetActive(false);
+                MaxLevel[1].SetActive(true);
+                SkillExplainT(data, data.GetPercentage(data.SkillLevel + 1), 1);
+            }
+            else
+            {
+                Skill_Level[1].gameObject.SetActive(true);
+                Skill_Level[1].text = $"Lv.{data.SkillLevel + 1}";
+                MaxLevel[0].SetActive(false);
+                MaxLevel[1].SetActive(false);
+                SkillExplainT(data, data.GetPercentage(data.SkillLevel + 1), 1);
+            }
+            isMaxSkillLevel = false;
+        }
+        else if (data.SkillLevel == UData.MaxSkillLevel)
+        {
+            MaxLevel[0].SetActive(true);
+            MaxLevel[1].SetActive(false);
+            Skill_Level[1].gameObject.SetActive(false);
+            Skill_Explain[1].text = "skill level max";
+            isMaxSkillLevel = true;
+        }
         curType = type;
-        Gold.text = UData.Materials[data.SkillLevel].Gold.ToString();
-        ShowMaterial(data);
+        
+        
+        
 
-        MaxLevel.SetActive(false);
+        if (isMaxSkillLevel)
+        {
+            Slot.SetActive(false);
+            SkillUpgradeButton.interactable = false;
+            Gold.text = "0";
+        }
+        else
+        {
+            ShowMaterial(data);
+            SkillUpgradeButton.interactable = true;
+
+            if (DataManager.Inst.RInfo.Gold >= UData.Materials[curSkillData.SkillLevel].Gold)
+            {
+                GoldEnough = true;
+                Gold.text = $"<color=white>{UData.Materials[data.SkillLevel].Gold}</color>";
+            }
+            else
+            {
+                GoldEnough = false;
+                Gold.text = $"<color=red>{UData.Materials[data.SkillLevel].Gold}</color>";
+            }
+
+            if (!GoldEnough || !MaterialEnough)
+            {
+                Alert.SetActive(true);
+                SkillUpgradeButton.interactable = false;
+            }
+            else
+            {
+                Alert.SetActive(false);
+                SkillUpgradeButton.interactable = true;
+            }
+        }
     }
 
     public void SkillExplain(SkillData data)
@@ -186,6 +273,27 @@ public class UpgradeCharacter : MonoBehaviour
         }
         Skill_Explain[0].text = ExplainTxt1;
         Skill_Explain[1].text = ExplainTxt2;
+    }
+    public void SkillExplainT(SkillData data, float skillLevel, int cur)
+    {
+        string ExplainTxt = data.SkillExplain;
+        if (ExplainTxt.Contains(change[(int)Explain.Skill_1]))
+        {
+            ExplainTxt = ExplainTxt.Replace(change[(int)Explain.Skill_1], CheckPercentage(data, skillLevel).ToString());
+        }
+        if (ExplainTxt.Contains(change[(int)Explain.Skill_2]))
+        {
+            ExplainTxt = ExplainTxt.Replace(change[(int)Explain.Skill_2], CheckPercentage_2(data, skillLevel).ToString());
+        }
+        if (ExplainTxt.Contains(change[(int)Explain.CoolTime]))
+        {
+            ExplainTxt = ExplainTxt.Replace(change[(int)Explain.CoolTime], data.CoolTime.ToString());
+        }
+        if (ExplainTxt.Contains(change[(int)Explain.Duration]))
+        {
+            ExplainTxt = ExplainTxt.Replace(change[(int)Explain.Duration], data.BuffTime.ToString());
+        }
+        Skill_Explain[cur].text = ExplainTxt;
     }
 
     public float CheckPercentage(SkillData data, float per)
@@ -230,12 +338,6 @@ public class UpgradeCharacter : MonoBehaviour
         return per;
     }
 
-    public void SkillLevelUP(SkillData data)
-    {
-
-
-    }
-
     public void ShowDetails()
     {
         SetDetailsUI();
@@ -244,20 +346,33 @@ public class UpgradeCharacter : MonoBehaviour
 
     public void ShowMaterial(SkillData data)
     {
-        GameObject material = Slot;
-        material.GetComponent<Item>().itemValue = DataManager.Inst.GetItemByID(UData.Materials[data.SkillLevel-1].ItemID);
-        material.GetComponent<Item>().SetItem(UData.Materials[data.SkillLevel-1].Count);
-        material.GetComponent<Item>().Setting();
-        material.GetComponent<Item>().SetUI();
-        material.transform.SetParent(MaterialPos.transform);
+        Slot.SetActive(true);
+        Slot.GetComponent<Item>().itemValue = DataManager.Inst.GetItemByID(UData.Materials[data.SkillLevel - 1].ItemID);
+        int invenIndex = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel - 1].ItemID);
+        int curInven = InventoryManager.Inst.Copy[invenIndex].ItemCount;
+
+        Slot.GetComponent<Item>().SetItem(UData.Materials[data.SkillLevel - 1].Count);
+        Slot.GetComponent<Item>().Setting();
+
+        if (curInven >= Slot.GetComponent<Item>().ItemCount)
+        {
+            MaterialEnough = true;
+            Slot.GetComponent<Item>().countText.text = $"<color=white>{curInven}</color>/{Slot.GetComponent<Item>().ItemCount}";
+        }
+        else
+        {
+            MaterialEnough = false;
+            Slot.GetComponent<Item>().countText.text = $"<color=red>{curInven}</color>/{Slot.GetComponent<Item>().ItemCount}";
+        }
+        Slot.transform.SetParent(MaterialPos.transform);
     }
 
     public void UpgradeSkill()
     {
         DataManager.Inst.RInfo.Gold -= UData.Materials[curSkillData.SkillLevel].Gold;
 
-        int index = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel-1].ItemID);
-        InventoryManager.Inst.Copy[index].SetItem(InventoryManager.Inst.Copy[index].ItemCount - UData.Materials[curSkillData.SkillLevel-1].Count);
+        int index = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel - 1].ItemID);
+        InventoryManager.Inst.Copy[index].SetItem(InventoryManager.Inst.Copy[index].ItemCount - UData.Materials[curSkillData.SkillLevel - 1].Count);
         InventoryManager.Inst.Copy[index].Setting();
         DataManager.Inst.SaveItemData();
         DataManager.Inst.GetJsonItemData();
@@ -275,12 +390,22 @@ public class UpgradeCharacter : MonoBehaviour
     public void LevelUp()
     {
         DataManager.Inst.RInfo.Gold -= UData.GetLevelUpgradeGold(curCharacter.GetComponent<Character>().myStat.myData.Level);
-        curCharacter.GetComponent<Character>().myStat.myData.Level += 1;
+        StatIncrease(curCharacter.GetComponent<Character>().myStat.myData);
         DataManager.Inst.SaveCharacterData(curCharacter.GetComponent<Character>().myStat.myData);
         DataManager.Inst.GetJsonCharacterData(curCharacter.GetComponent<Character>(), curCharacter.GetComponent<Character>().myStat.myData);
         curCard.SetUI();
+        SetUI();
         curCharacter.GetComponent<Character>().myStat.Initialize();
         DataManager.Inst.SaveGoldData();
         DataManager.Inst.GetJsonGoldData();
+    }
+
+    public void StatIncrease(CharacterData data)
+    {
+        data.Level += 1;
+        data.MaxHP += 200;
+        data.DefencePower += 5;
+        data.AttackDamage += 100;
+        data.Healing += 50;
     }
 }
