@@ -14,6 +14,7 @@ public class CharacterCard : MonoBehaviour
     private void Start()
     {
         charNameTest.text = character.GetComponent<Character>().myStat.myData.CharName;
+        CharImg.GetComponent<Image>().sprite = Resources.Load<Sprite>("Sprites/CharIcon/" + character.GetComponent<Character>().myStat.myData.IconSpriteName);
     }
     public void AddToFormation()
     {
@@ -22,6 +23,7 @@ public class CharacterCard : MonoBehaviour
         {
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].charImg.SetActive(true);
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].character = character;
+            FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].Icon.sprite = Resources.Load<Sprite>("Sprites/CharIcon/" + character.GetComponent<Character>().myStat.myData.IconSpriteName);
             FormationSystem.Inst.FormationCard[FormationSystem.Inst.index].test.text = charNameTest.text;
             FormationSystem.Inst.InSetting[FormationSystem.Inst.index] = character;
             FormationSystem.Inst.index++;

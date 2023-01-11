@@ -5,6 +5,7 @@ using UnityEngine;
 public class Drone : MonoBehaviour
 {
     public GameObject missilePrefab;
+    public AudioSource audioSource;
     public Transform FirePos;
     float m_speed = 1.0f;
     float m_disFromStart = 4.0f;
@@ -13,7 +14,7 @@ public class Drone : MonoBehaviour
     float m_interval = 0.15f;
     int shotCountPerInterval = 2;
     public bool isCritical;
-    public IEnumerator OpenFire(Transform myTarget, float Damage)
+    public IEnumerator OpenFire(Transform myTarget, float Damage, AudioClip fire)
     {
         int _shotCount = shotCount;
         while (myTarget!=null && _shotCount>0)
@@ -23,6 +24,7 @@ public class Drone : MonoBehaviour
                 if (_shotCount>0)
                 {
                     GameObject missile = Instantiate(missilePrefab);
+                    audioSource.PlayOneShot(fire);
                     missile.GetComponent<DroneMissile>().isCritical = isCritical;
                     missile.GetComponent<DroneMissile>().target = myTarget;
                     missile.GetComponent<DroneMissile>().damage = Damage;

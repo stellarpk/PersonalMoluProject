@@ -17,4 +17,6 @@ public class ItemValue : ScriptableObject
     public string SpriteName;
     [SerializeField]
     public string IconName;
+    [SerializeField]
+    public string Explain;
 }

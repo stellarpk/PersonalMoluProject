@@ -48,6 +48,14 @@ public class InventoryManager : MonoBehaviour
         items.Clear();
     }
 
+    public void SetInteractable()
+    {
+        for (int i = 0; i < items.Count; i++)
+        {
+            items[i].gameObject.GetComponent<Button>().interactable = true;
+        }
+    }
+
     public void ChangeGoldText()
     {
         GoldText.text = Gold.ToString();

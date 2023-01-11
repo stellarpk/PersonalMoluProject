@@ -21,6 +21,7 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
     public void Setting()
     {
         cost.text = character.s_EX.sData.SkillCost.ToString();
+        CharImage.sprite = Resources.Load<Sprite>("Sprites/CharIcon/" + character.myStat.myData.IconSpriteName); 
     }
 
     public void Test()
@@ -38,7 +39,7 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
         }
         else
         {
-            Debug.Log("스킬 사용에 필요한 코스트가 부족합니다.");
+            StartCoroutine(NotEnoughCost());
         }
     }
 
@@ -76,6 +77,13 @@ public class UseEX : MonoBehaviour, IDragHandler, IEndDragHandler, IPointerEnter
                 SkillSystem.Inst.characters[i].UsingEX = true;
             }
         }
+    }
+
+    public IEnumerator NotEnoughCost()
+    {
+        GameManager.Inst.alert.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        GameManager.Inst.alert.SetActive(false);
     }
 }
 

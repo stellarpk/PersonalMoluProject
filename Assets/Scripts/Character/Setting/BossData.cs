@@ -5,9 +5,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Boss Data", menuName = "Sciptable Object/Boss Data", order = -1)]
 public class BossData : ScriptableObject
 {
-    [SerializeField] float stunGauge;
-    [SerializeField] float timeLimit;
-
-    public float StunGauge { get { return stunGauge; } set { stunGauge = value; } }
-    public float TimeLimit { get { return timeLimit; } set { timeLimit = value; } }
+    [field: SerializeField] public float[] MaxHP { get; set; }
+    [field: SerializeField] public float CurHP { get; set; }
+    [field: SerializeField] public float AttackRange { get; set; }
+    [field: SerializeField] public float SkillRange { get; set; }
+    [field: SerializeField] public float AttackSpeed { get; set; }
+    [field: SerializeField] public float[] AttackDamage { get; set; }
+    [field: SerializeField] public float Stability { get; set; }
+    [field: SerializeField] public float[] DefencePower { get; set; }
+    [field: SerializeField] public float TimeLimit { get; set; }
 }

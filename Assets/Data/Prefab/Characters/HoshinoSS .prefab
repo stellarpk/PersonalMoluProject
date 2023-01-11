@@ -3969,6 +3969,7 @@ GameObject:
   - component: {fileID: 5667611703555646479}
   - component: {fileID: 5667611703555646466}
   - component: {fileID: 5667611703555646477}
+  - component: {fileID: 6379680453849487985}
   m_Layer: 9
   m_Name: 'HoshinoSS '
   m_TagString: Untagged
@@ -3983,7 +3984,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5667611703555646473}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4041,45 +4042,32 @@ MonoBehaviour:
     Percentage: 0
     Percentage_2: 0
     SkillLevel: 0
-    buff:
-      bData: {fileID: 11400000, guid: 39f665b58dd6c164fac8596a414b920c, type: 2}
-      buffTime: 0
-      buffType: 0
-      isBuffOn: 0
+    isBuffOn: 0
+    BuffTime: 0
   s_Normal:
     sData: {fileID: 11400000, guid: 828f499b03d38e54dbadbd62ea7486d1, type: 2}
     coolTime: 0
     Percentage: 0
     Percentage_2: 0
     SkillLevel: 0
-    buff:
-      bData: {fileID: 0}
-      buffTime: 0
-      buffType: 0
-      isBuffOn: 0
+    isBuffOn: 0
+    BuffTime: 0
   s_Passive:
     sData: {fileID: 11400000, guid: f3bb5bb4699c0404fa48c4840fb364cf, type: 2}
     coolTime: 0
     Percentage: 0
     Percentage_2: 0
     SkillLevel: 0
-    buff:
-      bData: {fileID: 11400000, guid: ddd36f6a5aae5134594f57bcd28f2a98, type: 2}
-      buffTime: 0
-      buffType: 0
-      isBuffOn: 0
+    isBuffOn: 0
+    BuffTime: 0
   s_Sub:
     sData: {fileID: 11400000, guid: c36d02b685994be4d883ca4034f95960, type: 2}
     coolTime: 0
     Percentage: 0
     Percentage_2: 0
     SkillLevel: 0
-    buff:
-      bData: {fileID: 11400000, guid: 9160ff2361165444eb93edf6fa9369b3, type: 2}
-      buffTime: 0
-      buffType: 0
-      isBuffOn: 0
-  myBuffList: []
+    isBuffOn: 0
+    BuffTime: 0
   myWeapon: {fileID: 5667611703312241103}
   scanner: {fileID: 5667611703467317977}
   HitPos: {fileID: 5667611703249283721}
@@ -4091,6 +4079,8 @@ MonoBehaviour:
   UsingEX: 0
   isCanceling: 0
   EX_Card: {fileID: 0}
+  shootSound: {fileID: 8300000, guid: 6739c01659ad96d47987f4ddee226b36, type: 3}
+  audioSource: {fileID: 6379680453849487985}
   HPBar: {fileID: 2298639281810276465, guid: 0c4790c6d970cb24d8ce62b3b6a58802, type: 3}
   myHeadPos: {fileID: 5329147034542113242}
   DmgTxt: {fileID: 402102151435888008, guid: 02be208b3bff5af43840ee54265dca92, type: 3}
@@ -4130,6 +4120,102 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!82 &6379680453849487985
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5667611703555646473}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &5667611703896220995
 GameObject:
   m_ObjectHideFlags: 0

@@ -57,6 +57,7 @@ public class UpgradeCharacter : MonoBehaviour
     public GameObject StatDetails;
     public TMP_Text[] Details = new TMP_Text[9];
     public Button LevelUpgrade;
+    public Image CharSprite;
 
     [Header("Skill UI")]
     public Image Skill_Icon;
@@ -97,7 +98,7 @@ public class UpgradeCharacter : MonoBehaviour
         Skills[1].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Normal.sData);
         Skills[2].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Passive.sData);
         Skills[3].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Sub.sData);
-
+        CharSprite.sprite = Resources.Load<Sprite>("Sprites/CharSprite/" + curCharacter.GetComponent<Character>().myStat.myData.SpriteName);
         if (curCharacter.GetComponent<Character>().myStat.myData.Level == UData.MaxLevel)
         {
             LevelUpgrade.interactable = false;

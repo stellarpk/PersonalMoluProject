@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Normal
   m_EditorClassIdentifier: 
   ID: 1000
-  ItemName: "\uC77C\uBC18\uC7AC\uB8CC"
-  Droprate: 80
+  ItemName: Normal Skill Book
+  Droprate: 100
   ItemCount: 1
   SpriteName: Normal_Frame
   IconName: Book
+  Explain: Normal Grade Skill Upgrade Book

@@ -31,6 +31,12 @@ public class Boss : CharacterProperty, IBattle
     public Transform TextPos;
     public GameObject DmgTxt;
 
+    public AudioSource audioSource;
+    public AudioClip skill_1_Sound;
+    public AudioClip skill_2_Sound;
+    public AudioClip skill_3_Sound;
+    public AudioClip DeadSound;
+
     public BossHpBar hpbar;
 
     public float CurDamaged;
@@ -74,6 +80,7 @@ public class Boss : CharacterProperty, IBattle
         if (Mathf.Approximately(bossInfo.CurHP, 0.0f))
         {
             StopAllCoroutines();
+            audioSource.PlayOneShot(DeadSound);
             GameManager.Inst.CheckBossDead();
             myAnim.SetTrigger("Die");
         }
@@ -86,7 +93,7 @@ public class Boss : CharacterProperty, IBattle
 
     public void Setting()
     {
-        bossInfo.Initialize();
+        bossInfo.Initialize(DataManager.Inst.difficulty);
     }
 
     public void StartPattern()
@@ -190,6 +197,7 @@ public class Boss : CharacterProperty, IBattle
             {
                 GameObject bullet = Instantiate(Skill_1_Projectile, Muzzle[i].position, Muzzle[i].rotation);
                 Instantiate(Skill_1_Flare, Muzzle[i].position, Muzzle[i].rotation);
+                audioSource.PlayOneShot(skill_1_Sound);
                 bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(5f), 10f, bullet);
             }
             yield return new WaitForSeconds(3f);
@@ -216,6 +224,7 @@ public class Boss : CharacterProperty, IBattle
             bullet.GetComponentInChildren<NoneTargetBullet>().OnFire(Damage(3.5f), 10f, bullet);
             Destroy(bullet, 5f);
         }
+        audioSource.PlayOneShot(skill_2_Sound);
         yield return new WaitForSeconds(3f);
         StartCoroutine(Think());
     }
@@ -253,6 +262,7 @@ public class Boss : CharacterProperty, IBattle
                 bullet.GetComponent<Rigidbody>().AddForce(Vector3.up * 10f, ForceMode.Impulse);
                 bullet.GetComponentInChildren<Bullet>().OnFire(target, Damage(7.0f), 20f, bullet);
             }
+            audioSource.PlayOneShot(skill_3_Sound);
             ResetTarget();
         }
         yield return new WaitForSeconds(3f);

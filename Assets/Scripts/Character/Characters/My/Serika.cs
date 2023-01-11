@@ -6,6 +6,7 @@ using UnityEngine;
 public class Serika : Character, ISkill
 {
     bool NormalReady = false;
+    public AudioClip skillSound;
     Character Target;
     // 일반 공격 3점사
     private void Start()
@@ -181,6 +182,8 @@ public class Serika : Character, ISkill
         float projectileDamage = skillDamage / divideDamage;
         float stability = myStat.Stability * 0.5f;
         Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
+
+        audioSource.PlayOneShot(skillSound);
         for (int i = 0; i < divideDamage; i++)
         {
             float rate = myStat.CritRate / (myStat.CritRate + 650.0f);

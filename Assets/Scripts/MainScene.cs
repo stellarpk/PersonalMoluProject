@@ -1,12 +1,17 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 public class MainScene : MonoBehaviour
 {
     public static MainScene Inst = null;
     public UpgradeCharacter UpChar;
+    public ItemExplain expain;
     public Transform ItemContainer;
+    public GameObject[] SetDiff;
     public TMP_Text GoldText;
     public TMP_Text BossTicket;
 
@@ -23,6 +28,13 @@ public class MainScene : MonoBehaviour
     private void Start()
     {
         DataManager.Inst.SetJsonCharacterData();
+    }
+
+    public void SetDifficulty()
+    {
+        GameObject click = EventSystem.current.currentSelectedGameObject;
+        int index = Array.FindIndex(SetDiff, x => x == click);
+        DataManager.Inst.difficulty = (BossDifficulty)index;
     }
 
     public void MoveToBoss()

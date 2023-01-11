@@ -26,3 +26,5 @@ MonoBehaviour:
   CritDamage: 200
   DefencePower: 123
   Healing: 300
+  SpriteName: Hoshino
+  IconSpriteName: HoshinoIcon

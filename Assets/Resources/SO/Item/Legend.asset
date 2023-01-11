@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Legend
   m_EditorClassIdentifier: 
   ID: 1003
-  ItemName: "\uB808\uC804\uB4DC\uC7AC\uB8CC"
+  ItemName: Legend Skill Book
   Droprate: 35
   ItemCount: 1
   SpriteName: Legend_Frame
   IconName: Book
+  Explain: Legend Grade Skill Upgrade Book

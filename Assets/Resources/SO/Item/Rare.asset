@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Rare
   m_EditorClassIdentifier: 
   ID: 1001
-  ItemName: "\uB808\uC5B4\uC7AC\uB8CC"
-  Droprate: 65
+  ItemName: Rare Skill Book
+  Droprate: 85
   ItemCount: 1
   SpriteName: Rare_Frame
   IconName: Book
+  Explain: Rare Grade Skill Upgrade Book

@@ -29,6 +29,7 @@ public class DataManager : MonoBehaviour
     public CharacterData Dummy;
     public GameObject Slot;
     public GameObject curCharacter;
+    public BossDifficulty difficulty;
     private void Awake()
     {
         if (Inst != null)
@@ -61,6 +62,9 @@ public class DataManager : MonoBehaviour
                 GetItemJson(items, InventoryManager.Inst.items);
                 GetItemJson(items, InventoryManager.Inst.Copy);
 
+
+                MainScene.Inst.expain.SetExplain(InventoryManager.Inst.items, 0);
+                InventoryManager.Inst.SetInteractable();
                 for (int i = 0; i < InventoryManager.Inst.Copy.Count; i++)
                 {
                     InventoryManager.Inst.Copy[i].transform.SetParent(InventoryManager.Inst.gameObject.transform);

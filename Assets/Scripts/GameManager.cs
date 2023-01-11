@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[System.Serializable]
+public class RewardPerDiff
+{
+    public Item[] Rewards;
+}
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Inst = null;
@@ -25,14 +31,17 @@ public class GameManager : MonoBehaviour
     public Transform CamPos;
     public int CharacterDeathCount;
 
-    
+    public GameObject alert;
+
+    public TMPro.TMP_Text diff;
 
     public bool GameEnd;
     public bool GameOver;
     public bool GameClear;
 
-    public int RewardGold;
-    public List<Item> RewardItem = new List<Item>();
+    public int[] RewardGold;
+    public RewardPerDiff[] Items;
+    //public List<Item> RewardItem = new List<Item>();
     public GameObject GoldGO;
     public Transform RewardPos;
 
@@ -66,6 +75,7 @@ public class GameManager : MonoBehaviour
                 SkillSystem.Inst.characters.Add(InGameCharacters[i].GetComponent<Character>());
             }
         }
+        diff.text = DataManager.Inst.difficulty.ToString();
         GameObject boss = Instantiate(BossCharacter, BossSpawn.position, BossSpawn.rotation);
         boss.transform.rotation = Quaternion.Euler(0, 180, 0);
         boss.GetComponent<Boss>().Setting();
@@ -93,7 +103,7 @@ public class GameManager : MonoBehaviour
     public IEnumerator GameCleared()
     {
         yield return new WaitForSeconds(2f);
-        GetReward(RewardGold,RewardItem);
+        GetReward(RewardGold[(int)DataManager.Inst.difficulty],Items[(int)DataManager.Inst.difficulty].Rewards);
         UIManager.Inst.GameEnd(UIManager.Inst.Clear);
     }
 
@@ -114,9 +124,9 @@ public class GameManager : MonoBehaviour
         CamPos.position = camPos;
     }
 
-    public void GetReward(int Gold, List<Item> rewardItems)
+    public void GetReward(int Gold, Item[] rewardItems)
     {
-        for (int i = 0; i < rewardItems.Count; i++)
+        for (int i = 0; i < rewardItems.Length; i++)
         {
             int DropRate = Random.Range(0, 100);
             if (rewardItems[i].itemValue.Droprate >= DropRate)

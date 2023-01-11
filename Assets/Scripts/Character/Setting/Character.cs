@@ -55,6 +55,9 @@ public class Character : CharacterProperty, IBattle
 
     public GameObject EX_Card;
 
+    public AudioClip shootSound;
+    public AudioSource audioSource;
+
     public GameObject HPBar;
     public Transform myHeadPos;
     HpBar myHpBar;
@@ -87,7 +90,7 @@ public class Character : CharacterProperty, IBattle
         }
         else
         {
-            Debug.Log("스킬 사용에 필요한 코스트가 부족합니다.");
+            StartCoroutine(EX_Card.GetComponent<UseEX>().NotEnoughCost());
         }
     }
 
@@ -365,6 +368,7 @@ public class Character : CharacterProperty, IBattle
                 if (delay >= AttackDelay)
                 {
                     fire?.Invoke();
+                    audioSource.PlayOneShot(shootSound);
                     delay = 0.0f;
                 }
             }

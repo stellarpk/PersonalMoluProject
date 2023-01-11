@@ -7,6 +7,7 @@ using static UnityEngine.UI.GridLayoutGroup;
 
 public class Shiroko : Character, ISkill
 {
+    public AudioClip DroneFire;
     public GameObject Grenade;
     public GameObject Drone;
     GameObject coDrone;
@@ -127,7 +128,6 @@ public class Shiroko : Character, ISkill
                     }
                     else
                     {
-                        Debug.Log("범위 내에 적이 없습니다. 다시 사용해주세요");
                         TurnOffIndicator();
                     }
                 }
@@ -189,7 +189,7 @@ public class Shiroko : Character, ISkill
         }
         else finalDamage = (int)damage;
         if (coEX != null) StopCoroutine(coEX);
-        coEX = StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage));
+        coEX = StartCoroutine(coDrone.GetComponent<Drone>().OpenFire(myTarget, finalDamage, DroneFire));
 
     }
 

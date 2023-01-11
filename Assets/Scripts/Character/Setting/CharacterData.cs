@@ -19,6 +19,8 @@ public class CharacterData : ScriptableObject
     [SerializeField] public float CritDamage;
     [SerializeField] public float DefencePower;
     [SerializeField] public float Healing;
+    [SerializeField] public string SpriteName;
+    [SerializeField] public string IconSpriteName;
 }
 
 

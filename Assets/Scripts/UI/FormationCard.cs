@@ -10,6 +10,7 @@ public class FormationCard : MonoBehaviour
 {
     public GameObject charImg;
     public GameObject character;
+    public Image Icon;
     public TMP_Text test;
 
     public void UnorganizeCharacter()

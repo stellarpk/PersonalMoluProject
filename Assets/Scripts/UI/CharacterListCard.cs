@@ -20,6 +20,7 @@ public class CharacterListCard : MonoBehaviour
     {
         Level.text = "LV."+ myCharacter.GetComponent<Character>().myStat.myData.Level.ToString();
         Name.text = myCharacter.GetComponent<Character>().myStat.myData.CharName;
+        CharImg.sprite = Resources.Load<Sprite>("Sprites/CharIcon/" + myCharacter.GetComponent<Character>().myStat.myData.IconSpriteName);
     }
 
     public void UpgradingCharacter()

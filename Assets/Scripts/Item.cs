@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 public struct ItemInfo
 {
@@ -77,5 +79,12 @@ public class Item : UIProperty
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void Explain()
+    {
+        GameObject click = EventSystem.current.currentSelectedGameObject;
+        int index = InventoryManager.Inst.items.FindIndex(x => x.itemValue == click.GetComponent<Item>().itemValue);
+        MainScene.Inst.expain.SetExplain(InventoryManager.Inst.items, index);
     }
 }

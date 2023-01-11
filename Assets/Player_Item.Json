@@ -1,27 +1,27 @@
 {
     "ID": 1000,
-    "ItemName": "일반재료",
-    "Droprate": 80.0,
-    "ItemCount": 17,
+    "ItemName": "Normal Skill Book",
+    "Droprate": 100.0,
+    "ItemCount": 23,
     "SpriteName": "Normal_Frame",
     "IconName": "Book"
 }={
     "ID": 1001,
-    "ItemName": "레어재료",
-    "Droprate": 65.0,
+    "ItemName": "Rare Skill Book",
+    "Droprate": 85.0,
     "ItemCount": 20,
     "SpriteName": "Rare_Frame",
     "IconName": "Book"
 }={
     "ID": 1002,
-    "ItemName": "에픽재료",
+    "ItemName": "Epic Skill Book",
     "Droprate": 50.0,
     "ItemCount": 19,
     "SpriteName": "Epic_Frame",
     "IconName": "Book"
 }={
     "ID": 1003,
-    "ItemName": "레전드재료",
+    "ItemName": "Legend Skill Book",
     "Droprate": 35.0,
     "ItemCount": 12,
     "SpriteName": "Legend_Frame",

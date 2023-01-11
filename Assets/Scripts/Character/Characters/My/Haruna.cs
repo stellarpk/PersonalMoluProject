@@ -9,6 +9,7 @@ public class Haruna : Character, ISkill
     public HarunaEX drawEX;
     public GameObject EX_Bullet;
     Coroutine EX_Range;
+    public AudioClip SkillSound;
     private void Start()
     {
 
@@ -118,7 +119,6 @@ public class Haruna : Character, ISkill
 
     public void ShootEXSkill()
     {
-        Debug.Log("Shoot");
         float stabil = myStat.Stability * 0.5f;
         float skillDamage = Random.Range(myStat.AttackDamage - stabil, myStat.AttackDamage + stabil) * s_Normal.Percentage;
         float rate = myStat.CritRate / (myStat.CritRate + 650.0f);
@@ -131,7 +131,7 @@ public class Haruna : Character, ISkill
             bullet.GetComponent<Penetrate_Bullet>().isCritical = true;
         }
         else finalDamage = (int)skillDamage;
-
+        audioSource.PlayOneShot(SkillSound);
         bullet.GetComponent<Penetrate_Bullet>().Damage = finalDamage;
         bullet.GetComponent<Penetrate_Bullet>().OnFire(drawEX.EndRange_T, myWeapon.weapon.weaponData.BulletSpeed * 3.0f);
         EndEXSkillAnim();
@@ -191,6 +191,7 @@ public class Haruna : Character, ISkill
             else finalDamage = (int)skillDamage;
             Transform HitPos = scanner.myTarget.transform.GetComponent<IBattle>().hitPos;
             GameObject bullet = Instantiate(myWeapon.Bullet, myWeapon.muzzle.position, myWeapon.muzzle.rotation);
+            audioSource.PlayOneShot(SkillSound);
             bullet.GetComponentInChildren<Bullet>().OnFire(HitPos, finalDamage, myWeapon.weapon.weaponData.BulletSpeed * 2.0f, bullet);
         }
         EndNormalSkillAnim();

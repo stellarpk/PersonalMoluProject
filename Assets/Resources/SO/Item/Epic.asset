@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Epic
   m_EditorClassIdentifier: 
   ID: 1002
-  ItemName: "\uC5D0\uD53D\uC7AC\uB8CC"
+  ItemName: Epic Skill Book
   Droprate: 50
   ItemCount: 1
   SpriteName: Epic_Frame
   IconName: Book
+  Explain: Epic Grade Skill Upgrade Book
