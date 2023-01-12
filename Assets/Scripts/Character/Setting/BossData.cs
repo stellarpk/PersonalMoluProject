@@ -14,4 +14,5 @@ public class BossData : ScriptableObject
     [field: SerializeField] public float Stability { get; set; }
     [field: SerializeField] public float[] DefencePower { get; set; }
     [field: SerializeField] public float TimeLimit { get; set; }
+    [field: SerializeField] public string BossIcon { get; set; }
 }

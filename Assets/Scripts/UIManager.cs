@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
     public BossHpBar BHB;
     public GameObject BattleUI;
     public GameObject[] HPBar;
+    public Image BossIcon;
     int speedMag = 0;
     bool pause;
     float[] timeSpeed = { 1.0f, 1.5f, 2.0f };

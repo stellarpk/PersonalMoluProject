@@ -80,6 +80,7 @@ public class GameManager : MonoBehaviour
         boss.transform.rotation = Quaternion.Euler(0, 180, 0);
         boss.GetComponent<Boss>().Setting();
         boss.GetComponent<Boss>().bossInfo.SetHP();
+        UIManager.Inst.BossIcon.sprite = Resources.Load<Sprite>("Sprites/Boss/" + boss.GetComponent<Boss>().bossInfo.bossData.BossIcon);
         UIManager.Inst.BHB.boss = boss.GetComponent<Boss>();
         UIManager.Inst.BHB.Setting();
         boss.GetComponent<Boss>().hpbar = UIManager.Inst.BHB;

@@ -28,14 +28,16 @@ public class MoveScene : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "MainScene")
+        InventoryManager.Inst.items.Clear();
+        if (scene.name == "MainScene")
         {
+            InventoryManager.Inst.ClearCopy();
+
             DataManager.Inst.GetJsonItemData();
             DataManager.Inst.GetJsonGoldData();
         }
         if(scene.buildIndex == 2)
         {
-            InventoryManager.Inst.items.Clear();
             GameManager.Inst.InGameSetting(DataManager.Inst.Formation);
         }
     }

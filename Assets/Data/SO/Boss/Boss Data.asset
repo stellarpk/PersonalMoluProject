@@ -33,3 +33,4 @@ MonoBehaviour:
   - 30
   - 40
   <TimeLimit>k__BackingField: 180
+  <BossIcon>k__BackingField: BossIcon

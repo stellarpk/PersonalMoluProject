@@ -350,7 +350,12 @@ public class UpgradeCharacter : MonoBehaviour
         Slot.SetActive(true);
         Slot.GetComponent<Item>().itemValue = DataManager.Inst.GetItemByID(UData.Materials[data.SkillLevel - 1].ItemID);
         int invenIndex = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel - 1].ItemID);
-        int curInven = InventoryManager.Inst.Copy[invenIndex].ItemCount;
+        int curInven = 0;
+        if (invenIndex >= 0)
+        {
+            curInven = InventoryManager.Inst.Copy[invenIndex].ItemCount;
+        }
+        
 
         Slot.GetComponent<Item>().SetItem(UData.Materials[data.SkillLevel - 1].Count);
         Slot.GetComponent<Item>().Setting();
