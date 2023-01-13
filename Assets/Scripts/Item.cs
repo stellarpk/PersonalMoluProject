@@ -5,13 +5,21 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+
+[Serializable]
 public struct ItemInfo
 {
+    [SerializeField]
     public int ID;
+    [SerializeField]
     public string ItemName;
+    [SerializeField]
     public float Droprate;
+    [SerializeField]
     public int ItemCount;
+    [SerializeField]
     public string SpriteName;
+    [SerializeField]
     public string IconName;
 }
 

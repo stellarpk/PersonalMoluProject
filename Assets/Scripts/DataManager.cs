@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System;
 using System.Globalization;
+using static UnityEditor.Progress;
 
 public class DataManager : MonoBehaviour
 {
@@ -25,6 +26,7 @@ public class DataManager : MonoBehaviour
     public static string charData;
     public static string skillupData;
     public static string skillData;
+    public List<ItemInfo> Sorting;
     public ItemValue ForGetJson;
     public CharacterData Dummy;
     public GameObject Slot;
@@ -53,6 +55,7 @@ public class DataManager : MonoBehaviour
     {
         string fileName = @"Player_Item.Json";
         string filePath = Application.dataPath + "/" + fileName;
+        SortingJsons(fileName, filePath);
         if (File.Exists(filePath))
         {
             itemData = LoadText(filePath);
@@ -166,22 +169,60 @@ public class DataManager : MonoBehaviour
         return string.Format("{0:#,###}", Data);
     }
 
+    public void SortingJsons(string fileName, string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            itemData = LoadText(filePath);
+            if (itemData != String.Empty)
+            {
+                string[] items = itemData.Split("=");
+                for (int i = 0; i < items.Length; i++)
+                {
+                    ItemInfo value = new ItemInfo();
+                    JsonUtility.FromJsonOverwrite(items[i], value);
+                    Sorting.Add(value);
+                }
+            }
+        }
+        List<ItemInfo> SortingByOrder = Sorting.OrderBy(i => i.ID).ToList();
+        string item = string.Empty;
+        for (int i = 0; i < SortingByOrder.Count; i++)
+        {
+            string itemValueToJson = string.Empty;
+            itemValueToJson = JsonUtility.ToJson(SortingByOrder[i], true);
+            item += itemValueToJson + "=";
+        }
+
+        if (item.Length != 0)
+        {
+            item = item.Substring(0, item.Length - 1);
+        }
+
+        string sortName = "Player_Item";
+        string path = Application.dataPath + "/" + sortName + ".Json";
+        File.WriteAllText(path, item);
+    }
+
     public void GetItemJson(string[] items, List<Item> list)
     {
         for (int i = 0; i < items.Length; i++)
         {
-            GameObject item = Instantiate(Slot);
-            Item itemInfo = item.GetComponent<Item>();
             JsonUtility.FromJsonOverwrite(items[i], ForGetJson);
-            int index = IVs.FindIndex(x => x.ID == ForGetJson.ID);
-            itemInfo.itemValue = IVs[index];
+            if (ForGetJson.ItemCount != 0)
+            {
+                GameObject item = Instantiate(Slot);
+                Item itemInfo = item.GetComponent<Item>();
+                int index = IVs.FindIndex(x => x.ID == ForGetJson.ID);
+                itemInfo.itemValue = IVs[index];
 
-            itemInfo.SetItem(ForGetJson.ItemCount);
-            itemInfo.Setting();
-            itemInfo.SetUI();
-            item.transform.SetParent(MainScene.Inst.ItemContainer);
-            item.transform.localScale = new Vector3(1, 1, 1);
-            list.Add(itemInfo);
+                itemInfo.SetItem(ForGetJson.ItemCount);
+                itemInfo.Setting();
+                itemInfo.SetUI();
+                item.transform.SetParent(MainScene.Inst.ItemContainer);
+                item.transform.localScale = new Vector3(1, 1, 1);
+                list.Add(itemInfo);
+            }
         }
     }
 

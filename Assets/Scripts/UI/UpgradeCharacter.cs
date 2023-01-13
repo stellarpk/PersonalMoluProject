@@ -76,6 +76,11 @@ public class UpgradeCharacter : MonoBehaviour
     public SkillData curSkillData;
     public SkillType curType;
     public string[] change = { "[Skill_1]", "[Skill_2]", "[CoolTime]", "[Duration]" };
+    public GameObject LevelUpEffect;
+    public GameObject SkillUpEffect;
+
+    public AudioSource audio;
+    public AudioClip effectSound;
 
     bool MaterialEnough;
     bool GoldEnough;
@@ -122,7 +127,12 @@ public class UpgradeCharacter : MonoBehaviour
         Details[8].text = "CostRecover  " + curCharacter.GetComponent<Character>().myStat.myData.CostRecover.ToString();
     }
 
-    public void SetUpgradeSkillUI()
+    public void SetDefaultUpgradeUI()
+    {
+        SetUpgradeSkillUI(curType);
+    }
+
+    public void SetUpgradeSkillUI(SkillType skillType)
     {
         UpgradeSkillIcon[0].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_EX.sData);
         UpgradeSkillIcon[1].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Normal.sData);
@@ -130,7 +140,23 @@ public class UpgradeCharacter : MonoBehaviour
         UpgradeSkillIcon[3].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Sub.sData);
 
         Character Cur = curCharacter.GetComponent<Character>();
-        SkillWindow(Cur.s_EX.sData, SkillType.EX);
+        switch (skillType)
+        {
+            case SkillType.EX:
+                SkillWindow(Cur.s_EX.sData, skillType);
+                break;
+            case SkillType.Normal:
+                SkillWindow(Cur.s_Normal.sData, skillType);
+                break;
+            case SkillType.Passive:
+                SkillWindow(Cur.s_Passive.sData, skillType);
+                break;
+            case SkillType.Sub:
+                SkillWindow(Cur.s_Sub.sData, skillType);
+                break;
+            default:
+                break;
+        }
     }
 
     public void EXWindow()
@@ -376,9 +402,13 @@ public class UpgradeCharacter : MonoBehaviour
     public void UpgradeSkill()
     {
         DataManager.Inst.RInfo.Gold -= UData.Materials[curSkillData.SkillLevel].Gold;
-
+        StartCoroutine(SUpEffect());
         int index = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel - 1].ItemID);
         InventoryManager.Inst.Copy[index].SetItem(InventoryManager.Inst.Copy[index].ItemCount - UData.Materials[curSkillData.SkillLevel - 1].Count);
+        if(InventoryManager.Inst.Copy[index].ItemCount == 0)
+        {
+            InventoryManager.Inst.Copy.RemoveAt(index);
+        }
         InventoryManager.Inst.Copy[index].Setting();
         DataManager.Inst.SaveItemData();
         DataManager.Inst.GetJsonItemData();
@@ -387,15 +417,32 @@ public class UpgradeCharacter : MonoBehaviour
         DataManager.Inst.GetJsonCharacterSkillData(curCharacter.GetComponent<Character>().myStat.myData, curSkillData);
         SkillWindow(curSkillData, curType);
         SetUI();
-        SetUpgradeSkillUI();
+        SetUpgradeSkillUI(curType);
         curCharacter.GetComponent<Character>().InitializeSkill();
         DataManager.Inst.SaveGoldData();
         DataManager.Inst.GetJsonGoldData();
     }
 
+    IEnumerator LVUPEffect()
+    {
+        audio.PlayOneShot(effectSound);
+        LevelUpEffect.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(1.0f);
+        LevelUpEffect.GetComponent<ParticleSystem>().Stop();
+    }
+
+    IEnumerator SUpEffect()
+    {
+        audio.PlayOneShot(effectSound);
+        SkillUpEffect.GetComponent<ParticleSystem>().Play();
+        yield return new WaitForSeconds(1.0f);
+        SkillUpEffect.GetComponent<ParticleSystem>().Stop();
+    }
+
     public void LevelUp()
     {
         DataManager.Inst.RInfo.Gold -= UData.GetLevelUpgradeGold(curCharacter.GetComponent<Character>().myStat.myData.Level);
+        StartCoroutine(LVUPEffect());
         StatIncrease(curCharacter.GetComponent<Character>().myStat.myData);
         DataManager.Inst.SaveCharacterData(curCharacter.GetComponent<Character>().myStat.myData);
         DataManager.Inst.GetJsonCharacterData(curCharacter.GetComponent<Character>(), curCharacter.GetComponent<Character>().myStat.myData);

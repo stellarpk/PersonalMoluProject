@@ -1,0 +1,23 @@
+{
+    "SkillCost": 0,
+    "CoolTime": 0.0,
+    "SkillLevel": 2,
+    "percentage": [
+        1.2009999752044678,
+        1.2109999656677247,
+        1.2209999561309815,
+        1.2619999647140504,
+        1.2719999551773072,
+        1.281999945640564,
+        1.3220000267028809,
+        1.3320000171661378,
+        1.3420000076293946,
+        1.3830000162124634
+    ],
+    "percentage_2": [],
+    "isBuff": true,
+    "BuffTime": 30.0,
+    "SkillExplain": "When Use EX, ATKSPD [Skill_1]% Increase For [Duration] sec",
+    "SkillName": "",
+    "SkillIcon": "Buff_1"
+}

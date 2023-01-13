@@ -1,0 +1,23 @@
+{
+    "SkillCost": 0,
+    "CoolTime": 0.0,
+    "SkillLevel": 2,
+    "percentage": [
+        1.1119999885559083,
+        1.1139999628067017,
+        1.1169999837875367,
+        1.128000020980835,
+        1.13100004196167,
+        1.1339999437332154,
+        1.1449999809265137,
+        1.1480000019073487,
+        1.1510000228881837,
+        1.1619999408721924
+    ],
+    "percentage_2": [],
+    "isBuff": true,
+    "BuffTime": 0.0,
+    "SkillExplain": "DEF Increase [Skill_1]%, ATK Increase [Skill_1]%",
+    "SkillName": "",
+    "SkillIcon": "Passive_1"
+}

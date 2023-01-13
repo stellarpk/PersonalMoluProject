@@ -1,0 +1,23 @@
+{
+    "SkillCost": 0,
+    "CoolTime": 0.0,
+    "SkillLevel": 2,
+    "percentage": [
+        360.0,
+        378.0,
+        396.0,
+        468.0,
+        486.0,
+        504.0,
+        576.0,
+        594.0,
+        612.0,
+        684.0
+    ],
+    "percentage_2": [],
+    "isBuff": true,
+    "BuffTime": 0.0,
+    "SkillExplain": "while Ex Skill On, CostRecover [Skill_1]Increase",
+    "SkillName": "",
+    "SkillIcon": "CostRecover"
+}

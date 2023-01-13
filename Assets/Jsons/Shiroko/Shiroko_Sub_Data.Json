@@ -1,0 +1,23 @@
+{
+    "SkillCost": 0,
+    "CoolTime": 25.0,
+    "SkillLevel": 3,
+    "percentage": [
+        1.3020000457763672,
+        1.3170000314712525,
+        1.3320000171661378,
+        1.3930000066757203,
+        1.4079999923706055,
+        1.4229999780654908,
+        1.4830000400543213,
+        1.4989999532699586,
+        1.5140000581741334,
+        1.5740000009536744
+    ],
+    "percentage_2": [],
+    "isBuff": true,
+    "BuffTime": 30.0,
+    "SkillExplain": "Every Normal Attack, 20% Chance to Increase ATKSPD [Skill_1]% for [Duration] sec. (CoolTime [CoolTime] sec)",
+    "SkillName": "",
+    "SkillIcon": "Buff_1"
+}

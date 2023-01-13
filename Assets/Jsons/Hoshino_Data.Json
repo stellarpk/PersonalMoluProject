@@ -1,16 +1,18 @@
 {
-    "Level": 1,
+    "Level": 6,
     "CharName": "Hoshino",
-    "MaxHP": 2554.0,
+    "MaxHP": 3554.0,
     "MoveSpeed": 3.0,
     "AttackRange": 45.0,
     "SkillRange": 50.0,
-    "AttackSpeed": 0.4,
-    "AttackDamage": 243.0,
+    "AttackSpeed": 0.4000000059604645,
+    "AttackDamage": 743.0,
     "Stability": 150.0,
     "CostRecover": 1050.0,
     "CritPer": 271.0,
     "CritDamage": 200.0,
-    "DefencePower": 123.0,
-    "Healing": 300.0
+    "DefencePower": 148.0,
+    "Healing": 550.0,
+    "SpriteName": "Hoshino",
+    "IconSpriteName": "HoshinoIcon"
 }

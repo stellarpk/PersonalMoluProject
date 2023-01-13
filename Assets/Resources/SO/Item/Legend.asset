@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ID: 1003
   ItemName: Legend Skill Book
-  Droprate: 35
+  Droprate: 100
   ItemCount: 1
   SpriteName: Legend_Frame
   IconName: Book

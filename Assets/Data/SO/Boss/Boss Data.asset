@@ -23,9 +23,9 @@ MonoBehaviour:
   <AttackSpeed>k__BackingField: 0
   <AttackDamage>k__BackingField:
   - 150
-  - 250
-  - 350
-  - 450
+  - 175
+  - 200
+  - 220
   <Stability>k__BackingField: 0
   <DefencePower>k__BackingField:
   - 10

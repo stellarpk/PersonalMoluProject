@@ -1,0 +1,23 @@
+{
+    "SkillCost": 0,
+    "CoolTime": 30.0,
+    "SkillLevel": 2,
+    "percentage": [
+        2.0,
+        2.0999999046325685,
+        2.200000047683716,
+        2.5999999046325685,
+        2.700000047683716,
+        2.799999952316284,
+        3.200000047683716,
+        3.299999952316284,
+        3.4000000953674318,
+        3.799999952316284
+    ],
+    "percentage_2": [],
+    "isBuff": false,
+    "BuffTime": 0.0,
+    "SkillExplain": "Every [CoolTime]second, Damage Single Target to [Skill_1]% ATK",
+    "SkillName": "",
+    "SkillIcon": "Target"
+}
