@@ -55,7 +55,6 @@ public class DataManager : MonoBehaviour
     {
         string fileName = @"Player_Item.Json";
         string filePath = Application.dataPath + "/" + fileName;
-        SortingJsons(fileName, filePath);
         if (File.Exists(filePath))
         {
             itemData = LoadText(filePath);
@@ -65,6 +64,7 @@ public class DataManager : MonoBehaviour
                 GetItemJson(items, InventoryManager.Inst.items);
                 GetItemJson(items, InventoryManager.Inst.Copy);
 
+                SortingItem();
 
                 MainScene.Inst.expain.SetExplain(InventoryManager.Inst.items, 0);
                 InventoryManager.Inst.SetInteractable();
@@ -169,39 +169,13 @@ public class DataManager : MonoBehaviour
         return string.Format("{0:#,###}", Data);
     }
 
-    public void SortingJsons(string fileName, string filePath)
+    public void SortingItem()
     {
-        if (File.Exists(filePath))
+        InventoryManager.Inst.items = InventoryManager.Inst.items.OrderBy(x => x.IInfo.ID).ToList();
+        for (int i = 0; i < InventoryManager.Inst.items.Count; i++)
         {
-            itemData = LoadText(filePath);
-            if (itemData != String.Empty)
-            {
-                string[] items = itemData.Split("=");
-                for (int i = 0; i < items.Length; i++)
-                {
-                    ItemInfo value = new ItemInfo();
-                    JsonUtility.FromJsonOverwrite(items[i], value);
-                    Sorting.Add(value);
-                }
-            }
+            InventoryManager.Inst.items[i].gameObject.transform.SetSiblingIndex(i);
         }
-        List<ItemInfo> SortingByOrder = Sorting.OrderBy(i => i.ID).ToList();
-        string item = string.Empty;
-        for (int i = 0; i < SortingByOrder.Count; i++)
-        {
-            string itemValueToJson = string.Empty;
-            itemValueToJson = JsonUtility.ToJson(SortingByOrder[i], true);
-            item += itemValueToJson + "=";
-        }
-
-        if (item.Length != 0)
-        {
-            item = item.Substring(0, item.Length - 1);
-        }
-
-        string sortName = "Player_Item";
-        string path = Application.dataPath + "/" + sortName + ".Json";
-        File.WriteAllText(path, item);
     }
 
     public void GetItemJson(string[] items, List<Item> list)

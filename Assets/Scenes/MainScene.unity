@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -38273,7 +38273,7 @@ MonoBehaviour:
   - '[Duration]'
   LevelUpEffect: {fileID: 6700234093582863594}
   SkillUpEffect: {fileID: 5315049904191467029}
-  audio: {fileID: 8974730935999041709}
+  audioSource: {fileID: 8974730935999041709}
   effectSound: {fileID: 8300000, guid: c48a972d3d024c2408a3331750786a29, type: 3}
   Slot: {fileID: 4426025387518354239}
 --- !u!82 &8974730935999041709

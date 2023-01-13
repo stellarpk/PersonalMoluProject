@@ -1,8 +1,22 @@
 {
+    "ID": 1001,
+    "ItemName": "Rare Skill Book",
+    "Droprate": 100.0,
+    "ItemCount": 1,
+    "SpriteName": "Rare_Frame",
+    "IconName": "Book"
+}={
+    "ID": 1002,
+    "ItemName": "Epic Skill Book",
+    "Droprate": 100.0,
+    "ItemCount": 4,
+    "SpriteName": "Epic_Frame",
+    "IconName": "Book"
+}={
     "ID": 1000,
     "ItemName": "Normal Skill Book",
     "Droprate": 100.0,
-    "ItemCount": 7,
+    "ItemCount": 2,
     "SpriteName": "Normal_Frame",
     "IconName": "Book"
 }

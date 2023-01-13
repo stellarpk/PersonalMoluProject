@@ -79,7 +79,7 @@ public class UpgradeCharacter : MonoBehaviour
     public GameObject LevelUpEffect;
     public GameObject SkillUpEffect;
 
-    public AudioSource audio;
+    public AudioSource audioSource;
     public AudioClip effectSound;
 
     bool MaterialEnough;
@@ -405,11 +405,12 @@ public class UpgradeCharacter : MonoBehaviour
         StartCoroutine(SUpEffect());
         int index = InventoryManager.Inst.Copy.FindIndex(x => x.itemValue.ID == UData.Materials[curSkillData.SkillLevel - 1].ItemID);
         InventoryManager.Inst.Copy[index].SetItem(InventoryManager.Inst.Copy[index].ItemCount - UData.Materials[curSkillData.SkillLevel - 1].Count);
-        if(InventoryManager.Inst.Copy[index].ItemCount == 0)
+        InventoryManager.Inst.Copy[index].Setting();
+        if (InventoryManager.Inst.Copy[index].ItemCount == 0)
         {
+            Destroy(InventoryManager.Inst.Copy[index]);
             InventoryManager.Inst.Copy.RemoveAt(index);
         }
-        InventoryManager.Inst.Copy[index].Setting();
         DataManager.Inst.SaveItemData();
         DataManager.Inst.GetJsonItemData();
         curSkillData.SkillLevel += 1;
@@ -425,7 +426,7 @@ public class UpgradeCharacter : MonoBehaviour
 
     IEnumerator LVUPEffect()
     {
-        audio.PlayOneShot(effectSound);
+        audioSource.PlayOneShot(effectSound);
         LevelUpEffect.GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(1.0f);
         LevelUpEffect.GetComponent<ParticleSystem>().Stop();
@@ -433,7 +434,7 @@ public class UpgradeCharacter : MonoBehaviour
 
     IEnumerator SUpEffect()
     {
-        audio.PlayOneShot(effectSound);
+        audioSource.PlayOneShot(effectSound);
         SkillUpEffect.GetComponent<ParticleSystem>().Play();
         yield return new WaitForSeconds(1.0f);
         SkillUpEffect.GetComponent<ParticleSystem>().Stop();
