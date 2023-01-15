@@ -105,7 +105,12 @@ public class HarunaEX : MonoBehaviour
 
                 if (isColl)
                 {
-
+                    GameManager.Inst.EnemyPos[i].GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = new Color(255 / 255f, 139 / 255f, 139, 255f);
+                    Debug.Log(GameManager.Inst.EnemyPos[i].gameObject.name);
+                }
+                else
+                {
+                    GameManager.Inst.EnemyPos[i].GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = Color.white;
                 }
             }
             

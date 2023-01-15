@@ -83,6 +83,7 @@ public class GameManager : MonoBehaviour
         UIManager.Inst.BossIcon.sprite = Resources.Load<Sprite>("Sprites/Boss/" + boss.GetComponent<Boss>().bossInfo.bossData.BossIcon);
         UIManager.Inst.BHB.boss = boss.GetComponent<Boss>();
         UIManager.Inst.BHB.Setting();
+        EnemyPos.Add(boss.transform);
         boss.GetComponent<Boss>().hpbar = UIManager.Inst.BHB;
         curBoss = boss;
         playTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;

@@ -16,7 +16,7 @@
     "ID": 1000,
     "ItemName": "Normal Skill Book",
     "Droprate": 100.0,
-    "ItemCount": 2,
+    "ItemCount": 3,
     "SpriteName": "Normal_Frame",
     "IconName": "Book"
 }
