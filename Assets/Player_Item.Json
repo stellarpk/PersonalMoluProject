@@ -1,22 +1,29 @@
 {
-    "ID": 1001,
-    "ItemName": "Rare Skill Book",
-    "Droprate": 100.0,
-    "ItemCount": 1,
-    "SpriteName": "Rare_Frame",
-    "IconName": "Book"
-}={
     "ID": 1002,
     "ItemName": "Epic Skill Book",
     "Droprate": 100.0,
-    "ItemCount": 4,
+    "ItemCount": 2,
     "SpriteName": "Epic_Frame",
     "IconName": "Book"
 }={
     "ID": 1000,
     "ItemName": "Normal Skill Book",
     "Droprate": 100.0,
-    "ItemCount": 3,
+    "ItemCount": 15,
     "SpriteName": "Normal_Frame",
+    "IconName": "Book"
+}={
+    "ID": 1003,
+    "ItemName": "Legend Skill Book",
+    "Droprate": 100.0,
+    "ItemCount": 4,
+    "SpriteName": "Legend_Frame",
+    "IconName": "Book"
+}={
+    "ID": 1001,
+    "ItemName": "Rare Skill Book",
+    "Droprate": 100.0,
+    "ItemCount": 1,
+    "SpriteName": "Rare_Frame",
     "IconName": "Book"
 }

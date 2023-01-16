@@ -152,6 +152,8 @@ public class UIManager : MonoBehaviour
     public void ExitGame()
     {
         MoveScene.Inst.Move(0);
+
+        DataManager.Inst.SaveGoldData();
     }
 
     public void ChangeSpeedWhenUseSkill()

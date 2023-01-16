@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     public Transform BossSpawn;
     public Transform CamPos;
     public int CharacterDeathCount;
-
+    int Ingame = 0;
     public GameObject alert;
 
     public TMPro.TMP_Text diff;
@@ -90,11 +90,19 @@ public class GameManager : MonoBehaviour
         maxPlayTime = boss.GetComponent<Boss>().bossInfo.TimeLimit;
         SkillSystem.Inst.SkillCardSetting();
         SkillSystem.Inst.ArrangeSkillCard();
+
+        for (int i = 0; i < InGameCharacters.Length; i++)
+        {
+            if (InGameCharacters[i] != null)
+            {
+                Ingame++;
+            }
+        }
     }
 
     public void CheckCharacterDead()
     {
-        if (CharacterDeathCount == InGameCharacters.Length || playTime <= 0) GameOver = true;
+        if (CharacterDeathCount == Ingame || playTime <= 0) GameOver = true;
     }
 
     public void CheckBossDead()
@@ -147,7 +155,6 @@ public class GameManager : MonoBehaviour
         GameObject goldIcon = Instantiate(GoldGO);
         goldIcon.transform.SetParent(RewardPos);
         goldIcon.GetComponent<Item>().countText.text = Gold.ToString();
-        DataManager.Inst.SaveGoldData();
     }
 
     public IEnumerator GameSet()
@@ -175,8 +182,15 @@ public class GameManager : MonoBehaviour
                 }
             }
             StartCoroutine(GameCleared());
+
+            DataManager.Inst.SaveGoldData();
         }
-        if (GameOver) StartCoroutine(GameSet());
+        if (GameOver)
+        {
+            StartCoroutine(GameSet());
+
+            DataManager.Inst.SaveGoldData();
+        }
     }
 
     private void Update()

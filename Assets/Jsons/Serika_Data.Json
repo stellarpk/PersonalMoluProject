@@ -1,18 +1,18 @@
 {
-    "Level": 6,
+    "Level": 10,
     "CharName": "Serika",
-    "MaxHP": 3302.0,
+    "MaxHP": 4102.0,
     "MoveSpeed": 3.0,
     "AttackRange": 55.0,
     "SkillRange": 5.0,
     "AttackSpeed": 0.75,
-    "AttackDamage": 811.0,
+    "AttackDamage": 1211.0,
     "Stability": 150.0,
     "CostRecover": 1050.0,
     "CritPer": 256.0,
     "CritDamage": 200.0,
-    "DefencePower": 44.0,
-    "Healing": 550.0,
+    "DefencePower": 64.0,
+    "Healing": 750.0,
     "SpriteName": "Serika",
     "IconSpriteName": "SerikaIcon"
 }

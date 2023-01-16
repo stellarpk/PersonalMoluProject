@@ -13,19 +13,19 @@ MonoBehaviour:
   m_Name: Boss Data
   m_EditorClassIdentifier: 
   <MaxHP>k__BackingField:
-  - 10000
-  - 20000
-  - 30000
-  - 40000
+  - 25000
+  - 50000
+  - 75000
+  - 100000
   <CurHP>k__BackingField: 0
   <AttackRange>k__BackingField: 650
   <SkillRange>k__BackingField: 650
   <AttackSpeed>k__BackingField: 0
   <AttackDamage>k__BackingField:
+  - 125
   - 150
   - 175
   - 200
-  - 220
   <Stability>k__BackingField: 0
   <DefencePower>k__BackingField:
   - 10

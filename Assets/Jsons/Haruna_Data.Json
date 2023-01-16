@@ -1,18 +1,18 @@
 {
-    "Level": 7,
+    "Level": 10,
     "CharName": "Haruna",
-    "MaxHP": 3651.0,
+    "MaxHP": 4251.0,
     "MoveSpeed": 3.0,
     "AttackRange": 75.0,
     "SkillRange": 75.0,
     "AttackSpeed": 0.30000001192092898,
-    "AttackDamage": 1057.0,
+    "AttackDamage": 1357.0,
     "Stability": 150.0,
     "CostRecover": 1050.0,
     "CritPer": 205.0,
     "CritDamage": 200.0,
-    "DefencePower": 49.0,
-    "Healing": 600.0,
+    "DefencePower": 64.0,
+    "Healing": 750.0,
     "SpriteName": "Haruna",
     "IconSpriteName": "HarunaIcon"
 }

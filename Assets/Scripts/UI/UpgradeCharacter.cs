@@ -58,6 +58,8 @@ public class UpgradeCharacter : MonoBehaviour
     public TMP_Text[] Details = new TMP_Text[9];
     public Button LevelUpgrade;
     public Image CharSprite;
+    public TMP_Text UpgradeGold;
+    public GameObject GoldIcon;
 
     [Header("Skill UI")]
     public Image Skill_Icon;
@@ -104,13 +106,18 @@ public class UpgradeCharacter : MonoBehaviour
         Skills[2].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Passive.sData);
         Skills[3].GetComponent<SkillUI>().Setting(curCharacter.GetComponent<Character>().s_Sub.sData);
         CharSprite.sprite = Resources.Load<Sprite>("Sprites/CharSprite/" + curCharacter.GetComponent<Character>().myStat.myData.SpriteName);
+        
         if (curCharacter.GetComponent<Character>().myStat.myData.Level == UData.MaxLevel)
         {
             LevelUpgrade.interactable = false;
+            UpgradeGold.text = "MAX LEVEL";
+            GoldIcon.SetActive(false);
         }
         else
         {
             LevelUpgrade.interactable = true;
+            UpgradeGold.text = UData.LevelUpgradeGold[curCharacter.GetComponent<Character>().myStat.myData.Level - 1].ToString();
+            GoldIcon.SetActive(true);
         }
     }
 
@@ -242,6 +249,7 @@ public class UpgradeCharacter : MonoBehaviour
         if (isMaxSkillLevel)
         {
             Slot.SetActive(false);
+            Alert.SetActive(false);
             SkillUpgradeButton.interactable = false;
             Gold.text = "0";
         }

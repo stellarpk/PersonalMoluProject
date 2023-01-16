@@ -115,6 +115,10 @@ public class Haruna : Character, ISkill
     public override void Use_EX_Skill()
     {
         EX_Skill();
+        for (int i = 0; i < GameManager.Inst.EnemyPos.Count; i++)
+        {
+            GameManager.Inst.EnemyPos[i].GetComponentInChildren<SkinnedMeshRenderer>().materials[0].color = Color.white;
+        }
     }
 
     public void ShootEXSkill()
